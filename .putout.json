@@ -1,7 +1,5 @@
 {
-    "match": {
-        "*.md": {
-            "remove-debugger": "off"
-        }
+    "rules": {
+        "putout": "on"
     }
 }
