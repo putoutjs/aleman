@@ -4,7 +4,7 @@
   "type": "module",
   "author": "coderaiser <mnemonic.enemy@gmail.com> (https://github.com/coderaiser)",
   "description": "🐊Putout-based framework for web",
-  "homepage": "https://github.com/coderaiser/putout/tree/master/packages/plugin-remove-debugger#readme",
+  "homepage": "https://github.com/putoutjs/aleman#readme",
   "main": "lib/aleman/aleman.js",
   "release": false,
   "tag": false,
