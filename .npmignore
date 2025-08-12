@@ -6,3 +6,4 @@ coverage
 eslint.config.*
 *.config.*
 *.spec.js
+test
