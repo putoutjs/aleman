@@ -4,3 +4,4 @@
 - ✅[`remove-button`](https://putout.cloudcmd.io/#/gist/fa2b037a629306cbd43cf42c457c08b9/0cac9c986141d69f9747538816e66b14c4cbd256);
 - ✅[`show-menu`](https://putout.cloudcmd.io/#/gist/884fd40c07b94951de1a9ce99afab015/21d4881b44955b1426f80e87c76b7ad86eeea464);
 - ✅[`select-next`](https://putout.cloudcmd.io/#/gist/10891aa58ff2ecfa1728ed19aeb2e3f2/ce536fb0b414faefbae5d0c8a094517beb1c606e);
+- ✅[`build-menu`](https://putout.cloudcmd.io/#/gist/329dccd5fdc7f8b220be79af405dc9bb/b56df53f52bbe2a300ede38a96d1d2242e60679f);
