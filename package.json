@@ -30,6 +30,7 @@
   "dependencies": {
     "@putout/processor-html": "^14.0.2",
     "html-escaper": "^3.0.3",
+    "once": "^1.4.0",
     "putout": "^40.5.1"
   },
   "keywords": [
