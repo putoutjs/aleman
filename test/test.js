@@ -8,6 +8,7 @@ export const createTest = (url, addon, rules) => {
     const __filename = fileURLToPath(url);
     const dir = dirname(__filename);
     const fixture = readFixtures(dir);
+    
     const test = extend({
         render: render({
             addon,
@@ -33,7 +34,6 @@ const render = ({addon, rules}) => (operator) => (html, modules = {}) => {
         ...modules,
     });
     
-    debugger;
     addon.listener({
         render: render(addon.name),
         ...modules,
@@ -41,4 +41,3 @@ const render = ({addon, rules}) => (operator) => (html, modules = {}) => {
     
     return operator.equal(html.output, element.innerHTML);
 };
-

@@ -1,6 +1,5 @@
 import {join} from 'node:path';
 import {readFileSync} from 'node:fs';
-import tryCatch from 'try-catch';
 import kebabCase from 'just-kebab-case';
 
 const readFixture = (dir, name) => {
@@ -25,4 +24,3 @@ const createHandler = (dir) => ({
         return readFixture(dir, kebabCase(prop));
     },
 });
-
