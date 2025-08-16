@@ -1,10 +1,12 @@
-createHydrate();
-createMap();
-
-await createLink();
-const {createMenu} = await import('../lib/main.js');
-
-createMenu();
+export const createMenu = async () => {
+    createHydrate();
+    createMap();
+    
+    await createLink();
+    const {hydrateMenu} = await import('../lib/main.js');
+    
+    hydrateMenu(hydrateMenu);
+};
 
 async function createLink() {
     const style = document.createElement('style');
