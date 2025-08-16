@@ -48,4 +48,3 @@ function createMap() {
     `;
     document.body.append(script);
 }
-
