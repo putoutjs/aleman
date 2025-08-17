@@ -18,7 +18,7 @@
     "#rules": "./lib/rules/index.js"
   },
   "exports": {
-    "menu": "./menu/menu.js"
+    "./menu": "./menu/menu.js"
   },
   "scripts": {
     "test": "madrun test",
