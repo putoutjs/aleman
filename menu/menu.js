@@ -1,11 +1,11 @@
-export const createMenu = async () => {
+export const createMenu = async (element, options, menuData) => {
     createHydrate();
     createMap();
     
     createLink();
-    const {hydrateMenu} = await import('../lib/main.js');
+    const {hydrateMenu} = await import('./main.js');
     
-    hydrateMenu(hydrateMenu);
+    hydrateMenu();
 };
 
 function createLink() {
