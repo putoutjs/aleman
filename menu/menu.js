@@ -1,4 +1,4 @@
-export const createMenu = async (element, options, menuData) => {
+export const createMenu = async () => {
     createHydrate();
     createMap();
     

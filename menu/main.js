@@ -5,7 +5,7 @@ import menu from '../lib//globals/menu.js';
 import {hydrate} from '../lib/aleman/aleman.js';
 import {rules} from '../lib/rules/index.js';
 
-export function hydrateMenu(element, options, menuData = menu) {
+export function hydrateMenu() {
     const addons = [
         menuClick,
         menuItemClick,
