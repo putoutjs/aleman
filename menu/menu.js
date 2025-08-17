@@ -21,9 +21,8 @@ async function createLink() {
     }
     
     const styleFetch = await fetch('../style.css');
-    const text = await styleFetch.text();
     
-    style.innerHTML = text;
+    style.innerHTML = await styleFetch.text();
     
     document.head.appendChild(style);
 }
