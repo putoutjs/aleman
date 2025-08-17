@@ -10,10 +10,10 @@ export const createMenu = async () => {
 
 async function createLink() {
     const style = document.createElement('style');
-    const styleFetch = await fetch('../style.css');
+    const stylePath = new URL('../style.css', import.meta.url).pathname;
+    const styleFetch = await fetch(stylePath);
     
     style.innerHTML = await styleFetch.text();
-    
     document.head.appendChild(style);
 }
 
@@ -42,3 +42,4 @@ function createMap() {
     `;
     document.body.append(script);
 }
+
