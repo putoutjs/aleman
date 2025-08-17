@@ -2,24 +2,17 @@ export const createMenu = async () => {
     createHydrate();
     createMap();
     
-    await createLink();
+    createLink();
     const {hydrateMenu} = await import('../lib/main.js');
     
     hydrateMenu(hydrateMenu);
 };
 
-async function createLink() {
-    const style = document.createElement('style');
-    const content = await import('https://esm.sh/aleman@1.0.12/menu/menu.css', {
-        with: {
-            type: 'css',
-        },
-    });
+function createLink() {
+    const style = document.createElement('link');
     
-    for (const rule of content.default.cssRules) {
-        style.innerHTML += rule.cssText;
-    }
-    
+    style.rel = 'stylesheet';
+    style.href = 'https://esm.sh/aleman@1.0.12/menu/menu.css';
     document.head.appendChild(style);
 }
 
@@ -48,3 +41,4 @@ function createMap() {
     `;
     document.body.append(script);
 }
+
