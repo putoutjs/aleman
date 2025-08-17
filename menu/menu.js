@@ -20,6 +20,11 @@ async function createLink() {
         style.innerHTML += rule.cssText;
     }
     
+    const styleFetch = await fetch('../style.css');
+    const text = await styleFetch.text();
+    
+    style.innerHTML = text;
+    
     document.head.appendChild(style);
 }
 
