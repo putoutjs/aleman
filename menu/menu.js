@@ -5,7 +5,7 @@ export const createMenu = async () => {
     createLink();
     const {hydrateMenu} = await import('./main.js');
     
-    hydrateMenu();
+    hydrateMenu(element, options, menuData);
 };
 
 function createLink() {
