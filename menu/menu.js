@@ -10,16 +10,6 @@ export const createMenu = async () => {
 
 async function createLink() {
     const style = document.createElement('style');
-    const content = await import('../style.css', {
-        with: {
-            type: 'css',
-        },
-    });
-    
-    for (const rule of content.default.cssRules) {
-        style.innerHTML += rule.cssText;
-    }
-    
     const styleFetch = await fetch('../style.css');
     
     style.innerHTML = await styleFetch.text();
