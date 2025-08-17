@@ -1,6 +1,6 @@
 {
   "name": "aleman",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "type": "module",
   "author": "coderaiser <mnemonic.enemy@gmail.com> (https://github.com/coderaiser)",
   "description": "🐊Putout-based framework for web",
