@@ -1,4 +1,4 @@
-export const createMenu = async () => {
+export const createMenu = async (element, options, menuData) => {
     createHydrate();
     createMap();
     
@@ -12,7 +12,7 @@ function createLink() {
     const style = document.createElement('link');
     
     style.rel = 'stylesheet';
-    style.href = 'https://esm.sh/aleman@1.0.12/menu/menu.css';
+    style.href = 'https://esm.sh/aleman@1.0.15/menu/menu.css';
     document.head.appendChild(style);
 }
 
