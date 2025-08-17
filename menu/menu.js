@@ -10,7 +10,7 @@ export const createMenu = async () => {
 
 async function createLink() {
     const style = document.createElement('style');
-    const content = await import('https://esm.sh/aleman/menu/style.css', {
+    const content = await import('https://esm.sh/aleman@1.0.12/menu/menu.css', {
         with: {
             type: 'css',
         },
