@@ -10,10 +10,16 @@ export const createMenu = async () => {
 
 async function createLink() {
     const style = document.createElement('style');
-    const stylePath = new URL('../style.css', import.meta.url).pathname;
-    const styleFetch = await fetch(stylePath);
+    const content = await import('https://esm.sh/aleman/menu/style.css', {
+        with: {
+            type: 'css',
+        },
+    });
     
-    style.innerHTML = await styleFetch.text();
+    for (const rule of content.default.cssRules) {
+        style.innerHTML += rule.cssText;
+    }
+    
     document.head.appendChild(style);
 }
 
