@@ -23,7 +23,7 @@ export const createState = (state, {options, listener, stateName = 'aleman-state
     const stateElement = document.querySelector(`[data-name="${stateName}"]`);
     
     const prev = fullstore();
-    const readState = createReadState(prev, stateElement);
+    const readState = createReadState(stateElement);
     const writeState = createWriteState(prev, stateElement);
     
     const fn = wrap(listener, {
@@ -57,7 +57,7 @@ export const createState = (state, {options, listener, stateName = 'aleman-state
     };
 };
 
-export const createReadState = (prev, stateElement) => () => {
+export const createReadState = (stateElement) => () => {
     return parse(stateElement.textContent);
 };
 

@@ -7,6 +7,7 @@ export const hydrate = (element, {addons, options, state, rules, stateName = 'al
         options,
         rules,
     });
+    
     const listener = () => {
         const state = readState();
         const [is, result] = render(state);

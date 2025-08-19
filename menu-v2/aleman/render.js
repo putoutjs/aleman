@@ -56,4 +56,3 @@ export const createRender = (html, {options, rules}) => {
         return [TRANSFORM, result];
     };
 };
-

@@ -1,9 +1,9 @@
 {
-  "imports": {
-    "putout": "https://esm.sh/@putout/bundle",
-    "@putout/processor-html": "https://esm.sh/@putout/processor-html@14.1.1",
-    "html-escaper": "https://esm.sh/html-escaper",
-    "once": "https://esm.sh/once",
-    "fullstore": "https://esm.sh/fullstore"
-  }
+    "imports": {
+        "putout": "https://esm.sh/@putout/bundle",
+        "@putout/processor-html": "https://esm.sh/@putout/processor-html@14.1.1",
+        "html-escaper": "https://esm.sh/html-escaper",
+        "once": "https://esm.sh/once",
+        "fullstore": "https://esm.sh/fullstore"
+    }
 }
