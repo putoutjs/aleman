@@ -2,27 +2,34 @@ import fullstore from 'fullstore';
 
 const {assign} = Object;
 const {stringify, parse} = JSON;
-const stateElement = document.getElementById('state');
 
-const wrap = (rules, prev, {readState, writeState}) => () => {
-    if (readStateStr() === prev())
+const wrap = (render, {prev, options, stateElement, readState, writeState}) => () => {
+    const {textContent} = stateElement;
+    
+    if (stateElement.textContent === prev())
         return;
     
-    const state = readState(rules);
-    prev(readStateStr());
+    const state = readState();
+    prev(textContent);
     writeState(state);
     
-    for (const rule of rules) {
-        rule(state);
-    }
+    render({
+        state,
+        options,
+    });
 };
 
-export const createState = (state, rules) => {
-    const prev = fullstore();
-    const readState = createReadState(prev);
-    const writeState = createWriteState(prev);
+export const createState = (state, {options, listener, stateName = 'aleman-state'}) => {
+    const stateElement = document.querySelector(`[data-name="${stateName}"]`);
     
-    const fn = wrap(rules, prev, {
+    const prev = fullstore();
+    const readState = createReadState(prev, stateElement);
+    const writeState = createWriteState(prev, stateElement);
+    
+    const fn = wrap(listener, {
+        options,
+        prev,
+        stateElement,
         readState,
         writeState,
     });
@@ -50,17 +57,11 @@ export const createState = (state, rules) => {
     };
 };
 
-export const createReadState = (prev) => () => {
-    const state = parse(stateElement.textContent);
-    
-    state.prev = prev;
-    
-    return state;
+export const createReadState = (prev, stateElement) => () => {
+    return parse(stateElement.textContent);
 };
 
-const readStateStr = () => stateElement.textContent;
-
-export const createWriteState = (prev) => (newState) => {
+export const createWriteState = (prev, stateElement) => (newState) => {
     const prevStateStr = stateElement.textContent;
     const prevState = parse(stateElement.textContent);
     
