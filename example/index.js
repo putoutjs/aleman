@@ -1,4 +1,4 @@
-import {createMenu} from './menu.js';
+import {createMenu} from '../menu/menu.js';
 
 const menuData = {
     hello: () => alert('x'),
