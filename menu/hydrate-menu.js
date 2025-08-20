@@ -1,5 +1,5 @@
 import {rules} from './rules/index.js';
-import {hydrate} from './aleman/index.js';
+import {hydrate} from '../aleman/index.js';
 import {initState} from './state.js';
 import {addons} from './addons/index.js';
 
