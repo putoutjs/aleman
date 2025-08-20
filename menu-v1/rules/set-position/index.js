@@ -1,39 +1,18 @@
-import {operator, types} from 'putout';
+import {operator} from 'putout';
 import {checkDataName} from '../check-data-name.js';
-
-const {
-    stringLiteral,
-    jsxIdentifier,
-    jsxAttribute,
-} = types;
 
 const {setLiteralValue} = operator;
 
 export const report = () => `Set position`;
 
-export const fix = ({path, attr, left, top}) => {
+export const fix = ({attr, left, top}) => {
     const style = `left: ${left}px; top: ${top}px;`;
-    
-    if (attr) {
-        setLiteralValue(attr.value, style);
-        
-        return;
-    }
-    
-    const {attributes} = path.node;
-    
-    const attribute = jsxAttribute(
-        jsxIdentifier('style'),
-        stringLiteral(style),
-    );
-    
-    attributes.push(attribute);
+    setLiteralValue(attr.value, style);
 };
 
 export const traverse = ({options, push}) => ({
     JSXOpeningElement(path) {
-        const {position = {}} = options;
-        const {left = 0, top = 20} = position;
+        const {left = 0, top = 20} = options;
         
         if (!checkDataName(path.parentPath, 'menu'))
             return;
@@ -53,14 +32,7 @@ export const traverse = ({options, push}) => ({
                 left,
                 top,
             });
-            return;
         }
-        
-        push({
-            path,
-            left,
-            top,
-        });
     },
 });
 
@@ -71,4 +43,3 @@ function parsePosition(str) {
     
     return [x, y];
 }
-

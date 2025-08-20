@@ -1,7 +1,7 @@
 import {dirname} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {extend} from 'supertape';
-import {createRender} from '../lib/aleman/render.js';
+import {createRender} from '../menu-v1/aleman/render.js';
 import {readFixtures} from './fixture.js';
 
 export const createTest = (url, addon, rules) => {

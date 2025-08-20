@@ -1,7 +1,7 @@
 import {
     hideMenu,
     filter as menuFilter,
-} from '../menu/menu.js';
+} from './menu.js';
 
 export const events = ['click'];
 export const filter = ({event, state}) => {

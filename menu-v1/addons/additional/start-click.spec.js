@@ -1,4 +1,4 @@
-import {rules} from '#rules';
+import {rules} from 'menu-v1/rules/index.js';
 import {createTest} from '#test';
 import * as addon from './start-click.js';
 

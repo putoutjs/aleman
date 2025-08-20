@@ -3,7 +3,7 @@ export const createMenu = async (element, options, menuData) => {
     createMap();
     
     createLink();
-    const {hydrateMenu} = await import('./main.js');
+    const {hydrateMenu} = await import('../lib/main.js');
     
     hydrateMenu(element, options, menuData);
 };

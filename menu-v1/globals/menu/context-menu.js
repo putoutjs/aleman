@@ -1,4 +1,4 @@
-import {showMenu} from '../menu/menu.js';
+import {showMenu} from './menu.js';
 
 export const events = [
     'contextmenu',
