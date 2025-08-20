@@ -8,4 +8,3 @@ test('aleman: stop-click', (t) => {
     t.render(fixture.stopClick);
     t.end();
 });
-
