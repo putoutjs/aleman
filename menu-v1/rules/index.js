@@ -1,7 +1,7 @@
 import * as setPosition from './set-position/index.js';
 import * as unselectAll from './unselect-all/index.js';
 import * as buildMenu from '../../lib/rules/build-menu/index.js';
-import * as select from './select/index.js';
+import * as select from '../../lib/rules/select/index.js';
 import * as unselect from './unselect/index.js';
 import * as menu from '../../lib/rules/menu/index.js';
 import * as removeButton from './remove-button/index.js';
