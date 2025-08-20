@@ -1,6 +1,6 @@
 export const key = 'F9';
 
-export const listener = ({event}) => ({
+export const listener = () => ({
     command: 'show',
     position: {
         left: 0,
