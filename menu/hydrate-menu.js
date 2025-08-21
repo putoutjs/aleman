@@ -11,12 +11,24 @@ export const hydrateMenu = (element, options, menu) => {
     });
     
     const state = initState(options);
-    
-    hydrate(element, {
+    const {run} = hydrate(element, {
         options,
         state,
         addons,
         rules,
         stateName: 'aleman-state-menu',
     });
+    
+    const show = run.bind(null, {
+        command: 'show',
+    });
+    
+    const hide = run.bind(null, {
+        command: 'hide',
+    });
+    
+    return {
+        show,
+        hide,
+    };
 };

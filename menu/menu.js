@@ -9,7 +9,7 @@ export const createMenu = async (element, options, menuData) => {
     createStateElement();
     const {hydrateMenu} = await import('./hydrate-menu.js');
     
-    hydrateMenu(hydrateElement, options, menuData);
+    return hydrateMenu(hydrateElement, options, menuData);
 };
 
 async function createLink() {

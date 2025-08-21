@@ -41,4 +41,25 @@ export const hydrate = (element, {addons, options, state, rules, stateName = 'al
         globalAddons,
         options,
     });
+    
+    return {
+        run: (partialState) => {
+            const state = {
+                ...readState(),
+                ...partialState,
+            };
+            const [is, result] = render(state);
+            
+            if (!is)
+                return;
+            
+            element.innerHTML = result;
+            addListeners({
+                readState,
+                writeState,
+                namedAddons,
+                options,
+            });
+        },
+    };
 };
