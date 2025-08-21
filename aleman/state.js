@@ -66,7 +66,7 @@ export const createWriteState = (prev, stateElement) => (newState) => {
     const prevState = parse(stateElement.textContent);
     
     assign(prevState, newState);
-    const str = stringify(prevState);
+    const str = stringify(prevState, null, 4);
     
     if (str === prevStateStr)
         return;
