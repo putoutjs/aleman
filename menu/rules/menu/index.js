@@ -22,7 +22,7 @@ export const fix = ({path, command}) => {
 
 export const traverse = ({push, options}) => ({
     JSXOpeningElement(path) {
-        const {command} = options;
+        const {name: menuName, command} = options;
         const attributes = path.get('attributes');
         
         for (const attr of attributes) {
@@ -31,7 +31,7 @@ export const traverse = ({push, options}) => ({
             if (name.name !== 'data-name')
                 continue;
             
-            if (value.value !== 'menu')
+            if (value.value !== menuName)
                 return;
             
             break;
