@@ -1,13 +1,15 @@
+import {importmap} from './importmap.js';
+import {hydrateMenu} from './hydrate-menu.js';
+
 const {stringify} = JSON;
 
 export const createMenu = async (element, options, menuData) => {
     const hydrateElement = createHydrate();
     
-    await createMap();
+    createMap();
     await createLink();
     
     createStateElement();
-    const {hydrateMenu} = await import('./hydrate-menu.js?module');
     
     hydrateMenu(hydrateElement, options, menuData);
 };
@@ -45,12 +47,11 @@ function createStateElement() {
     document.body.append(section);
 }
 
-async function createMap() {
-    const {importmap} = await import('./importmap.js?module');
-    
+function createMap() {
     const script = document.createElement('script');
     
     script.type = 'importmap';
     script.innerHTML = stringify(importmap, null, 4);
     document.body.append(script);
 }
+
