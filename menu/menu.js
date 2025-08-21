@@ -7,7 +7,7 @@ export const createMenu = async (element, options, menuData) => {
     await createLink();
     
     createStateElement();
-    const {hydrateMenu} = await import('./hydrate-menu.js');
+    const {hydrateMenu} = await import('./hydrate-menu.js?module');
     
     hydrateMenu(hydrateElement, options, menuData);
 };
@@ -46,11 +46,7 @@ function createStateElement() {
 }
 
 async function createMap() {
-    const {default: importmap} = await import('./importmap.json?module', {
-        with: {
-            type: 'json',
-        },
-    });
+    const {importmap} = await import('./importmap.js?module');
     
     const script = document.createElement('script');
     
