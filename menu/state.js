@@ -4,6 +4,7 @@ export const initState = ({menu}) => {
     const count = keys(menu);
     
     return {
+        menuName: 'menu',
         command: 'hide',
         index: -1,
         count,

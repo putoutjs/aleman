@@ -37,11 +37,11 @@ export const fix = ({path, menu}) => {
 export const traverse = ({options, push}) => ({
     JSXOpeningElement(path) {
         const {
-            name = 'menu',
+            menuName = 'menu',
             menu = DefaultMenu,
         } = options;
         
-        if (!checkDataName(path, name))
+        if (!checkDataName(path, menuName))
             return;
         
         if (path.parentPath.node.children.length)
