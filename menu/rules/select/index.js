@@ -1,4 +1,5 @@
 import {operator, types} from 'putout';
+import {checkDataName} from '../check-data-name.js';
 
 const {isJSXElement} = types;
 const {setLiteralValue} = operator;
@@ -15,15 +16,15 @@ export const fix = ({path, prev, next}) => {
 
 export const traverse = ({options, push}) => ({
     JSXOpeningElement(path) {
+        const {name = 'menu', index = 1} = options;
+        
         if (path.node.name.name !== 'li')
             return;
-        
-        const {index = 1} = options;
         
         if (!isJSXElement(path.parentPath.parentPath))
             return;
         
-        if (!checkDataName(path.parentPath.parentPath))
+        if (!checkDataName(path.parentPath.parentPath, name))
             return;
         
         const children = path.parentPath
@@ -56,19 +57,6 @@ export const traverse = ({options, push}) => ({
     },
 });
 
-function checkDataName(path) {
-    const attributes = path.get('openingElement.attributes');
-    
-    for (const attr of attributes) {
-        const {name, value} = attr.node;
-        
-        if (name.name === 'data-name')
-            return value.value === 'menu';
-    }
-    
-    return false;
-}
-
 function unselect(path) {
     if (!path)
         return;
@@ -83,3 +71,4 @@ function unselect(path) {
             setLiteralValue(value, value.value.replace(' menu-item-selected', ''));
     }
 }
+

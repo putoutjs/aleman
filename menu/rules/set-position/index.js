@@ -29,10 +29,10 @@ export const fix = ({path, attr, left, top}) => {
 
 export const traverse = ({options, push}) => ({
     JSXOpeningElement(path) {
-        const {position = {}} = options;
+        const {name = 'menu', position = {}} = options;
         const {left = 0, top = 20} = position;
         
-        if (!checkDataName(path.parentPath, 'menu'))
+        if (!checkDataName(path.parentPath, name))
             return;
         
         for (const attr of path.node.attributes) {
