@@ -1,7 +1,9 @@
 const {stringify} = JSON;
 
 export const createMenu = async (element, options, menuData) => {
-    const {name = 'menu'} = options;
+    options.name = options.name || 'menu';
+    const {name} = options;
+    
     const hydrateElement = createHydrate();
     
     await createMap();
