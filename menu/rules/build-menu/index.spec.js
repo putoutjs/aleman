@@ -23,4 +23,3 @@ test('lib: build-menu: no report: built', (t) => {
     t.noReport('built');
     t.end();
 });
-
