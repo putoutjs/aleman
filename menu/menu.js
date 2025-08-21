@@ -37,8 +37,8 @@ async function createLink() {
     document.head.appendChild(style);
 }
 
-function createHydrate() {
-    const name = 'aleman-hydrate-menu';
+function createHydrate(name) {
+    const elementName = `aleman-hydrate-${name}`;
     const hydrateElement = findByName(name);
     
     if (hydrateElement)
@@ -46,7 +46,7 @@ function createHydrate() {
     
     const section = document.createElement('section');
     
-    section.dataset.name = name;
+    section.dataset.name = elementName;
     section.innerHTML = `<ul data-name="menu" class="menu menu-hidden"></ul>`;
     document.body.append(section);
     
