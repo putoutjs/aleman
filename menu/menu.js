@@ -36,8 +36,9 @@ async function createLink() {
 
 function createHydrate() {
     const name = 'aleman-hydrate-menu';
+    const hydrateElement = findByName(name);
     
-    if (findByName(name))
+    if (hydrateElement)
         return;
     
     const section = document.createElement('section');
