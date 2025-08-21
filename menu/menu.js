@@ -54,4 +54,3 @@ function createMap() {
     script.innerHTML = stringify(importmap, null, 4);
     document.body.append(script);
 }
-
