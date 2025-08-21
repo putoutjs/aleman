@@ -1,5 +1,7 @@
-export const name = 'menu';
-export const events = ['mouseenter'];
-export const listener = () => ({
-    index: -1,
+export const createMouseEnter = (name) => ({
+    name,
+    events: ['mouseenter'],
+    listener: () => ({
+        index: -1,
+    }),
 });

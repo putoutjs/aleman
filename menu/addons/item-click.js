@@ -1,7 +1,10 @@
-export const name = 'menu';
-export const events = ['click'];
+export const createItemClick = (name) => ({
+    name,
+    events: ['click'],
+    listener,
+});
 
-export const listener = ({event, options}) => {
+const listener = ({event, options}) => {
     const menuItemElement = document.elementFromPoint(event.clientX, event.clientY);
     const name = menuItemElement.textContent.trim();
     const {menu} = options;

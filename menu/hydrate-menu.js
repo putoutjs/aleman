@@ -2,6 +2,8 @@ import {rules} from './rules/index.js';
 import {hydrate} from '../aleman/index.js';
 import {initState} from './state.js';
 import {addons} from './addons/index.js';
+import {createMouseEnter} from './addons/mouse-enter.js';
+import {createItemClick} from './addons/item-click.js';
 
 const {assign} = Object;
 
@@ -14,7 +16,11 @@ export const hydrateMenu = (element, options, menu) => {
     const {run} = hydrate(element, {
         options,
         state,
-        addons,
+        addons: [
+            createMouseEnter(options.name),
+            createItemClick(options.name),
+            ...addons,
+        ],
         rules,
         stateName: `aleman-state-${options.name}`,
     });

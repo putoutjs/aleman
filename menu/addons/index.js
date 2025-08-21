@@ -5,8 +5,6 @@ import * as down from './down.js';
 import * as up from './up.js';
 import * as f9 from './f9.js';
 import * as enter from './enter.js';
-import * as mouseEnter from './mouse-enter.js';
-import * as itemClick from './item-click.js';
 
 export const addons = [
     contextMenu,
@@ -16,6 +14,4 @@ export const addons = [
     up,
     f9,
     enter,
-    mouseEnter,
-    itemClick,
 ];
