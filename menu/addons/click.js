@@ -1,6 +1,9 @@
 export const events = ['click'];
 
-export const listener = () => ({
-    command: 'hide',
-    index: -1,
-});
+export const listener = ({options}) => {
+    options.beforeClick?.();
+    return {
+        command: 'hide',
+        index: -1,
+    };
+};

@@ -8,6 +8,7 @@ export const listener = ({event, options}) => {
     const fn = menu[name];
     
     setTimeout(fn);
+    options.beforeClose?.();
     
     return {
         index: -1,
