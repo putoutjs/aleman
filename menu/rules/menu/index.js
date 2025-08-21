@@ -1,4 +1,7 @@
-import {operator} from 'putout';
+import {operator, types} from 'putout';
+import {checkDataName} from '../check-data-name.js';
+
+const {isJSXElement} = types;
 
 const {setLiteralValue} = operator;
 
@@ -22,20 +25,11 @@ export const fix = ({path, command}) => {
 
 export const traverse = ({push, options}) => ({
     JSXOpeningElement(path) {
-        const {name: menuName, command} = options;
+        const {name, command} = options;
         const attributes = path.get('attributes');
         
-        for (const attr of attributes) {
-            const {name, value} = attr.node;
-            
-            if (name.name !== 'data-name')
-                continue;
-            
-            if (value.value !== menuName)
-                return;
-            
-            break;
-        }
+        if (!checkDataName(path.parentPath, name))
+            return false;
         
         for (const attr of attributes) {
             const {name, value} = attr.node;
@@ -57,3 +51,4 @@ export const traverse = ({push, options}) => ({
         }
     },
 });
+

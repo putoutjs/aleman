@@ -46,7 +46,7 @@ function createHydrate(name) {
     const section = document.createElement('section');
     
     section.dataset.name = `aleman-hydrate-${name}`;
-    section.innerHTML = `<ul data-name="${name}" class="menu menu-hidden"></ul>`;
+    section.innerHTML = `<ul data-name="menu" class="menu menu-hidden"></ul>`;
     document.body.append(section);
     
     return section;
