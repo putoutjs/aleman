@@ -48,6 +48,7 @@ export const hydrate = (element, {addons, options, state, rules, stateName = 'al
                 ...readState(),
                 ...partialState,
             };
+            
             const [is, result] = render(state);
             
             if (!is)
