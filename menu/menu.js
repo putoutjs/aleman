@@ -39,7 +39,7 @@ function createHydrate() {
     const hydrateElement = findByName(name);
     
     if (hydrateElement)
-        return;
+        return hydrateElement;
     
     const section = document.createElement('section');
     
