@@ -46,7 +46,7 @@ function createStateElement() {
 }
 
 async function createMap() {
-    const {default: importmap} = await import('./importmap.json', {
+    const {default: importmap} = await import('./importmap.json?module', {
         with: {
             type: 'json',
         },
