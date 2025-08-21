@@ -16,7 +16,7 @@ export const hydrateMenu = (element, options, menu) => {
         state,
         addons,
         rules,
-        stateName: 'aleman-state-menu',
+        stateName: `aleman-state-${options.name}`,
     });
     
     const show = run.bind(null, {
