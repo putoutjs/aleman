@@ -77,7 +77,7 @@ async function createMap() {
     script.innerHTML = stringify(importmap, null, 4);
     document.body.append(script);
 }
+
 function findByName(name) {
     return document.querySelector(`[data-name=${name}]`);
 }
-
