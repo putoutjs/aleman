@@ -5,4 +5,3 @@ export const importmap = {
         'fullstore': 'https://esm.sh/fullstore',
     },
 };
-
