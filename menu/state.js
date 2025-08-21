@@ -1,10 +1,10 @@
 const {keys} = Object;
 
-export const initState = ({menu}) => {
+export const initState = ({menu, name = 'menu'}) => {
     const count = keys(menu);
     
     return {
-        menuName: 'menu',
+        name,
         command: 'hide',
         index: -1,
         count,

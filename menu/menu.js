@@ -1,12 +1,13 @@
 const {stringify} = JSON;
 
 export const createMenu = async (element, options, menuData) => {
+    const {name = 'menu'} = options;
     const hydrateElement = createHydrate();
     
     await createMap();
     await createLink();
     
-    createStateElement();
+    createStateElement(name);
     const {hydrateMenu} = await import('./hydrate-menu.js');
     
     return hydrateMenu(hydrateElement, options, menuData);
@@ -50,17 +51,17 @@ function createHydrate() {
     return section;
 }
 
-function createStateElement() {
-    const name = 'aleman-state-menu';
+function createStateElement(name) {
+    const elementName = `aleman-state-${name}`;
     
-    if (findByName(name))
+    if (findByName(elementName))
         return;
     
     const section = document.createElement('section');
     
-    section.dataset.name = name;
+    section.dataset.name = elementName;
     section.classList.add('menu-hidden');
-    section.dataset.name = 'aleman-state-menu';
+    section.dataset.name = elementName;
     document.body.append(section);
 }
 
