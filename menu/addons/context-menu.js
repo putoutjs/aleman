@@ -4,8 +4,12 @@ export const events = [
 
 export const preventDefault = true;
 
-export const listener = ({event, options}) => {
-    options.beforeShow?.();
+export const listener = ({event, state, options}) => {
+    options.beforeShow?.({
+        ...state,
+        x: state.position.left,
+        y: state.position.top,
+    });
     return {
         command: 'show',
         position: {
