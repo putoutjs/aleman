@@ -12,12 +12,12 @@ export const filter = ({event, state, options}) => {
     
     return beforeShow?.({
         ...state,
-        x: state.position.left,
-        y: state.position.top,
+        x: event.clientX,
+        y: event.clientY - 14,
     });
 };
 
-export const listener = ({event, state, options}) => {
+export const listener = ({event}) => {
     return {
         command: 'show',
         position: {
