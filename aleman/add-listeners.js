@@ -17,6 +17,7 @@ export const addListeners = ({namedAddons, options, readState, writeState}) => {
             key,
             listener,
             preventDefault,
+            filter,
         } = addon;
         
         for (const event of events) {
@@ -28,6 +29,14 @@ export const addListeners = ({namedAddons, options, readState, writeState}) => {
                     return;
                 
                 const state = readState();
+                const is = filter?.({
+                    event,
+                    state,
+                    options,
+                });
+                
+                if (filter && !is)
+                    return false;
                 
                 const newState = listener({
                     event,
@@ -92,3 +101,4 @@ export const addGlobalListeners = ({globalAddons, options, readState, writeState
         }
     }
 };
+

@@ -4,12 +4,15 @@ export const events = [
 
 export const preventDefault = true;
 
-export const listener = ({event, state, options}) => {
-    options.beforeShow?.({
+export const filter = ({event, state, options}) => {
+    return options.beforeShow?.({
         ...state,
         x: state.position.left,
         y: state.position.top,
     });
+};
+
+export const listener = ({event, state, options}) => {
     return {
         command: 'show',
         position: {
