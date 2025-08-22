@@ -5,7 +5,12 @@ export const events = [
 export const preventDefault = true;
 
 export const filter = ({event, state, options}) => {
-    return options.beforeShow?.({
+    const {beforeShow} = options;
+    
+    if (!beforeShow)
+        return true;
+    
+    return beforeShow?.({
         ...state,
         x: state.position.left,
         y: state.position.top,

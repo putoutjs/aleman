@@ -13,39 +13,14 @@ export const addListeners = ({namedAddons, options, readState, writeState}) => {
     for (const addon of namedAddons) {
         const element = queryElement(addon);
         const events = maybeEvents(addon);
-        const {
-            key,
-            listener,
-            preventDefault,
-            filter,
-        } = addon;
         
         for (const event of events) {
-            element.addEventListener(event, (event) => {
-                if (preventDefault)
-                    event.preventDefault();
-                
-                if (key && event.key !== key)
-                    return;
-                
-                const state = readState();
-                const is = filter?.({
-                    event,
-                    state,
-                    options,
-                });
-                
-                if (filter && !is)
-                    return false;
-                
-                const newState = listener({
-                    event,
-                    state,
-                    options,
-                });
-                
-                writeState(newState);
-            });
+            element.addEventListener(event, createListener({
+                addon,
+                options,
+                readState,
+                writeState,
+            }));
         }
     }
 };
@@ -74,31 +49,48 @@ export const splitAddons = (addons) => {
 export const addGlobalListeners = ({globalAddons, options, readState, writeState}) => {
     for (const addon of globalAddons) {
         const events = maybeEvents(addon);
-        const {
-            key,
-            listener,
-            preventDefault,
-        } = addon;
         
         for (const event of events) {
-            document.addEventListener(event, (event) => {
-                if (preventDefault)
-                    event.preventDefault();
-                
-                if (key && event.key !== key)
-                    return;
-                
-                const state = readState();
-                
-                const newState = listener({
-                    event,
-                    state,
-                    options,
-                });
-                
-                writeState(newState);
-            });
+            document.addEventListener(event, createListener({
+                addon,
+                options,
+                readState,
+                writeState,
+            }));
         }
     }
 };
 
+const createListener = ({options, addon, readState, writeState}) => (event) => {
+    const {
+        key,
+        listener,
+        preventDefault,
+        filter,
+    } = addon;
+    
+    if (preventDefault)
+        event.preventDefault();
+    
+    if (key && event.key !== key)
+        return;
+    
+    const state = readState();
+    
+    const is = filter?.({
+        event,
+        state,
+        options,
+    });
+    
+    if (filter && !is)
+        return false;
+    
+    const newState = listener({
+        event,
+        state,
+        options,
+    });
+    
+    writeState(newState);
+};
