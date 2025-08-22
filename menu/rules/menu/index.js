@@ -1,7 +1,5 @@
-import {operator, types} from 'putout';
+import {operator} from 'putout';
 import {checkDataName} from '../check-data-name.js';
-
-const {isJSXElement} = types;
 
 const {setLiteralValue} = operator;
 
@@ -51,4 +49,3 @@ export const traverse = ({push, options}) => ({
         }
     },
 });
-

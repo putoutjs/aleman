@@ -9,8 +9,8 @@ export const initState = ({menu, name = 'menu'}) => {
         index: -1,
         count,
         position: {
-            left: 0,
-            top: 20,
+            x: 0,
+            y: 20,
         },
     };
 };

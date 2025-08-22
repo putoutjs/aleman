@@ -15,7 +15,7 @@ export const fix = ({path}) => {
 
 export const traverse = ({push, options}) => ({
     JSXOpeningElement(path) {
-        const {index} = options;
+        const {index, name} = options;
         
         if (index !== -1)
             return;

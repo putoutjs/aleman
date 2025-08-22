@@ -71,4 +71,3 @@ function unselect(path) {
             setLiteralValue(value, value.value.replace(' menu-item-selected', ''));
     }
 }
-

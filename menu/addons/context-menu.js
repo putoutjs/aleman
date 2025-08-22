@@ -13,8 +13,8 @@ export const listener = ({event, state, options}) => {
     return {
         command: 'show',
         position: {
-            left: event.clientX,
-            top: event.clientY - 14,
+            x: event.clientX,
+            y: event.clientY - 14,
         },
     };
 };

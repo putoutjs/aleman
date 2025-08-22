@@ -11,8 +11,8 @@ const {setLiteralValue} = operator;
 
 export const report = () => `Set position`;
 
-export const fix = ({path, attr, left, top}) => {
-    const style = `left: ${left}px; top: ${top}px;`;
+export const fix = ({path, attr, x, y}) => {
+    const style = `left: ${x}px; top: ${y}px;`;
     
     if (attr) {
         setLiteralValue(attr.value, style);
@@ -30,7 +30,7 @@ export const fix = ({path, attr, left, top}) => {
 export const traverse = ({options, push}) => ({
     JSXOpeningElement(path) {
         const {name = 'menu', position = {}} = options;
-        const {left = 0, top = 20} = position;
+        const {x = 0, y = 20} = position;
         
         if (!checkDataName(path.parentPath, name))
             return;
@@ -39,24 +39,24 @@ export const traverse = ({options, push}) => ({
             if (attr.name.name !== 'style')
                 continue;
             
-            const [x, y] = parsePosition(attr.value.value);
+            const [x1, y1] = parsePosition(attr.value.value);
             
-            if (x === left && y === top)
+            if (x === x1 && y === y1)
                 return;
             
             push({
                 path,
                 attr,
-                left,
-                top,
+                x,
+                y,
             });
             return;
         }
         
         push({
             path,
-            left,
-            top,
+            x,
+            y,
         });
     },
 });
