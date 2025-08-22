@@ -1,7 +1,7 @@
 const {keys} = Object;
 
 export const initState = ({menu, name = 'menu'}) => {
-    const count = keys(menu);
+    const count = keys(menu).length;
     
     return {
         name,
