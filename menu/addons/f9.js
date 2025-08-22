@@ -8,8 +8,10 @@ export const filter = ({state, options}) => {
     
     return options.beforeShow?.({
         ...state,
-        x: state.position.left,
-        y: state.position.top,
+        position: {
+            x: state.position.left,
+            y: state.position.top,
+        },
     });
 };
 

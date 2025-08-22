@@ -12,8 +12,10 @@ export const filter = ({event, state, options}) => {
     
     return beforeShow?.({
         ...state,
-        x: event.clientX,
-        y: event.clientY - 14,
+        position: {
+            x: event.clientX,
+            y: event.clientY - 14,
+        },
     });
 };
 
