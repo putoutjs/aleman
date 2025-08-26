@@ -14,7 +14,7 @@ export const filter = ({event, state, options}) => {
         ...state,
         position: {
             x: event.clientX,
-            y: event.clientY - 14,
+            y: event.clientY - 10,
         },
     });
 };
