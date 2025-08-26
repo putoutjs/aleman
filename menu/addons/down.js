@@ -1,6 +1,7 @@
 const {keys} = Object;
 
 export const key = 'ArrowDown';
+export const preventDefault = true;
 
 export const listener = ({state, options}) => {
     let {index} = state;
