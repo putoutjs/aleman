@@ -6,6 +6,8 @@ import {
 } from './add-listeners.js';
 import {createRender} from './render.js';
 
+const id = (a) => a;
+
 export const hydrate = (element, {addons, options, state, rules, stateName = 'aleman-state'}) => {
     const render = createRender(element.innerHTML, {
         options,
@@ -43,24 +45,19 @@ export const hydrate = (element, {addons, options, state, rules, stateName = 'al
     });
     
     return {
-        run: (partialState) => {
-            const state = {
-                ...readState(),
-                ...partialState,
-            };
-            
-            const [is, result] = render(state);
-            
-            if (!is)
-                return;
-            
-            element.innerHTML = result;
-            addListeners({
-                readState,
-                writeState,
-                namedAddons,
+        run: (event, fn = id, condition) => {
+            const state = readState();
+            const newState = fn({
+                state,
+                event,
                 options,
+            });
+            
+            writeState({
+                ...state,
+                ...newState,
             });
         },
     };
 };
+

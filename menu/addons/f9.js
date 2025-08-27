@@ -6,21 +6,11 @@ export const filter = ({state, options}) => {
     if (!beforeShow)
         return true;
     
-    return options.beforeShow?.({
-        ...state,
-        position: {
-            x: state.position.left,
-            y: state.position.top,
-        },
-    });
+    return options.beforeShow?.(state);
 };
 
 export const listener = ({options, state}) => {
     return {
         command: 'show',
-        position: {
-            left: 0,
-            top: 0,
-        },
     };
 };
