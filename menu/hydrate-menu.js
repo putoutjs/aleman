@@ -13,6 +13,8 @@ export const hydrateMenu = (element, options, menu) => {
     });
     
     const state = initState(options);
+    const {beforeShow} = options;
+    beforeShow?.(state);
     const {run} = hydrate(element, {
         options,
         state,
