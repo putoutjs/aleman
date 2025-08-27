@@ -4,24 +4,20 @@ export const events = [
 
 export const preventDefault = true;
 
-export const filter = ({event, state, options}) => {
+export const listener = ({event, state, options}) => {
     const {beforeShow} = options;
     
-    if (!beforeShow)
-        return true;
-    
-    return beforeShow?.({
+    const is = !beforeShow || beforeShow?.({
         ...state,
         position: {
             x: event.clientX,
             y: event.clientY - 10,
         },
     });
-};
-
-export const listener = ({event}) => {
+    
+    const command = is ? 'show' : 'hide';
     return {
-        command: 'show',
+        command,
         position: {
             x: event.clientX,
             y: event.clientY - 14,
