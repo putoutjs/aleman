@@ -1,6 +1,10 @@
 import {template} from 'putout';
+import {checkDataName} from '../check-data-name.js';
 
-const {keys} = Object;
+const isObject = (a) => a && typeof a === 'object';
+
+const {entries} = Object;
+
 const noop = () => {};
 
 export const report = () => `Build menu`;
@@ -9,15 +13,19 @@ const createMenuItem = template(`
     <li data-name="menu-item" className="menu-item"><label>NAME</label></li>
 `);
 
+const createMenu = template(`
+    <ul data-name="menu" className="menu menu-hidden"></ul>
+`);
+
 const DefaultMenu = {
     hello: noop,
     world: noop,
 };
 
 export const fix = ({path, menu, icon}) => {
-    const items = [];
+    const {children} = path.parentPath.node;
     
-    for (const key of keys(menu)) {
+    for (const [key, value] of entries(menu)) {
         const menuItem = createMenuItem();
         
         menuItem.children[0].children[0].value = key;
@@ -25,10 +33,23 @@ export const fix = ({path, menu, icon}) => {
         if (icon)
             setIcon(key, menuItem);
         
-        items.push(menuItem);
+        children.push(menuItem);
+        
+        if (isObject(value)) {
+            setSubmenu(menuItem);
+            menuItem.children.push(createMenu());
+            
+            const openingElement = path.parentPath.get('children')
+                .at(-1)
+                .get('children.1.openingElement');
+            
+            fix({
+                path: openingElement,
+                icon,
+                menu: value,
+            });
+        }
     }
-    
-    path.parentPath.node.children = items;
 };
 
 export const traverse = ({options, push}) => ({
@@ -53,15 +74,15 @@ export const traverse = ({options, push}) => ({
     },
 });
 
-function checkDataName(path, dataName) {
-    const {attributes} = path.node;
+function setSubmenu(menuItem) {
+    const {attributes} = menuItem.openingElement;
     
-    for (const {name, value} of attributes) {
-        if (name.name === 'data-name')
-            return value.value === dataName;
+    for (const attr of attributes) {
+        if (attr.name.name === 'className') {
+            attr.value.value += ' menu-submenu';
+            break;
+        }
     }
-    
-    return false;
 }
 
 function setIcon(name, menuItem) {

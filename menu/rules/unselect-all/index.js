@@ -26,7 +26,9 @@ export const traverse = ({push, options}) => ({
         if (!isJSXElement(path.parentPath.parentPath))
             return;
         
-        if (!checkDataName(path.parentPath.parentPath, name))
+        const openingElementPath = path.parentPath.parentPath.get('openingElement');
+        
+        if (!checkDataName(openingElementPath, name))
             return;
         
         const children = path.parentPath

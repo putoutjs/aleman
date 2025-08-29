@@ -1,9 +1,7 @@
 export function checkDataName(path, dataName = 'menu') {
-    const attributes = path.get('openingElement.attributes');
+    const {attributes} = path.node;
     
-    for (const attr of attributes) {
-        const {name, value} = attr.node;
-        
+    for (const {name, value} of attributes) {
         if (name.name === 'data-name')
             return value.value === dataName;
     }

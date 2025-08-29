@@ -32,7 +32,9 @@ export const traverse = ({options, push}) => ({
         const {name = 'menu', position = {}} = options;
         const {x = 0, y = 20} = position;
         
-        if (!checkDataName(path.parentPath, name))
+        const openingElementPath = path.parentPath.get('openingElement');
+        
+        if (!checkDataName(openingElementPath, name))
             return;
         
         for (const attr of path.node.attributes) {

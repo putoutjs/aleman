@@ -26,7 +26,9 @@ export const traverse = ({push, options}) => ({
         const {name, command} = options;
         const attributes = path.get('attributes');
         
-        if (!checkDataName(path.parentPath, name))
+        const opengineElementPath = path.parentPath.get('openingElement');
+        
+        if (!checkDataName(opengineElementPath, name))
             return false;
         
         for (const attr of attributes) {

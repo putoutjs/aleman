@@ -16,6 +16,7 @@ export const listener = ({event, state, options}) => {
     });
     
     const command = is ? 'show' : 'hide';
+    
     return {
         command,
         position: {

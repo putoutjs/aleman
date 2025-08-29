@@ -1,6 +1,8 @@
 import {createTest} from '@putout/test';
 import * as plugin from './index.js';
 
+const noop = () => {};
+
 const test = createTest(import.meta.url, {
     plugins: [
         ['build-menu', plugin],
@@ -27,8 +29,20 @@ test('lib: build-menu: transform with options: icon', (t) => {
     t.end();
 });
 
+test('lib: build-menu: transform with options: nested', (t) => {
+    t.transformWithOptions('nested', {
+        menuName: 'xxx',
+        icon: true,
+        menu: {
+            hello: {
+                world: noop,
+            },
+        },
+    });
+    t.end();
+});
+
 test('lib: build-menu: no report: built', (t) => {
     t.noReport('built');
     t.end();
 });
-
