@@ -6,9 +6,6 @@
   "description": "🐊Putout-based framework for web",
   "homepage": "https://github.com/putoutjs/aleman#readme",
   "main": "aleman/index.js",
-  "release": false,
-  "tag": false,
-  "changelog": false,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/coderaiser/putout.git"
