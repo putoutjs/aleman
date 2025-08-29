@@ -82,7 +82,7 @@ function setSubmenu(menuItem) {
     
     for (const attr of attributes) {
         if (attr.name.name === 'className') {
-            attr.value.value += ' menu-submenu';
+            setLiteralValue(attr.value, `${attr.value.value} menu-submenu`);
             break;
         }
     }
