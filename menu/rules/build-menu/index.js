@@ -1,6 +1,6 @@
 import {types, template} from 'putout';
 
-const {entries} = Object;
+const {entries, keys} = Object;
 const noop = () => {};
 const {jsxText} = types;
 
@@ -20,13 +20,17 @@ const DefaultMenu = {
     world: noop,
 };
 
-export const fix = ({path, menu}) => {
+export const fix = ({path, menu, icon}) => {
     const items = [];
     
-    for (const [key] of entries(menu)) {
+    for (const key of keys(menu)) {
         const menuItem = createMenuItem();
         
         menuItem.children[1].children[0].value = key;
+        
+        if (icon)
+            setIcon(key, menuItem);
+        
         items.push(INDENT, menuItem);
     }
     
@@ -39,6 +43,7 @@ export const traverse = ({options, push}) => ({
         const {
             name = 'menu',
             menu = DefaultMenu,
+            icon = false,
         } = options;
         
         if (!checkDataName(path, name))
@@ -50,6 +55,7 @@ export const traverse = ({options, push}) => ({
         push({
             path,
             menu,
+            icon,
         });
     },
 });
@@ -63,4 +69,22 @@ function checkDataName(path, dataName) {
     }
     
     return false;
+}
+
+function setIcon(name, menuItem) {
+    const {attributes} = menuItem.openingElement;
+    
+    for (const attr of attributes) {
+        if (attr.name.name === 'className') {
+            attr.value.value += ` icon ${getIconName(name)}`;
+            return;
+        }
+    }
+}
+
+function getIconName(name) {
+    return 'icon-' + name
+        .replace(/[()]/g, '')
+        .replace(/\s/g, '-')
+        .toLowerCase();
 }

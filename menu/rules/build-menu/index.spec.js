@@ -19,7 +19,16 @@ test('lib: build-menu: transform with options', (t) => {
     t.end();
 });
 
+test('lib: build-menu: transform with options: icon', (t) => {
+    t.transformWithOptions('icon', {
+        menuName: 'xxx',
+        icon: true,
+    });
+    t.end();
+});
+
 test('lib: build-menu: no report: built', (t) => {
     t.noReport('built');
     t.end();
 });
+
