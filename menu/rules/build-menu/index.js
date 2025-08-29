@@ -7,9 +7,7 @@ const {jsxText} = types;
 export const report = () => `Build menu`;
 
 const createMenuItem = template(`
-    <li data-name="menu-item" className="menu-item">
-        <label>NAME</label>
-    </li>
+    <li data-name="menu-item" className="menu-item"><label>NAME</label></li>
 `);
 
 const NEWLINE = jsxText('\n');
@@ -26,15 +24,14 @@ export const fix = ({path, menu, icon}) => {
     for (const key of keys(menu)) {
         const menuItem = createMenuItem();
         
-        menuItem.children[1].children[0].value = key;
+        menuItem.children[0].children[0].value = key;
         
         if (icon)
             setIcon(key, menuItem);
         
-        items.push(INDENT, menuItem);
+        items.push(menuItem);
     }
     
-    items.push(NEWLINE);
     path.parentPath.node.children = items;
 };
 
