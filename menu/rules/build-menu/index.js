@@ -2,12 +2,10 @@ import {template, operator} from 'putout';
 import {checkDataName} from '../check-data-name.js';
 
 const {setLiteralValue} = operator;
-
-const isObject = (a) => a && typeof a === 'object';
-
 const {entries} = Object;
 
 const noop = () => {};
+const isObject = (a) => a && typeof a === 'object';
 
 export const report = () => `Build menu`;
 
