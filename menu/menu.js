@@ -73,7 +73,11 @@ async function createMap() {
         return;
     
     const script = document.createElement('script');
-    const {importmap} = await import('./importmap.js');
+    const {default: importmap} = await import('./importmap.json', {
+        with: {
+            type: 'json',
+        },
+    });
     
     script.dataset.name = name;
     script.type = 'importmap';
