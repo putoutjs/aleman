@@ -9,8 +9,6 @@ export const filter = ({state, options}) => {
     return options.beforeShow?.(state);
 };
 
-export const listener = ({options, state}) => {
-    return {
-        command: 'show',
-    };
-};
+export const listener = () => ({
+    command: 'show',
+});

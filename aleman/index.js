@@ -45,7 +45,7 @@ export const hydrate = (element, {addons, options, state, rules, stateName = 'al
     });
     
     return {
-        run: (event, fn = id, condition) => {
+        run: (event, fn = id) => {
             const state = readState();
             const newState = fn({
                 state,
@@ -60,4 +60,3 @@ export const hydrate = (element, {addons, options, state, rules, stateName = 'al
         },
     };
 };
-

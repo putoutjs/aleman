@@ -33,6 +33,7 @@ export const hydrateMenu = (element, options, menu) => {
                 clientX,
                 clientY,
             };
+            
             run(event, contextMenu.listener, options.beforeShow);
         },
         hide: () => run({}, click.listener, options.beforeHide),

@@ -1,17 +1,13 @@
-import {types, template} from 'putout';
+import {template} from 'putout';
 
-const {entries, keys} = Object;
+const {keys} = Object;
 const noop = () => {};
-const {jsxText} = types;
 
 export const report = () => `Build menu`;
 
 const createMenuItem = template(`
     <li data-name="menu-item" className="menu-item"><label>NAME</label></li>
 `);
-
-const NEWLINE = jsxText('\n');
-const INDENT = jsxText(' ');
 
 const DefaultMenu = {
     hello: noop,
@@ -74,7 +70,7 @@ function setIcon(name, menuItem) {
     for (const attr of attributes) {
         if (attr.name.name === 'className') {
             attr.value.value += ` icon ${getIconName(name)}`;
-            return;
+            break;
         }
     }
 }
