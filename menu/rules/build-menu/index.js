@@ -1,5 +1,7 @@
-import {template} from 'putout';
+import {template, operator} from 'putout';
 import {checkDataName} from '../check-data-name.js';
+
+const {setLiteralValue} = operator;
 
 const isObject = (a) => a && typeof a === 'object';
 
@@ -39,7 +41,8 @@ export const fix = ({path, menu, icon}) => {
             setSubmenu(menuItem);
             menuItem.children.push(createMenu());
             
-            const openingElement = path.parentPath.get('children')
+            const openingElement = path.parentPath
+                .get('children')
                 .at(-1)
                 .get('children.1.openingElement');
             
@@ -90,7 +93,7 @@ function setIcon(name, menuItem) {
     
     for (const attr of attributes) {
         if (attr.name.name === 'className') {
-            attr.value.value += ` icon ${getIconName(name)}`;
+            setLiteralValue(attr.value, `${attr.value.value} icon ${getIconName(name)}`);
             break;
         }
     }
@@ -102,3 +105,4 @@ function getIconName(name) {
         .replace(/\s/g, '-')
         .toLowerCase();
 }
+

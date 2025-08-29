@@ -4,7 +4,7 @@ export const filter = ({state}) => state.command === 'show';
 
 export const listener = ({options, state}) => {
     options.beforeClick?.(state);
-    options.beforeHide?.(state);
+    options.beforeClose?.(state);
     
     return {
         command: 'hide',
