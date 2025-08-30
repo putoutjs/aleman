@@ -3,7 +3,6 @@ import * as click from './click.js';
 import * as escape from './escape.js';
 import * as down from './down.js';
 import * as up from './up.js';
-import * as f9 from './f9.js';
 import * as enter from './enter.js';
 
 export const addons = [
@@ -12,6 +11,5 @@ export const addons = [
     escape,
     down,
     up,
-    f9,
     enter,
 ];

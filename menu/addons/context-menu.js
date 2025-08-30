@@ -11,7 +11,7 @@ export const listener = ({event, state, options}) => {
         ...state,
         position: {
             x: event.clientX,
-            y: event.clientY - 10,
+            y: event.clientY,
         },
     });
     
@@ -21,7 +21,7 @@ export const listener = ({event, state, options}) => {
         command,
         position: {
             x: event.clientX,
-            y: event.clientY - 14,
+            y: event.clientY - 10,
         },
     };
 };
