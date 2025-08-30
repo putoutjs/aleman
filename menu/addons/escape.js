@@ -1,7 +1,7 @@
 export const key = 'Escape';
 
-export const listener = ({options}) => {
-    options.beforeHide?.();
+export const listener = ({state, options}) => {
+    options.beforeHide?.(state);
     return {
         command: 'hide',
         index: -1,

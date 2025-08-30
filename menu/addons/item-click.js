@@ -11,7 +11,7 @@ const listener = ({event, options}) => {
     const fn = menu[name];
     
     setTimeout(fn);
-    options.beforeClose?.();
+    options.beforeHide?.();
     
     return {
         index: -1,

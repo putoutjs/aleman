@@ -66,11 +66,9 @@ const createListener = ({options, addon, readState, writeState}) => (event) => {
         key,
         listener,
         preventDefault,
+        stopPropagation,
         filter,
     } = addon;
-    
-    if (preventDefault)
-        event.preventDefault();
     
     if (key && event.key !== key)
         return;
@@ -85,6 +83,12 @@ const createListener = ({options, addon, readState, writeState}) => (event) => {
     
     if (filter && !is)
         return false;
+    
+    if (preventDefault)
+        event.preventDefault();
+    
+    if (stopPropagation)
+        event.stopPropagation();
     
     const newState = listener({
         event,
