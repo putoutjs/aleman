@@ -1,3 +1,8 @@
+2025.08.30, v1.1.39
+
+fix:
+- 01ad494 menu: importmap: json -> js
+
 2025.08.30, v1.1.38
 
 fix:
