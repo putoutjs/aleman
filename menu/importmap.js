@@ -1,0 +1,7 @@
+export const importmap = {
+    imports: {
+        'putout': 'https://esm.sh/@putout/bundle',
+        '@putout/processor-html': 'https://esm.sh/@putout/processor-html',
+        'fullstore': 'https://esm.sh/fullstore',
+    },
+};
