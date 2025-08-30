@@ -10,7 +10,7 @@ const isObject = (a) => a && typeof a === 'object';
 export const report = () => `Build menu`;
 
 const createMenuItem = template(`
-    <li data-name="menu-item" className="menu-item"><label>NAME</label></li>
+    <li data-name="menu-item" className="menu-item"><label data-menu-path="">NAME</label></li>
 `);
 
 const createMenu = template(`
@@ -22,7 +22,7 @@ const DefaultMenu = {
     world: noop,
 };
 
-export const fix = ({path, menu, icon}) => {
+export const fix = ({path, menu, icon, name = ''}) => {
     const {children} = path.parentPath.node;
     
     for (const [key, value] of entries(menu)) {
@@ -32,6 +32,8 @@ export const fix = ({path, menu, icon}) => {
         
         if (icon)
             setIcon(key, menuItem);
+        
+        setDataMenuPath(key, name, menuItem);
         
         children.push(menuItem);
         
@@ -48,6 +50,7 @@ export const fix = ({path, menu, icon}) => {
                 path: openingElement,
                 icon,
                 menu: value,
+                name: key,
             });
         }
     }
@@ -81,6 +84,18 @@ function setSubmenu(menuItem) {
     for (const attr of attributes) {
         if (attr.name.name === 'className') {
             setLiteralValue(attr.value, `${attr.value.value} menu-submenu`);
+            break;
+        }
+    }
+}
+
+function setDataMenuPath(key, name, menuItem) {
+    const {attributes} = menuItem.children[0].openingElement;
+    const dataMenuPath = name ? `${name}.${key}` : key;
+    
+    for (const attr of attributes) {
+        if (attr.name.name === 'data-menu-path') {
+            setLiteralValue(attr.value, dataMenuPath);
             break;
         }
     }
