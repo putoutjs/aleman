@@ -1,3 +1,5 @@
+import jessy from 'jessy';
+
 export const createItemClick = (name) => ({
     name,
     events: ['click'],
@@ -6,9 +8,9 @@ export const createItemClick = (name) => ({
 
 const listener = ({event, options}) => {
     const menuItemElement = document.elementFromPoint(event.clientX, event.clientY);
-    const name = menuItemElement.textContent.trim();
+    const {menuPath} = menuItemElement.dataset;
     const {menu} = options;
-    const fn = menu[name];
+    const fn = jessy(menuPath, menu);
     
     setTimeout(fn);
     options.beforeHide?.();
@@ -18,3 +20,4 @@ const listener = ({event, options}) => {
         command: 'hide',
     };
 };
+
