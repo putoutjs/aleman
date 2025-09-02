@@ -1,10 +1,19 @@
-export const events = [
+export const createContextMenu = (name) => {
+    return {
+        name,
+        events,
+        preventDefault,
+        listener,
+    };
+};
+
+const events = [
     'contextmenu',
 ];
 
-export const preventDefault = true;
+const preventDefault = true;
 
-export const listener = ({event, state, options}) => {
+const listener = ({event, state, options}) => {
     const {beforeShow} = options;
     
     const is = !beforeShow || beforeShow?.({

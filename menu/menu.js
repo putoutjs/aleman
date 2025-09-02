@@ -1,6 +1,6 @@
 const {stringify} = JSON;
 
-export const createMenu = async (element, options, menuData) => {
+export const createMenu = async (elementName, options, menu) => {
     options.name = options.name || 'menu';
     const {name} = options;
     
@@ -12,7 +12,11 @@ export const createMenu = async (element, options, menuData) => {
     createStateElement(name);
     const {hydrateMenu} = await import('./hydrate-menu.js');
     
-    return hydrateMenu(hydrateElement, options, menuData);
+    return hydrateMenu(elementName, {
+        hydrateElement,
+        options,
+        menu,
+    });
 };
 
 async function createLink() {
