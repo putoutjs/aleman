@@ -68,6 +68,8 @@ const createListener = ({options, addon, readState, writeState}) => (event) => {
         preventDefault,
         stopPropagation,
         filter,
+        after,
+        conditionAfter,
     } = addon;
     
     if (key && event.key !== key)
@@ -98,4 +100,13 @@ const createListener = ({options, addon, readState, writeState}) => (event) => {
     });
     
     writeState(newState);
+    
+    if (after && conditionAfter?.({state: newState, options}))
+        requestAnimationFrame(() => {
+            writeState(after({
+                event,
+                state: newState,
+                options,
+            }));
+        });
 };

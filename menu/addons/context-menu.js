@@ -5,7 +5,9 @@ export const createContextMenu = (name) => {
         name,
         events,
         preventDefault,
+        after,
         listener,
+        conditionAfter,
     };
 };
 
@@ -16,7 +18,7 @@ const events = [
 const preventDefault = true;
 
 const listener = ({event, state, options, writeState}) => {
-    const {name, beforeShow} = options;
+    const {beforeShow} = options;
     const {x, y} = {
         x: event.clientX,
         y: event.clientY,
@@ -30,11 +32,6 @@ const listener = ({event, state, options, writeState}) => {
         },
     });
     
-    if (is)
-        requestAnimationFrame(() => {
-            writeState(setPosition(name, event));
-        }, 0);
-    
     const command = is ? 'show' : 'hide';
     
     return {
@@ -44,4 +41,13 @@ const listener = ({event, state, options, writeState}) => {
             y: y - 14,
         },
     };
+};
+
+const after = ({event, options}) => {
+    const {name} = options;
+    return setPosition(name, event);
+};
+
+const conditionAfter = ({state}) => {
+    return state.command === 'show';
 };

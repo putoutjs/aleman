@@ -53,9 +53,9 @@ export const hydrate = (element, config) => {
     });
     
     return {
-        run: (event, fn = id) => {
+        run: (event, addon) => {
             const state = readState();
-            const newState = fn({
+            const newState = addon.listener({
                 state,
                 event,
                 options,
@@ -66,6 +66,15 @@ export const hydrate = (element, config) => {
                 ...state,
                 ...newState,
             });
+            
+            if (addon.conditionAfter?.({state: newState, options}))
+                requestAnimationFrame(() => {
+                    writeState(addon.after({
+                        event,
+                        options,
+                        state: newState,
+                    }));
+                });
         },
     };
 };

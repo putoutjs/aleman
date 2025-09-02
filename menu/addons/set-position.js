@@ -3,7 +3,7 @@ export const setPosition = (name, event) => {
     const {x, y} = calculate(element, event);
     
     element.style.left = `${x}px`;
-    element.style.top = `${y - 14}px`;
+    element.style.top = `${y}px`;
     
     return {
         position: {
