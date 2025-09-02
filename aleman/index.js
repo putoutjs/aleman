@@ -67,7 +67,7 @@ export const hydrate = (element, config) => {
                 ...newState,
             });
             
-            if (addon.conditionAfter?.({state: newState, options}))
+            if (addon.afterIf?.({state: newState, options}))
                 requestAnimationFrame(() => {
                     writeState(addon.after({
                         event,

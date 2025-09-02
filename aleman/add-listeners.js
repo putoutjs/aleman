@@ -69,7 +69,7 @@ const createListener = ({options, addon, readState, writeState}) => (event) => {
         stopPropagation,
         filter,
         after,
-        conditionAfter,
+        afterIf,
     } = addon;
     
     if (key && event.key !== key)
@@ -101,7 +101,12 @@ const createListener = ({options, addon, readState, writeState}) => (event) => {
     
     writeState(newState);
     
-    if (after && conditionAfter?.({state: newState, options}))
+    const isAfterIf = !afterIf || afterIf({
+        state: newState,
+        options,
+    });
+    
+    if (after && isAfterIf)
         requestAnimationFrame(() => {
             writeState(after({
                 event,

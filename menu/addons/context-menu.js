@@ -6,8 +6,8 @@ export const createContextMenu = (name) => {
         events,
         preventDefault,
         after,
+        afterIf,
         listener,
-        conditionAfter,
     };
 };
 
@@ -48,6 +48,6 @@ const after = ({event, options}) => {
     return setPosition(name, event);
 };
 
-const conditionAfter = ({state}) => {
+const afterIf = ({state}) => {
     return state.command === 'show';
 };
