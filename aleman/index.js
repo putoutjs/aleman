@@ -8,7 +8,15 @@ import {createRender} from './render.js';
 
 const id = (a) => a;
 
-export const hydrate = (element, {addons, options, state, rules, stateName = 'aleman-state'}) => {
+export const hydrate = (element, config) => {
+    const {
+        addons,
+        options,
+        state,
+        rules,
+        stateName = 'aleman-state',
+    } = config;
+    
     const render = createRender(element.innerHTML, {
         options,
         rules,
@@ -51,6 +59,7 @@ export const hydrate = (element, {addons, options, state, rules, stateName = 'al
                 state,
                 event,
                 options,
+                writeState,
             });
             
             writeState({

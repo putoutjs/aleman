@@ -4,30 +4,32 @@ import {initState} from './state.js';
 import {addons} from './addons/index.js';
 import {createMouseEnter} from './addons/mouse-enter.js';
 import {createItemClick} from './addons/item-click.js';
-import * as contextMenu from './addons/context-menu.js';
 import * as click from './addons/click.js';
 import {createContextMenu} from './addons/context-menu.js';
+import {setPosition} from './addons/set-position.js';
 
 const {assign} = Object;
 
-export const hydrateMenu = (name, {hydrateElement, options, menu}) => {
+export const hydrateMenu = (elementName, {hydrateElement, options, menu}) => {
     assign(options, {
         menu,
     });
     
+    const {name} = options;
     const state = initState(options);
-    const contextMenu = createContextMenu(name);
+    const contextMenu = createContextMenu(elementName);
     const {run} = hydrate(hydrateElement, {
         options,
         state,
         addons: [
             contextMenu,
-            createMouseEnter(options.name),
-            createItemClick(options.name),
+            createMouseEnter(name),
+            createItemClick(name),
             ...addons,
         ],
         rules,
-        stateName: `aleman-state-${options.name}`,
+        afterHydrate: setPosition,
+        stateName: `aleman-state-${name}`,
     });
     
     return {

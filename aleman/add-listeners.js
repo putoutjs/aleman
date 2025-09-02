@@ -94,6 +94,7 @@ const createListener = ({options, addon, readState, writeState}) => (event) => {
         event,
         state,
         options,
+        writeState,
     });
     
     writeState(newState);
