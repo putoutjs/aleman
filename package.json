@@ -8,7 +8,7 @@
   "main": "aleman/index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/coderaiser/putout.git"
+    "url": "git+https://github.com/putoutjs/aleman.git"
   },
   "exports": {
     "./menu": "./menu/menu.js"
