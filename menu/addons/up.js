@@ -1,4 +1,7 @@
-export const key = 'ArrowUp';
+export const keys = [
+    'ArrowUp',
+    'k',
+];
 
 export const preventDefault = true;
 

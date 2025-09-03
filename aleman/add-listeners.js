@@ -63,7 +63,7 @@ export const addGlobalListeners = ({globalAddons, options, readState, writeState
 
 const createListener = ({options, addon, readState, writeState}) => (event) => {
     const {
-        key,
+        keys,
         listener,
         preventDefault,
         stopPropagation,
@@ -72,7 +72,7 @@ const createListener = ({options, addon, readState, writeState}) => (event) => {
         afterIf,
     } = addon;
     
-    if (key && event.key !== key)
+    if (keys && !keys.includes(event.key))
         return;
     
     const state = readState();

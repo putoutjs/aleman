@@ -1,12 +1,13 @@
-const {keys} = Object;
-
-export const key = 'ArrowDown';
+export const keys = [
+    'ArrowDown',
+    'j',
+];
 export const preventDefault = true;
 
 export const listener = ({state, options}) => {
     let {index} = state;
     const {menu} = options;
-    const n = keys(menu).length - 1;
+    const n = Object.keys(menu).length - 1;
     
     if (index < n)
         ++index;

@@ -1,6 +1,6 @@
 const {values} = Object;
 
-export const key = 'Enter';
+export const keys = ['Enter'];
 
 export const filter = ({state}) => state.command === 'show';
 
