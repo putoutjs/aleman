@@ -50,6 +50,10 @@
     display: block;
 }
 
+.menu-item:hover > .menu, .menu-item-selected > .menu {
+    display: block;
+}
+
 .menu-submenu > label::after {
     display: block;
     float: right;
