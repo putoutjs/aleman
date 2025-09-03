@@ -6,8 +6,6 @@ import {
 } from './add-listeners.js';
 import {createRender} from './render.js';
 
-const id = (a) => a;
-
 export const hydrate = (element, config) => {
     const {
         addons,

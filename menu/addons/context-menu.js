@@ -1,15 +1,13 @@
 import {setPosition} from './set-position.js';
 
-export const createContextMenu = (name) => {
-    return {
-        name,
-        events,
-        preventDefault,
-        after,
-        afterIf,
-        listener,
-    };
-};
+export const createContextMenu = (name) => ({
+    name,
+    events,
+    preventDefault,
+    after,
+    afterIf,
+    listener,
+});
 
 const events = [
     'contextmenu',
@@ -17,7 +15,7 @@ const events = [
 
 const preventDefault = true;
 
-const listener = ({event, state, options, writeState}) => {
+const listener = ({event, state, options}) => {
     const {beforeShow} = options;
     const {x, y} = {
         x: event.clientX,
@@ -48,6 +46,4 @@ const after = ({event, options}) => {
     return setPosition(name, event);
 };
 
-const afterIf = ({state}) => {
-    return state.command === 'show';
-};
+const afterIf = ({state}) => state.command === 'show';

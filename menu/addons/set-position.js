@@ -48,4 +48,3 @@ function getMenuWidth(element) {
     const {width} = getComputedStyle(element);
     return parseInt(width, 10);
 }
-

@@ -18,6 +18,7 @@ export const hydrateMenu = (elementName, {hydrateElement, options, menu}) => {
     const {name} = options;
     const state = initState(options);
     const contextMenu = createContextMenu(elementName);
+    
     const {run} = hydrate(hydrateElement, {
         options,
         state,

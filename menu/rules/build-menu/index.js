@@ -119,4 +119,3 @@ function getIconName(name) {
         .replace(/\s/g, '-')
         .toLowerCase();
 }
-

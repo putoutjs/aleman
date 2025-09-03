@@ -20,4 +20,3 @@ const listener = ({event, options}) => {
         command: 'hide',
     };
 };
-
