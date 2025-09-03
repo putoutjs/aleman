@@ -6,12 +6,19 @@ export const keys = [
 export const preventDefault = true;
 
 export const listener = ({state}) => {
-    let {index} = state;
+    let {
+        index,
+        insideSubmenu,
+        submenuIndex,
+    } = state;
     
-    if (index)
+    if (insideSubmenu)
+        --submenuIndex;
+    else
         --index;
     
     return {
         index,
+        submenuIndex,
     };
 };

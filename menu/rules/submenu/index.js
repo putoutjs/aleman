@@ -5,8 +5,10 @@ const {setLiteralValue} = operator;
 
 export const report = () => `Select right`;
 
-export const fix = ({path, insideSubmenu}) => {
+export const fix = ({path, prev, next, insideSubmenu}) => {
     const {value} = path.node;
+    unselect(prev);
+    unselect(next);
     
     if (!insideSubmenu) {
         const newValue = value.value.replace(/\s?menu-item-selected/, '');
@@ -24,7 +26,7 @@ export const traverse = ({options, push}) => ({
         if (path.node.name.name !== 'li')
             return;
         
-        const {insideSubmenu = true, submenuIndex = 0} = options;
+        const {insideSubmenu = true, submenuIndex = 1} = options;
         const parentMenu = path.parentPath.parentPath.parentPath;
         
         if (!isJSXElement(parentMenu))
@@ -44,9 +46,14 @@ export const traverse = ({options, push}) => ({
             .get('children')
             .filter(isJSXElement);
         
-        const child = children[submenuIndex];
+        const prev = children[submenuIndex - 1];
+        const current = children[submenuIndex];
+        const next = children[submenuIndex + 1];
         
-        for (const attr of child.get('openingElement.attributes')) {
+        if (!current)
+            return;
+        
+        for (const attr of current.get('openingElement.attributes')) {
             const {name, value} = attr.node;
             
             if (name.name !== 'className')
@@ -56,12 +63,16 @@ export const traverse = ({options, push}) => ({
                 push({
                     path: attr,
                     insideSubmenu,
+                    prev,
+                    next,
                 });
             
             if (!insideSubmenu && value.value.includes('menu-item-selected'))
                 push({
                     path: attr,
                     insideSubmenu,
+                    prev,
+                    next,
                 });
         }
     },
@@ -91,4 +102,19 @@ function isParentSelected(path) {
     }
     
     return false;
+}
+
+function unselect(path) {
+    if (!path)
+        return;
+    
+    for (const attr of path.get('openingElement.attributes')) {
+        const {name, value} = attr.node;
+        
+        if (name.name !== 'className')
+            continue;
+        
+        if (value.value.includes('menu-item-selected'))
+            setLiteralValue(value, value.value.replace(' menu-item-selected', ''));
+    }
 }

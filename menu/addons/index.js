@@ -3,6 +3,8 @@ import * as escape from './escape.js';
 import * as down from './down.js';
 import * as up from './up.js';
 import * as enter from './enter.js';
+import * as left from './left.js';
+import * as right from './right.js';
 
 export const addons = [
     click,
@@ -10,4 +12,6 @@ export const addons = [
     down,
     up,
     enter,
+    left,
+    right,
 ];
