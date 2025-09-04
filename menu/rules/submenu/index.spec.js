@@ -38,3 +38,28 @@ test('menu: submenu: transform with options: last-selected', (t) => {
     });
     t.end();
 });
+
+test('menu: submenu: no report with options with options: li', (t) => {
+    t.noReportWithOptions('li', {
+        submenuIndex: 1,
+        insideSubmenu: false,
+    });
+    t.end();
+});
+
+test('menu: submenu: no report with options with options: not-menu', (t) => {
+    t.noReportWithOptions('not-menu', {
+        submenuIndex: 1,
+        insideSubmenu: false,
+    });
+    t.end();
+});
+
+test('menu: submenu: no report with options with options: submenu: submenuIndex: -1', (t) => {
+    t.noReportWithOptions('submenu', {
+        submenuIndex: -1,
+        insideSubmenu: false,
+    });
+    t.end();
+});
+

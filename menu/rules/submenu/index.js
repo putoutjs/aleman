@@ -34,6 +34,9 @@ export const traverse = ({options, push}) => ({
         if (path.node.name.name !== 'li')
             return;
         
+        if (!isJSXElement(path.parentPath.parentPath))
+            return;
+        
         const {insideSubmenu = true, submenuIndex = 1} = options;
         const parentMenu = path.parentPath.parentPath.parentPath;
         
@@ -41,9 +44,6 @@ export const traverse = ({options, push}) => ({
             return;
         
         if (!isParentSelected(parentMenu))
-            return;
-        
-        if (!isJSXElement(path.parentPath.parentPath))
             return;
         
         const openingElementPath = path.parentPath.parentPath.get('openingElement');
