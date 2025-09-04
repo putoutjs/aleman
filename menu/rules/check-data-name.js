@@ -1,10 +1,7 @@
-export function checkDataName(path, dataName = 'menu') {
-    const {attributes} = path.node;
+import {getAttributeValue} from './operator.js';
+
+export function checkDataName(path, value = 'menu') {
+    const attribute = getAttributeValue(path, 'data-name');
     
-    for (const {name, value} of attributes) {
-        if (name.name === 'data-name')
-            return value.value === dataName;
-    }
-    
-    return false;
+    return attribute === value;
 }

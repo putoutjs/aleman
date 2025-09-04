@@ -1,7 +1,10 @@
-import {template, operator} from 'putout';
+import {template} from 'putout';
 import {checkDataName} from '../check-data-name.js';
+import {
+    appendAttributeValue,
+    setAttributeValue,
+} from '../operator.js';
 
-const {setLiteralValue} = operator;
 const {entries} = Object;
 
 const noop = () => {};
@@ -80,37 +83,16 @@ export const traverse = ({options, push}) => ({
 });
 
 function setSubmenu(menuItem) {
-    const {attributes} = menuItem.openingElement;
-    
-    for (const attr of attributes) {
-        if (attr.name.name === 'className') {
-            setLiteralValue(attr.value, `${attr.value.value} menu-submenu`);
-            break;
-        }
-    }
+    appendAttributeValue(menuItem, 'className', 'menu-submenu');
 }
 
 function setDataMenuPath(key, name, menuItem) {
-    const {attributes} = menuItem.openingElement;
     const dataMenuPath = name ? `${name}.${key}` : key;
-    
-    for (const attr of attributes) {
-        if (attr.name.name === 'data-menu-path') {
-            setLiteralValue(attr.value, dataMenuPath);
-            break;
-        }
-    }
+    setAttributeValue(menuItem, 'data-menu-path', dataMenuPath);
 }
 
 function setIcon(name, menuItem) {
-    const {attributes} = menuItem.openingElement;
-    
-    for (const attr of attributes) {
-        if (attr.name.name === 'className') {
-            setLiteralValue(attr.value, `${attr.value.value} icon ${getIconName(name)}`);
-            break;
-        }
-    }
+    appendAttributeValue(menuItem, 'className', `icon ${getIconName(name)}`);
 }
 
 function getIconName(name) {
