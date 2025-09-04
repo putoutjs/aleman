@@ -1,9 +1,10 @@
 import {operator, types} from 'putout';
+import {checkDataName} from '../check-data-name.js';
 
 const {isJSXElement} = types;
 const {setLiteralValue} = operator;
 
-export const report = () => `Select right`;
+export const report = ({insideSubmenu}) => `${insideSubmenu ? 'Show' : 'Hide'} submenu`;
 
 export const fix = ({path, prev, next, insideSubmenu}) => {
     const {value} = path.node;
@@ -40,7 +41,9 @@ export const traverse = ({options, push}) => ({
         if (!isJSXElement(path.parentPath.parentPath))
             return;
         
-        if (!checkDataName(path.parentPath.parentPath))
+        const openingElementPath = path.parentPath.parentPath.get('openingElement');
+        
+        if (!checkDataName(openingElementPath))
             return;
         
         const children = path.parentPath
@@ -55,34 +58,16 @@ export const traverse = ({options, push}) => ({
         if (!current)
             return;
         
-        for (const attr of current.get('openingElement.attributes')) {
-            const {name} = attr.node;
-            
-            if (name.name !== 'className')
-                continue;
-            
-            push({
-                path: attr,
-                insideSubmenu,
-                prev,
-                next,
-            });
-        }
+        const [currentClassPath] = getClassPath(current);
+        
+        push({
+            path: currentClassPath,
+            insideSubmenu,
+            prev,
+            next,
+        });
     },
 });
-
-function checkDataName(path) {
-    const attributes = path.get('openingElement.attributes');
-    
-    for (const attr of attributes) {
-        const {name, value} = attr.node;
-        
-        if (name.name === 'data-name')
-            return value.value === 'menu';
-    }
-    
-    return false;
-}
 
 function isParentSelected(path) {
     const attributes = path.get('openingElement.attributes');
@@ -109,5 +94,22 @@ function unselect(path) {
         
         if (value.value.includes('menu-item-selected'))
             setLiteralValue(value, value.value.replace(' menu-item-selected', ''));
+    }
+}
+
+function getClassPath(path) {
+    if (!path)
+        return [null, ''];
+    
+    for (const attr of path.get('openingElement.attributes')) {
+        const {name, value} = attr.node;
+        
+        if (name.name !== 'className')
+            continue;
+        
+        return [
+            attr,
+            value.value,
+        ];
     }
 }

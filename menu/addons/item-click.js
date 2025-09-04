@@ -18,5 +18,6 @@ const listener = ({event, options}) => {
     return {
         index: -1,
         command: 'hide',
+        showSubmenu: false,
     };
 };

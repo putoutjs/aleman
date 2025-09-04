@@ -34,6 +34,7 @@ const listener = ({event, state, options}) => {
     
     return {
         command,
+        showSubmenu: false,
         position: {
             x,
             y: y - 14,

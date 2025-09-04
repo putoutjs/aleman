@@ -8,16 +8,16 @@ const test = createTest(import.meta.url, {
 });
 
 test('menu: submenu: report', (t) => {
-    t.reportWithOptions('submenu', `Select right`, {
+    t.reportWithOptions('submenu', `Show submenu`, {
         submenuIndex: 1,
         insideSubmenu: true,
     });
     t.end();
 });
 
-test('menu: submenu: no report with options', (t) => {
-    t.noReportWithOptions('submenu', {
-        submenuIndex: 1,
+test('menu: submenu: no report with options: no-submenu-selected', (t) => {
+    t.noReportWithOptions('no-submenu-selected', {
+        submenuIndex: 0,
         insideSubmenu: false,
     });
     t.end();

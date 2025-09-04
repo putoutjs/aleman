@@ -19,4 +19,5 @@ export const filter = ({state, options}) => {
 export const listener = () => ({
     submenuIndex: 0,
     insideSubmenu: true,
+    showSubmenu: true,
 });
