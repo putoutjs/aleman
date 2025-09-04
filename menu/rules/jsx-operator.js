@@ -54,3 +54,16 @@ export function setAttributeValue(node, name, value) {
     if (attributeNode)
         setLiteralValue(attributeNode.value, value);
 }
+
+export function removeAttributeValue(path, name, attributeValue) {
+    const node = path.node || path;
+    const classAttribute = getAttributeNode(node, name);
+    
+    if (!classAttribute)
+        return;
+    
+    const {value} = classAttribute.value;
+    
+    if (value.includes(attributeValue))
+        setLiteralValue(classAttribute.value, value.replace(RegExp(`\\s?${attributeValue}`), ''));
+}

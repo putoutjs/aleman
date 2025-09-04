@@ -1,5 +1,10 @@
 import {operator, types} from 'putout';
 import {checkDataName} from '../check-data-name.js';
+import {
+    getAttributePath,
+    getAttributeValue,
+    removeAttributeValue,
+} from '../jsx-operator.js';
 
 const {isJSXElement} = types;
 const {setLiteralValue} = operator;
@@ -58,7 +63,8 @@ export const traverse = ({options, push}) => ({
         if (!current)
             return;
         
-        const [currentClassPath] = getClassPath(current);
+        const currentOpeningElementPath = current.get('openingElement');
+        const currentClassPath = getAttributePath(currentOpeningElementPath, 'className');
         
         push({
             path: currentClassPath,
@@ -70,46 +76,15 @@ export const traverse = ({options, push}) => ({
 });
 
 function isParentSelected(path) {
-    const attributes = path.get('openingElement.attributes');
+    const openingElement = path.get('openingElement');
+    const classAttributeValue = getAttributeValue(openingElement, 'className');
     
-    for (const attr of attributes) {
-        const {name, value} = attr.node;
-        
-        if (name.name === 'className')
-            return value.value.includes('menu-item-selected');
-    }
-    
-    return false;
+    return classAttributeValue.includes('menu-item-selected');
 }
 
 function unselect(path) {
     if (!path)
         return;
     
-    for (const attr of path.get('openingElement.attributes')) {
-        const {name, value} = attr.node;
-        
-        if (name.name !== 'className')
-            continue;
-        
-        if (value.value.includes('menu-item-selected'))
-            setLiteralValue(value, value.value.replace(' menu-item-selected', ''));
-    }
-}
-
-function getClassPath(path) {
-    if (!path)
-        return [null, ''];
-    
-    for (const attr of path.get('openingElement.attributes')) {
-        const {name, value} = attr.node;
-        
-        if (name.name !== 'className')
-            continue;
-        
-        return [
-            attr,
-            value.value,
-        ];
-    }
+    removeAttributeValue(path, 'className', 'menu-item-selected');
 }
