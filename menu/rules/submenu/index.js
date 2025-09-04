@@ -17,8 +17,10 @@ export const fix = ({path, prev, next, insideSubmenu}) => {
         return;
     }
     
-    const newValue = `${value.value} menu-item-selected`;
-    setLiteralValue(value, newValue);
+    if (!value.value.includes('menu-item-selected')) {
+        const newValue = `${value.value} menu-item-selected`;
+        setLiteralValue(value, newValue);
+    }
 };
 
 export const traverse = ({options, push}) => ({
@@ -54,7 +56,7 @@ export const traverse = ({options, push}) => ({
             return;
         
         for (const attr of current.get('openingElement.attributes')) {
-            const {name, value} = attr.node;
+            const {name} = attr.node;
             
             if (name.name !== 'className')
                 continue;

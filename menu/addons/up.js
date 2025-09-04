@@ -1,3 +1,5 @@
+import {getSubmenu} from './submenu/index.js';
+
 export const keys = [
     'ArrowUp',
     'k',
@@ -13,6 +15,8 @@ export const listener = ({state, options}) => {
         submenuIndex,
     } = state;
     
+    const count = Object.keys(menu).length;
+    
     if (insideSubmenu && submenuIndex > 0)
         --submenuIndex;
     
@@ -20,10 +24,20 @@ export const listener = ({state, options}) => {
         --index;
     
     if (index === -1)
-        index = Object.keys(menu).length - 1;
+        index = count - 1;
+    
+    const submenu = getSubmenu({
+        index,
+        options,
+    });
+    
+    const submenuCount = Object.keys(submenu).length;
+    
+    const showSubmenu = submenuCount > 0;
     
     return {
         index,
         submenuIndex,
+        showSubmenu,
     };
 };

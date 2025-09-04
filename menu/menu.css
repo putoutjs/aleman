@@ -46,11 +46,7 @@
     display: none;
 }
 
-.menu-item:hover > .menu {
-    display: block;
-}
-
-.menu-item-selected > .menu,.menu-item:hover > .menu  {
+.menu-submenu-show > .menu, .menu-item:hover > .menu  {
     display: block;
 }
 

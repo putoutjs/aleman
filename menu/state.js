@@ -8,6 +8,7 @@ export const initState = ({menu, name = 'menu'}) => {
         command: 'hide',
         insideSubmenu: false,
         submenuIndex: 0,
+        showSubmenu: false,
         index: -1,
         count,
         position: {

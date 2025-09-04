@@ -7,10 +7,12 @@ export const keys = [
 export const preventDefault = true;
 
 export const filter = ({state, options}) => {
+    const {index} = state;
     const submenu = getSubmenu({
-        state,
+        index,
         options,
     });
+    
     return Object.keys(submenu).length;
 };
 
