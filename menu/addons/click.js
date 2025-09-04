@@ -9,5 +9,6 @@ export const listener = ({options, state}) => {
         command: 'hide',
         index: -1,
         showSubmenu: false,
+        insideSubmenu: false,
     };
 };

@@ -39,6 +39,7 @@ export const createState = (state, {options, listener, stateName = 'aleman-state
     
     history[str] = true;
     stateElement.textContent = str;
+    window.alemanSync = fn;
     
     document.addEventListener('keydown', ({key}) => {
         if (key === '`')

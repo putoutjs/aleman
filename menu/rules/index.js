@@ -1,3 +1,4 @@
+import * as hideSubmenu from './hide-submenu/index.js';
 import * as submenu from './submenu/index.js';
 import * as setPosition from './set-position/index.js';
 import * as buildMenu from './build-menu/index.js';
@@ -12,4 +13,5 @@ export const rules = {
     'select': select,
     'unselect-all': unselectAll,
     'submenu': submenu,
+    'hide-submenu': hideSubmenu,
 };

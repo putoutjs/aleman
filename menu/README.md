@@ -8,6 +8,7 @@
 - ✅[`build-menu`](https://putout.cloudcmd.io/#/gist/329dccd5fdc7f8b220be79af405dc9bb/b56df53f52bbe2a300ede38a96d1d2242e60679f);
 - ✅[`set-position`](https://putout.cloudcmd.io/#/gist/215bb4654a27f15235f3e380a3035138/7f4af88aaa4863be4f1b8a90b9f0f4b1cf4744a0);
 - ✅[`submenu`](https://putout.cloudcmd.io/#/gist/b0a3b64d14f3497869a345e7e438d66e/feb671c4a59a555ff408af92fab602bae3a94e2f);
+- ✅[`hide-submenu`](https://putout.cloudcmd.io/#/gist/fdf6cf60a7fdfa2bae64279eda2ab023/ce0d5e24dc5e0b3436b7e87585c62e8a5132a9ab);
 
 ## License
 
