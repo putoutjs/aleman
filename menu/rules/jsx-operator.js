@@ -41,7 +41,8 @@ export function getAttributePath(path, name) {
     return result;
 }
 
-export function appendAttributeValue(node, name, value) {
+export function appendAttributeValue(path, name, value) {
+    const node = path.node || path;
     const attributeNode = getAttributeNode(node, name);
     
     if (!attributeNode)
