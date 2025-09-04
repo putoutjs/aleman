@@ -30,12 +30,21 @@ test('aleman: unselect-all: transform with options: nested', (t) => {
     t.end();
 });
 
-test('aleman: unselect-all: no report: no-data-name', (t) => {
-    t.noReport('no-data-name');
+test('aleman: unselect-all: no report with options: no-data-name', (t) => {
+    t.noReportWithOptions('no-data-name', {
+        index: -1,
+    });
     t.end();
 });
 
-test('aleman: unselect-all: no report: no-parent', (t) => {
+test('aleman: unselect-all: no report with options: no-parent', (t) => {
+    t.noReportWithOptions('no-parent', {
+        index: -1,
+    });
+    t.end();
+});
+
+test('aleman: unselect-all: no report with options: no-parent', (t) => {
     t.noReport('no-parent');
     t.end();
 });
