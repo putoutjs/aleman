@@ -1,4 +1,6 @@
 import {operator} from 'putout';
+import {checkDataName} from '../check-data-name.js';
+import {getAttributePath} from '../jsx-operator.js';
 
 const {setLiteralValue} = operator;
 
@@ -23,31 +25,17 @@ export const traverse = ({push, options}) => ({
         if (showSubmenu)
             return;
         
-        const attributes = path.get('attributes');
         const openingElementPath = path.parentPath.parentPath.get('openingElement');
         
         if (!checkDataName(openingElementPath, name))
             return false;
         
-        for (const attr of attributes) {
-            const {name, value} = attr.node;
-            
-            if (name.name !== 'className')
-                continue;
-            
-            if (value.value.includes('menu-submenu-show'))
-                push(attr);
-        }
+        const attributePath = getAttributePath(path, 'className');
+        
+        if (!attributePath)
+            return;
+        
+        if (attributePath.node.value.value.includes('menu-submenu-show'))
+            push(attributePath);
     },
 });
-
-function checkDataName(path, dataName = 'menu') {
-    const {attributes} = path.node;
-    
-    for (const {name, value} of attributes) {
-        if (name.name === 'data-name')
-            return value.value === dataName;
-    }
-    
-    return false;
-}

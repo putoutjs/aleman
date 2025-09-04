@@ -27,6 +27,20 @@ export function getAttributeNode(node, name) {
     return result;
 }
 
+export function getAttributePath(path, name) {
+    let result = null;
+    const attributes = path.get('attributes');
+    
+    for (const attr of attributes) {
+        if (attr.node.name.name === name) {
+            result = attr;
+            break;
+        }
+    }
+    
+    return result;
+}
+
 export function appendAttributeValue(node, name, value) {
     const attributeNode = getAttributeNode(node, name);
     

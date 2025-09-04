@@ -3,7 +3,7 @@ import {checkDataName} from '../check-data-name.js';
 import {
     appendAttributeValue,
     setAttributeValue,
-} from '../operator.js';
+} from '../jsx-operator.js';
 
 const {entries} = Object;
 
