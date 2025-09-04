@@ -44,8 +44,13 @@ export function getAttributePath(path, name) {
 export function appendAttributeValue(node, name, value) {
     const attributeNode = getAttributeNode(node, name);
     
-    if (attributeNode)
-        setLiteralValue(attributeNode.value, `${attributeNode.value.value} ${value}`);
+    if (!attributeNode)
+        return;
+    
+    if (attributeNode.value.value.includes(value))
+        return;
+    
+    setLiteralValue(attributeNode.value, `${attributeNode.value.value} ${value}`);
 }
 
 export function setAttributeValue(node, name, value) {
@@ -56,6 +61,9 @@ export function setAttributeValue(node, name, value) {
 }
 
 export function removeAttributeValue(path, name, attributeValue) {
+    if (!path)
+        return;
+    
     const node = path.node || path;
     const classAttribute = getAttributeNode(node, name);
     

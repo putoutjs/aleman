@@ -1,5 +1,10 @@
 import {operator, types} from 'putout';
 import {checkDataName} from '../check-data-name.js';
+import {
+    appendAttributeValue,
+    getAttributePath,
+    removeAttributeValue,
+} from '../jsx-operator.js';
 
 const {isJSXElement} = types;
 const {setLiteralValue} = operator;
@@ -53,75 +58,30 @@ export const traverse = ({options, push}) => ({
         if (!current)
             return;
         
-        for (const attr of current.get('openingElement.attributes')) {
-            const {name} = attr.node;
-            
-            if (name.name !== 'className')
-                continue;
-            
-            push({
-                path: attr,
-                current,
-                prev,
-                next,
-                showSubmenu,
-            });
-            break;
-        }
+        const currentOpeningElement = current.get('openingElement');
+        const attributePath = getAttributePath(currentOpeningElement, 'className');
+        
+        push({
+            path: attributePath,
+            current,
+            prev,
+            next,
+            showSubmenu,
+        });
     },
 });
 
 function unselect(path) {
-    if (!path)
-        return;
-    
-    for (const attr of path.get('openingElement.attributes')) {
-        const {name, value} = attr.node;
-        
-        if (name.name !== 'className')
-            continue;
-        
-        if (value.value.includes('menu-item-selected'))
-            setLiteralValue(value, value.value.replace(' menu-item-selected', ''));
-    }
+    removeAttributeValue(path, 'className', 'menu-item-selected');
 }
 
 function addShowSubmenu(path, {showSubmenu}) {
-    for (const attr of path.get('openingElement.attributes')) {
-        const {name, value} = attr.node;
-        
-        if (name.name !== 'className')
-            continue;
-        
-        const currentValue = value.value;
-        
-        if (showSubmenu && !currentValue.includes('menu-submenu-show')) {
-            setLiteralValue(value, `${currentValue} menu-submenu-show`);
-            break;
-        }
-        
-        if (!showSubmenu && currentValue.includes('menu-submenu-show')) {
-            setLiteralValue(value, currentValue.replace('menu-submenu-show', ''));
-            break;
-        }
-    }
+    if (showSubmenu)
+        return appendAttributeValue(path, 'className', 'menu-submenu-show');
+    
+    removeAttributeValue(path, 'className', 'menu-submenu-show');
 }
 
 function removeShowSubmenu(path) {
-    if (!path)
-        return;
-    
-    for (const attr of path.get('openingElement.attributes')) {
-        const {name, value} = attr.node;
-        
-        if (name.name !== 'className')
-            continue;
-        
-        const currentValue = value.value;
-        
-        if (currentValue.includes('menu-submenu-show')) {
-            setLiteralValue(value, currentValue.replace(' menu-submenu-show', ''));
-            break;
-        }
-    }
+    removeAttributeValue(path, 'className', 'menu-submenu-show');
 }
