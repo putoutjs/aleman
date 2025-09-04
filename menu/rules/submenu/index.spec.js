@@ -8,11 +8,33 @@ const test = createTest(import.meta.url, {
 });
 
 test('menu: submenu: report', (t) => {
-    t.report('submenu', `Select right`);
+    t.reportWithOptions('submenu', `Select right`, {
+        submenuIndex: 1,
+        insideSubmenu: true,
+    });
     t.end();
 });
 
-test('menu: submenu: transform', (t) => {
-    t.transform('submenu');
+test('menu: submenu: no report with options', (t) => {
+    t.noReportWithOptions('submenu', {
+        submenuIndex: 1,
+        insideSubmenu: false,
+    });
+    t.end();
+});
+
+test('menu: submenu: transform with options', (t) => {
+    t.transformWithOptions('submenu', {
+        submenuIndex: 1,
+        insideSubmenu: true,
+    });
+    t.end();
+});
+
+test('menu: submenu: transform with options: last-selected', (t) => {
+    t.transformWithOptions('last-selected', {
+        submenuIndex: 1,
+        insideSubmenu: false,
+    });
     t.end();
 });

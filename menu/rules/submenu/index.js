@@ -59,21 +59,12 @@ export const traverse = ({options, push}) => ({
             if (name.name !== 'className')
                 continue;
             
-            if (insideSubmenu && !value.value.includes('menu-item-selected'))
-                push({
-                    path: attr,
-                    insideSubmenu,
-                    prev,
-                    next,
-                });
-            
-            if (!insideSubmenu && value.value.includes('menu-item-selected'))
-                push({
-                    path: attr,
-                    insideSubmenu,
-                    prev,
-                    next,
-                });
+            push({
+                path: attr,
+                insideSubmenu,
+                prev,
+                next,
+            });
         }
     },
 });
