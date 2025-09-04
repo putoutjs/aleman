@@ -1,3 +1,10 @@
+2025.09.04, v1.3.0
+
+feature:
+- 42707d3 rules: unselect-all: add
+- ed5c1a6 rules: submenu
+- 7776881 menu: left: close submenu
+
 2025.09.04, v1.2.7
 
 feature:
