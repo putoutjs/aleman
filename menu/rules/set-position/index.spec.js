@@ -10,7 +10,7 @@ const test = createTest(import.meta.url, {
 test('lib: set-position: report', (t) => {
     t.reportWithOptions('set-position', `Set position`, {
         position: {
-            top: 22,
+            x: 22,
         },
     });
     t.end();
@@ -36,5 +36,15 @@ test('lib: set-position: transform with options: no-style', (t) => {
 
 test('lib: set-position: no report: not-menu', (t) => {
     t.noReport('not-menu');
+    t.end();
+});
+
+test('lib: set-position: no report with options: same-position', (t) => {
+    t.noReportWithOptions('same-position', {
+        position: {
+            x: 0,
+            y: 20,
+        },
+    });
     t.end();
 });

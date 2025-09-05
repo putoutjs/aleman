@@ -32,9 +32,7 @@ export const traverse = ({options, push}) => ({
         const {name = 'menu', position = {}} = options;
         const {x = 0, y = 20} = position;
         
-        const openingElementPath = path.parentPath.get('openingElement');
-        
-        if (!checkDataName(openingElementPath, name))
+        if (!checkDataName(path, name))
             return;
         
         for (const attr of path.node.attributes) {
@@ -68,5 +66,8 @@ function parsePosition(str) {
         .split(/;|left|\s|:|top|px/)
         .filter(Boolean);
     
-    return [x, y];
+    return [
+        Number(x),
+        Number(y),
+    ];
 }

@@ -62,4 +62,3 @@ test('menu: submenu: no report with options with options: submenu: submenuIndex:
     });
     t.end();
 });
-
