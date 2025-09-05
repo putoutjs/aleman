@@ -1,5 +1,10 @@
-import {operator, types} from 'putout';
+import {types} from 'putout';
 import {checkDataName} from '../check-data-name.js';
+import {
+    getAttributePath,
+    getAttributeValue,
+    setAttributeValue,
+} from '../jsx-operator.js';
 
 const {
     stringLiteral,
@@ -7,54 +12,51 @@ const {
     jsxAttribute,
 } = types;
 
-const {setLiteralValue} = operator;
-
 export const report = () => `Set position`;
 
 export const fix = ({path, attr, x, y}) => {
     const style = `left: ${x}px; top: ${y}px;`;
     
     if (attr) {
-        setLiteralValue(attr.value, style);
-        
+        setAttributeValue(path, 'style', style);
         return;
     }
     
-    const {attributes} = path.node;
-    
+    const {attributes} = path.node.openingElement;
     const attribute = jsxAttribute(jsxIdentifier('style'), stringLiteral(style));
     
     attributes.push(attribute);
 };
 
 export const traverse = ({options, push}) => ({
-    JSXOpeningElement(path) {
+    JSXElement(path) {
         const {name = 'menu', position = {}} = options;
         const {x = 0, y = 20} = position;
         
         if (!checkDataName(path, name))
             return;
         
-        for (const attr of path.node.attributes) {
-            if (attr.name.name !== 'style')
-                continue;
-            
-            const [x1, y1] = parsePosition(attr.value.value);
-            
-            if (x === x1 && y === y1)
-                return;
-            
+        const styleAttributeValue = getAttributeValue(path, 'style');
+        
+        if (!styleAttributeValue) {
             push({
                 path,
-                attr,
                 x,
                 y,
             });
             return;
         }
         
+        const [x1, y1] = parsePosition(styleAttributeValue);
+        
+        if (x === x1 && y === y1)
+            return;
+        
+        const styleAttributePath = getAttributePath(path, 'style');
+        
         push({
             path,
+            attr: styleAttributePath,
             x,
             y,
         });

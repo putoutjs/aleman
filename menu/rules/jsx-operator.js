@@ -1,8 +1,12 @@
-import {operator} from 'putout';
+import {operator, types} from 'putout';
 
+const {isJSXElement} = types;
 const {setLiteralValue} = operator;
 
 export function getAttributeValue(path, attributeName) {
+    if (isJSXElement(path))
+        path = path.get('openingElement');
+    
     const {attributes} = path.node;
     
     for (const {name, value} of attributes) {
@@ -28,6 +32,9 @@ export function getAttributeNode(node, name) {
 }
 
 export function getAttributePath(path, name) {
+    if (isJSXElement(path))
+        path = path.get('openingElement');
+    
     let result = null;
     const attributes = path.get('attributes');
     
@@ -55,6 +62,11 @@ export function appendAttributeValue(path, name, value) {
 }
 
 export function setAttributeValue(node, name, value) {
+    if (!node)
+        return;
+    
+    node = node.node || node;
+    
     const attributeNode = getAttributeNode(node, name);
     
     if (attributeNode)
