@@ -86,6 +86,8 @@ export function containsClass(path, className) {
     return classNameValue.includes(className);
 }
 
+export const checkTagName = (path, name) => path.node.openingElement.name.name === name;
+
 export function removeAttributeValue(path, name, attributeValue) {
     if (!path)
         return;

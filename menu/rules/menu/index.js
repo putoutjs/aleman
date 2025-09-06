@@ -1,10 +1,7 @@
 import {checkDataName} from '../check-data-name.js';
 import {
     addClass,
-    appendAttributeValue,
     containsClass,
-    getAttributeValue,
-    removeAttributeValue,
     removeClass,
 } from '../jsx-operator.js';
 
@@ -39,4 +36,3 @@ export const traverse = ({push, options}) => ({
             });
     },
 });
-

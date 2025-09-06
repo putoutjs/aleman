@@ -1,41 +1,33 @@
-import {operator} from 'putout';
 import {checkDataName} from '../check-data-name.js';
-import {getAttributePath} from '../jsx-operator.js';
+import {
+    checkTagName,
+    containsClass,
+    removeClass,
+} from '../jsx-operator.js';
 
-const {setLiteralValue} = operator;
+const CLASS = 'menu-submenu-show';
 
 export const report = () => `Hide submenu`;
 
 export const fix = (path) => {
-    const {value} = path.node;
-    const newValue = value.value;
-    
-    setLiteralValue(value, newValue
-        .replace('menu-submenu-show', '')
-        .trim());
+    removeClass(path, CLASS);
 };
 
 export const traverse = ({push, options}) => ({
-    JSXOpeningElement(path) {
+    JSXElement(path) {
         const {name, showSubmenu} = options;
-        
-        if (path.node.name.name !== 'li')
-            return;
+        const {parentPath} = path;
         
         if (showSubmenu)
             return;
         
-        const openingElementPath = path.parentPath.parentPath.get('openingElement');
-        
-        if (!checkDataName(openingElementPath, name))
-            return false;
-        
-        const attributePath = getAttributePath(path, 'className');
-        
-        if (!attributePath)
+        if (!checkTagName(path, 'li'))
             return;
         
-        if (attributePath.node.value.value.includes('menu-submenu-show'))
-            push(attributePath);
+        if (!checkDataName(parentPath, name))
+            return false;
+        
+        if (containsClass(path, CLASS))
+            push(path);
     },
 });
