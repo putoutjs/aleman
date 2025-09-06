@@ -38,16 +38,15 @@ export const traverse = ({options, push}) => ({
         if (path.node.name.name !== 'li')
             return;
         
-        if (!isJSXElement(path.parentPath.parentPath))
+        const parentParentPath = path.parentPath.parentPath;
+        
+        if (!isJSXElement(parentParentPath))
             return;
         
-        const openingElementPath = path.parentPath.parentPath.get('openingElement');
-        
-        if (!checkDataName(openingElementPath, name))
+        if (!checkDataName(parentParentPath, name))
             return;
         
-        const children = path.parentPath
-            .parentPath
+        const children = parentParentPath
             .get('children')
             .filter(isJSXElement);
         
@@ -58,8 +57,7 @@ export const traverse = ({options, push}) => ({
         if (!current)
             return;
         
-        const currentOpeningElement = current.get('openingElement');
-        const attributePath = getAttributePath(currentOpeningElement, 'className');
+        const attributePath = getAttributePath(current, 'className');
         
         push({
             path: attributePath,
