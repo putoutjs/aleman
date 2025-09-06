@@ -1,8 +1,6 @@
 import {createTest} from '@putout/test';
 import * as plugin from './index.js';
 
-const showSubmenu = true;
-
 const test = createTest(import.meta.url, {
     plugins: [
         ['select', plugin],
@@ -14,8 +12,13 @@ test('lib: select: report', (t) => {
     t.end();
 });
 
-test('lib: select: transform with options', (t) => {
-    t.transformWithOptions('select', {
+test('lib: select: transform', (t) => {
+    t.transform('select');
+    t.end();
+});
+
+test('lib: select: transform with options: submenu', (t) => {
+    t.transformWithOptions('submenu', {
         showSubmenu: true,
     });
     t.end();
@@ -40,4 +43,3 @@ test('lib: select: no report: wrong-data-name', (t) => {
     t.noReport('wrong-data-name');
     t.end();
 });
-
