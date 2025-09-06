@@ -73,6 +73,19 @@ export function setAttributeValue(node, name, value) {
         setLiteralValue(attributeNode.value, value);
 }
 
+export function addClass(path, name) {
+    appendAttributeValue(path, 'className', name);
+}
+
+export function removeClass(path, name) {
+    removeAttributeValue(path, 'className', name);
+}
+
+export function containsClass(path, className) {
+    const classNameValue = getAttributeValue(path, 'className');
+    return classNameValue.includes(className);
+}
+
 export function removeAttributeValue(path, name, attributeValue) {
     if (!path)
         return;
