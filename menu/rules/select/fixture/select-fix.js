@@ -2,7 +2,7 @@
     <li data-name="menu-item" className='menu-item icon icon-view'>
         <label data-menu-path="View">View</label>
     </li>
-    <li data-name="menu-item" className='menu-item icon icon-edit menu-item-selected'>
+    <li data-name="menu-item" className='menu-item icon icon-edit menu-item-selected menu-submenu-show'>
         <label data-menu-path="Edit">Edit</label>
     </li>
 </ul>;

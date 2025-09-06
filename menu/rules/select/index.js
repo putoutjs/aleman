@@ -74,8 +74,6 @@ function unselect(path) {
 function addShowSubmenu(path, {showSubmenu}) {
     if (showSubmenu)
         return appendAttributeValue(path, 'className', 'menu-submenu-show');
-    
-    removeAttributeValue(path, 'className', 'menu-submenu-show');
 }
 
 function removeShowSubmenu(path) {
