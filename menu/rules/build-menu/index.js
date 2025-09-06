@@ -26,7 +26,7 @@ const DefaultMenu = {
 };
 
 export const fix = ({path, menu, icon, name = ''}) => {
-    const {children} = path.parentPath.node;
+    const {children} = path.node;
     
     for (const [key, value] of entries(menu)) {
         const menuItem = createMenuItem();
@@ -45,13 +45,13 @@ export const fix = ({path, menu, icon, name = ''}) => {
             setSubmenu(menuItem);
             menuItem.children.push(createMenu());
             
-            const openingElement = path.parentPath
+            const elementPath = path
                 .get('children')
                 .at(-1)
-                .get('children.1.openingElement');
+                .get('children.1');
             
             fix({
-                path: openingElement,
+                path: elementPath,
                 icon,
                 menu: value,
                 name: key,
@@ -61,7 +61,7 @@ export const fix = ({path, menu, icon, name = ''}) => {
 };
 
 export const traverse = ({options, push}) => ({
-    JSXOpeningElement(path) {
+    JSXElement(path) {
         const {
             name = 'menu',
             menu = DefaultMenu,
@@ -71,7 +71,7 @@ export const traverse = ({options, push}) => ({
         if (!checkDataName(path, name))
             return;
         
-        if (path.parentPath.node.children.length)
+        if (path.node.children.length)
             return;
         
         push({
