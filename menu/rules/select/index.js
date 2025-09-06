@@ -46,9 +46,7 @@ export const traverse = ({options, push}) => ({
         if (!checkDataName(parentParentPath, name))
             return;
         
-        const children = parentParentPath
-            .get('children')
-            .filter(isJSXElement);
+        const children = parentParentPath.get('children').filter(isJSXElement);
         
         const prev = children[index - 1];
         const current = children[index];

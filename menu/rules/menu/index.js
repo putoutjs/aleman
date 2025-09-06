@@ -1,7 +1,9 @@
-import {operator} from 'putout';
 import {checkDataName} from '../check-data-name.js';
-
-const {setLiteralValue} = operator;
+import {
+    appendAttributeValue,
+    getAttributeValue,
+    removeAttributeValue,
+} from '../jsx-operator.js';
 
 export const report = ({command}) => {
     const [first, ...rest] = command;
@@ -10,44 +12,29 @@ export const report = ({command}) => {
 };
 
 export const fix = ({path, command}) => {
-    const {value} = path.node;
-    let newValue;
+    if (command === 'show') {
+        removeAttributeValue(path, 'className', 'menu-hidden');
+        return;
+    }
     
-    if (command === 'show')
-        newValue = value.value.replace(/\s?menu-hidden/, '');
-    else
-        newValue = value.value + ' menu-hidden';
-    
-    setLiteralValue(value, newValue);
+    appendAttributeValue(path, 'className', 'menu-hidden');
 };
 
 export const traverse = ({push, options}) => ({
-    JSXOpeningElement(path) {
+    JSXElement(path) {
         const {name, command} = options;
-        const attributes = path.get('attributes');
+        const classNameValue = getAttributeValue(path, 'className');
         
-        const opengineElementPath = path.parentPath.get('openingElement');
-        
-        if (!checkDataName(opengineElementPath, name))
+        if (!checkDataName(path, name))
             return false;
         
-        for (const attr of attributes) {
-            const {name, value} = attr.node;
-            
-            if (name.name !== 'className')
-                continue;
-            
-            if (command === 'show' && value.value.includes('menu-hidden'))
-                push({
-                    command: 'show',
-                    path: attr,
-                });
-            
-            if (command === 'hide' && !value.value.includes('menu-hidden'))
-                push({
-                    command,
-                    path: attr,
-                });
-        }
+        const hidden = command === 'show' && classNameValue.includes('menu-hidden');
+        const shown = command === 'hide' && !classNameValue.includes('menu-hidden');
+        
+        if (hidden || shown)
+            push({
+                command,
+                path,
+            });
     },
 });
