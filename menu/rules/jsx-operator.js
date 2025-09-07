@@ -52,9 +52,6 @@ export function appendAttributeValue(path, name, value) {
     const node = path.node || path;
     const attributeNode = getAttributeNode(node, name);
     
-    if (!attributeNode)
-        return;
-    
     if (attributeNode.value.value.includes(value))
         return;
     
@@ -62,9 +59,6 @@ export function appendAttributeValue(path, name, value) {
 }
 
 export function setAttributeValue(node, name, value) {
-    if (!node)
-        return;
-    
     node = node.node || node;
     
     const attributeNode = getAttributeNode(node, name);
@@ -92,14 +86,12 @@ export function removeAttributeValue(path, name, attributeValue) {
     if (!path)
         return;
     
-    const node = path.node || path;
+    const {node} = path;
     const classAttribute = getAttributeNode(node, name);
-    
-    if (!classAttribute)
-        return;
     
     const {value} = classAttribute.value;
     
     if (value.includes(attributeValue))
         setLiteralValue(classAttribute.value, value.replace(RegExp(`\\s?${attributeValue}`), ''));
 }
+
