@@ -1,7 +1,7 @@
 import {template} from 'putout';
-import {checkDataName} from '../check-data-name.js';
 import {
     appendAttributeValue,
+    hasDataName,
     setAttributeValue,
 } from '../jsx-operator.js';
 
@@ -68,7 +68,7 @@ export const traverse = ({options, push}) => ({
             icon = false,
         } = options;
         
-        if (!checkDataName(path, name))
+        if (!hasDataName(path, name))
             return;
         
         if (path.node.children.length)

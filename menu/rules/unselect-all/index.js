@@ -1,5 +1,5 @@
 import {operator, types} from 'putout';
-import {checkDataName} from '../check-data-name.js';
+import {hasDataName} from '../jsx-operator.js';
 
 const {isJSXElement} = types;
 const {setLiteralValue} = operator;
@@ -28,7 +28,7 @@ export const traverse = ({push, options}) => ({
         
         const openingElementPath = path.parentPath.parentPath.get('openingElement');
         
-        if (!checkDataName(openingElementPath, name))
+        if (!hasDataName(openingElementPath, name))
             return;
         
         const children = path.parentPath

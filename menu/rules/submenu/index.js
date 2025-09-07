@@ -1,8 +1,8 @@
 import {operator, types} from 'putout';
-import {checkDataName} from '../check-data-name.js';
 import {
     getAttributePath,
     getAttributeValue,
+    hasDataName,
     removeAttributeValue,
 } from '../jsx-operator.js';
 
@@ -48,7 +48,7 @@ export const traverse = ({options, push}) => ({
         
         const openingElementPath = path.parentPath.parentPath.get('openingElement');
         
-        if (!checkDataName(openingElementPath))
+        if (!hasDataName(openingElementPath))
             return;
         
         const children = path.parentPath

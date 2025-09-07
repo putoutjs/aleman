@@ -1,8 +1,8 @@
-import {checkDataName} from '../check-data-name.js';
 import {
-    checkTagName,
-    containsClass,
-    removeClass,
+    hasTagName,
+    containsClassName,
+    removeClassName,
+    hasDataName,
 } from '../jsx-operator.js';
 
 const CLASS = 'menu-submenu-show';
@@ -10,7 +10,7 @@ const CLASS = 'menu-submenu-show';
 export const report = () => `Hide submenu`;
 
 export const fix = (path) => {
-    removeClass(path, CLASS);
+    removeClassName(path, CLASS);
 };
 
 export const traverse = ({push, options}) => ({
@@ -21,13 +21,13 @@ export const traverse = ({push, options}) => ({
         if (showSubmenu)
             return;
         
-        if (!checkTagName(path, 'li'))
+        if (!hasTagName(path, 'li'))
             return;
         
-        if (!checkDataName(parentPath, name))
+        if (!hasDataName(parentPath, name))
             return false;
         
-        if (containsClass(path, CLASS))
+        if (containsClassName(path, CLASS))
             push(path);
     },
 });

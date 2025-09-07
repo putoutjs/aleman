@@ -1,8 +1,8 @@
-import {checkDataName} from '../check-data-name.js';
 import {
-    addClass,
-    containsClass,
-    removeClass,
+    addClassName,
+    containsClassName,
+    hasDataName,
+    removeClassName,
 } from '../jsx-operator.js';
 
 export const report = ({command}) => {
@@ -13,21 +13,21 @@ export const report = ({command}) => {
 
 export const fix = ({path, command}) => {
     if (command === 'show') {
-        removeClass(path, 'menu-hidden');
+        removeClassName(path, 'menu-hidden');
         return;
     }
     
-    addClass(path, 'menu-hidden');
+    addClassName(path, 'menu-hidden');
 };
 
 export const traverse = ({push, options}) => ({
     JSXElement(path) {
         const {name, command} = options;
         
-        if (!checkDataName(path, name))
+        if (!hasDataName(path, name))
             return false;
         
-        const shown = !containsClass(path, 'menu-hidden');
+        const shown = !containsClassName(path, 'menu-hidden');
         
         if (command === 'show' && !shown || command === 'hide' && shown)
             push({

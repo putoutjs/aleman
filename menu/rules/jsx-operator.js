@@ -67,20 +67,20 @@ export function setAttributeValue(node, name, value) {
         setLiteralValue(attributeNode.value, value);
 }
 
-export function addClass(path, name) {
+export function addClassName(path, name) {
     appendAttributeValue(path, 'className', name);
 }
 
-export function removeClass(path, name) {
+export function removeClassName(path, name) {
     removeAttributeValue(path, 'className', name);
 }
 
-export function containsClass(path, className) {
+export function containsClassName(path, className) {
     const classNameValue = getAttributeValue(path, 'className');
     return classNameValue.includes(className);
 }
 
-export const checkTagName = (path, name) => path.node.openingElement.name.name === name;
+export const hasTagName = (path, name) => path.node.openingElement.name.name === name;
 
 export function removeAttributeValue(path, name, attributeValue) {
     if (!path)
@@ -95,3 +95,8 @@ export function removeAttributeValue(path, name, attributeValue) {
         setLiteralValue(classAttribute.value, value.replace(RegExp(`\\s?${attributeValue}`), ''));
 }
 
+export function hasDataName(path, value = 'menu') {
+    const attribute = getAttributeValue(path, 'data-name');
+    
+    return attribute === value;
+}

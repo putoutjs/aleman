@@ -1,8 +1,8 @@
 import {types} from 'putout';
-import {checkDataName} from '../check-data-name.js';
 import {
     getAttributePath,
     getAttributeValue,
+    hasDataName,
     setAttributeValue,
 } from '../jsx-operator.js';
 
@@ -33,7 +33,7 @@ export const traverse = ({options, push}) => ({
         const {name = 'menu', position = {}} = options;
         const {x = 0, y = 20} = position;
         
-        if (!checkDataName(path, name))
+        if (!hasDataName(path, name))
             return;
         
         const styleAttributeValue = getAttributeValue(path, 'style');
