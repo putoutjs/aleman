@@ -1,10 +1,11 @@
+import {operator} from 'putout';
 import {
-    hasTagName,
     containsClassName,
     removeClassName,
     hasDataName,
 } from '../jsx-operator.js';
 
+const {hasTagName} = operator;
 const CLASS = 'menu-submenu-show';
 
 export const report = () => `Hide submenu`;
@@ -31,3 +32,4 @@ export const traverse = ({push, options}) => ({
             push(path);
     },
 });
+
