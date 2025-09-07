@@ -16,3 +16,16 @@ test('menu: hide-submenu: transform', (t) => {
     t.transform('hide-submenu');
     t.end();
 });
+
+test('menu: hide-submenu: no report with options', (t) => {
+    t.noReportWithOptions('hide-submenu', {
+        showSubmenu: true,
+    });
+    t.end();
+});
+
+test('menu: hide-submenu: no report: no-menu', (t) => {
+    t.noReport('no-menu');
+    t.end();
+});
+
