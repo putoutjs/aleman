@@ -7,9 +7,8 @@ export const createItemClick = (name) => ({
 });
 
 const listener = ({event, options}) => {
-    const menuItemElement = document.elementFromPoint(event.clientX, event.clientY);
-    const {menuPath} = menuItemElement.dataset;
     const {menu} = options;
+    const menuPath = getMenuPath(event);
     const fn = jessy(menuPath, menu);
     
     setTimeout(fn);
@@ -21,3 +20,14 @@ const listener = ({event, options}) => {
         showSubmenu: false,
     };
 };
+
+function getMenuPath(event) {
+    let menuItemElement = document.elementFromPoint(event.clientX, event.clientY);
+    const {menuPath} = menuItemElement.dataset;
+    
+    if (!menuPath)
+        menuItemElement = menuItemElement.querySelector('[data-menu-path]');
+    
+    return menuItemElement.dataset.menuPath;
+}
+
