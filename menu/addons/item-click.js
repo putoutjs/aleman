@@ -30,4 +30,3 @@ function getMenuPath(event) {
     
     return menuItemElement.dataset.menuPath;
 }
-

@@ -1,53 +1,51 @@
 import {operator, types} from 'putout';
-import {hasDataName} from '../jsx-operator.js';
+import {
+    getAttributeValue,
+    hasDataName,
+    removeClassName,
+} from '../jsx-operator.js';
+
+const {
+    hasTagName,
+    setLiteralValue,
+} = operator;
 
 const {isJSXElement} = types;
-const {setLiteralValue} = operator;
 
 export const report = () => `Unselect all`;
 
 export const fix = ({path}) => {
-    const {value} = path.node;
-    const newValue = value.value.replace(/\s?menu-item-selected/, '');
-    
-    setLiteralValue(value, newValue);
+    removeClassName(path, 'menu-item-selected');
 };
 
 export const traverse = ({push, options}) => ({
-    JSXOpeningElement(path) {
+    JSXElement(path) {
         const {index, name} = options;
         
         if (index !== -1)
             return;
         
-        if (path.node.name.name !== 'li')
+        if (!hasTagName(path, 'li'))
             return;
         
-        if (!isJSXElement(path.parentPath.parentPath))
+        if (!isJSXElement(path.parentPath))
             return;
         
-        const openingElementPath = path.parentPath.parentPath.get('openingElement');
-        
-        if (!hasDataName(openingElementPath, name))
+        if (!hasDataName(path.parentPath, name))
             return;
         
         const children = path.parentPath
-            .parentPath
             .get('children')
             .filter(isJSXElement);
         
         for (const child of children) {
-            for (const attr of child.get('openingElement.attributes')) {
-                const {name, value} = attr.node;
-                
-                if (name.name !== 'className')
-                    continue;
-                
-                if (value.value.includes('menu-item-selected'))
-                    push({
-                        path: attr,
-                    });
-            }
+            const classNameValue = getAttributeValue(child, 'className');
+            
+            if (classNameValue.includes('menu-item-selected'))
+                push({
+                    path: child,
+                });
         }
     },
 });
+

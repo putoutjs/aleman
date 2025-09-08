@@ -45,7 +45,7 @@
         <li data-menu-path="New.File" data-name="menu-item" className='menu-item icon icon-view'>
         <label data-menu-path="New.File">File</label>
     </li>
-        <li data-menu-path="New.Directory" data-name="menu-item" className='menu-item icon icon-edit'>
+        <li data-menu-path="New.Directory" data-name="menu-item" className="menu-item icon icon-edit">
         <label data-menu-path="New.Directory">Directory</label>
     </li>
     </ul>

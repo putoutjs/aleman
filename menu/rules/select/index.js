@@ -1,6 +1,6 @@
 import {operator, types} from 'putout';
 import {
-    appendAttributeValue,
+    addAttributeValue,
     getAttributePath,
     hasDataName,
     removeAttributeValue,
@@ -73,7 +73,7 @@ function unselect(path) {
 
 function addShowSubmenu(path, {showSubmenu}) {
     if (showSubmenu)
-        return appendAttributeValue(path, 'className', 'menu-submenu-show');
+        return addAttributeValue(path, 'className', 'menu-submenu-show');
 }
 
 function removeShowSubmenu(path) {

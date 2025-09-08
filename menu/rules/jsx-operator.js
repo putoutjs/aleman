@@ -1,24 +1,22 @@
 import {operator, types} from 'putout';
 
 const {isJSXElement} = types;
+
 const {setLiteralValue} = operator;
 
 export function getAttributeValue(path, attributeName) {
-    if (isJSXElement(path))
-        path = path.get('openingElement');
+    const attribute = getAttributeNode(path, attributeName);
     
-    const {attributes} = path.node;
+    if (!attribute)
+        return '';
     
-    for (const {name, value} of attributes) {
-        if (name.name === attributeName)
-            return value.value;
-    }
-    
-    return '';
+    return attribute.value.value;
 }
 
-export function getAttributeNode(node, name) {
+export function getAttributeNode(path, name) {
     let result = null;
+    
+    const node = path.node || path;
     const {attributes} = node.openingElement;
     
     for (const attr of attributes) {
@@ -48,7 +46,7 @@ export function getAttributePath(path, name) {
     return result;
 }
 
-export function appendAttributeValue(path, name, value) {
+export function addAttributeValue(path, name, value) {
     const node = path.node || path;
     const attributeNode = getAttributeNode(node, name);
     
@@ -68,7 +66,7 @@ export function setAttributeValue(node, name, value) {
 }
 
 export function addClassName(path, name) {
-    appendAttributeValue(path, 'className', name);
+    addAttributeValue(path, 'className', name);
 }
 
 export function removeClassName(path, name) {
@@ -95,6 +93,5 @@ export function removeAttributeValue(path, name, attributeValue) {
 
 export function hasDataName(path, value = 'menu') {
     const attribute = getAttributeValue(path, 'data-name');
-    
     return attribute === value;
 }

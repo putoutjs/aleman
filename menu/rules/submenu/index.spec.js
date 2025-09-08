@@ -55,10 +55,11 @@ test('menu: submenu: no report with options: not-menu', (t) => {
     t.end();
 });
 
-test('menu: submenu: no report with options: submenu: submenuIndex: -1', (t) => {
-    t.noReportWithOptions('submenu', {
+test('menu: submenu: no report with options: submenu: submenuIndex: no-submenu', (t) => {
+    t.noReportWithOptions('no-submenu', {
         submenuIndex: -1,
         insideSubmenu: false,
     });
     t.end();
 });
+

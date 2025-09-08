@@ -17,8 +17,8 @@ test('menu: hide-submenu: transform', (t) => {
     t.end();
 });
 
-test('menu: hide-submenu: no report with options', (t) => {
-    t.noReportWithOptions('hide-submenu', {
+test('menu: hide-submenu: no report with options: show-submenu', (t) => {
+    t.noReportWithOptions('show-submenu', {
         showSubmenu: true,
     });
     t.end();

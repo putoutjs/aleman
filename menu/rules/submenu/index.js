@@ -1,40 +1,37 @@
 import {operator, types} from 'putout';
 import {
-    getAttributePath,
+    addAttributeValue,
+    addClassName,
     getAttributeValue,
     hasDataName,
     removeAttributeValue,
+    removeClassName,
 } from '../jsx-operator.js';
 
+const {hasTagName} = operator;
+
 const {isJSXElement} = types;
-const {setLiteralValue} = operator;
 
 export const report = ({insideSubmenu}) => `${insideSubmenu ? 'Show' : 'Hide'} submenu`;
 
 export const fix = ({path, prev, next, insideSubmenu}) => {
-    const {value} = path.node;
     unselect(prev);
     unselect(next);
     
     if (!insideSubmenu) {
-        const newValue = value.value.replace(/\s?menu-item-selected/, '');
-        setLiteralValue(value, newValue);
-        
+        removeClassName(path, 'menu-item-selected');
         return;
     }
     
-    if (!value.value.includes('menu-item-selected')) {
-        const newValue = `${value.value} menu-item-selected`;
-        setLiteralValue(value, newValue);
-    }
+    addClassName(path, 'menu-item-selected');
 };
 
 export const traverse = ({options, push}) => ({
-    JSXOpeningElement(path) {
-        if (path.node.name.name !== 'li')
+    JSXElement(path) {
+        if (!hasTagName(path, 'li'))
             return;
         
-        if (!isJSXElement(path.parentPath.parentPath))
+        if (!isJSXElement(path.parentPath))
             return;
         
         const {insideSubmenu = true, submenuIndex = 1} = options;
@@ -43,16 +40,13 @@ export const traverse = ({options, push}) => ({
         if (!isJSXElement(parentMenu))
             return;
         
-        if (!isParentSelected(parentMenu))
+        if (!isParentSelected(path.parentPath.parentPath))
             return;
         
-        const openingElementPath = path.parentPath.parentPath.get('openingElement');
-        
-        if (!hasDataName(openingElementPath))
+        if (!hasDataName(path.parentPath))
             return;
         
         const children = path.parentPath
-            .parentPath
             .get('children')
             .filter(isJSXElement);
         
@@ -63,11 +57,8 @@ export const traverse = ({options, push}) => ({
         if (!current)
             return;
         
-        const currentOpeningElementPath = current.get('openingElement');
-        const currentClassPath = getAttributePath(currentOpeningElementPath, 'className');
-        
         push({
-            path: currentClassPath,
+            path: current,
             insideSubmenu,
             prev,
             next,
@@ -76,9 +67,7 @@ export const traverse = ({options, push}) => ({
 });
 
 function isParentSelected(path) {
-    const openingElement = path.get('openingElement');
-    const classAttributeValue = getAttributeValue(openingElement, 'className');
-    
+    const classAttributeValue = getAttributeValue(path, 'className');
     return classAttributeValue.includes('menu-item-selected');
 }
 

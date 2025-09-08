@@ -44,7 +44,7 @@ test('aleman: unselect-all: no report with options: no-parent: index: -1', (t) =
     t.end();
 });
 
-test('aleman: unselect-all: no report with options: no-parent', (t) => {
+test('aleman: unselect-all: no report: no-parent', (t) => {
     t.noReport('no-parent');
     t.end();
 });
