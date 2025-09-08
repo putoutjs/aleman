@@ -42,7 +42,7 @@ export const traverse = ({options, push}) => ({
         if (!isParentSelected(path.parentPath.parentPath))
             return;
         
-        if (!hasDataName(path.parentPath))
+        if (!hasDataName(path.parentPath, 'menu'))
             return;
         
         const children = path.parentPath

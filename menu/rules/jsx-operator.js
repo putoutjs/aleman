@@ -1,7 +1,6 @@
 import {operator, types} from 'putout';
 
 const {isJSXElement} = types;
-
 const {setLiteralValue} = operator;
 
 export function getAttributeValue(path, attributeName) {
@@ -95,7 +94,7 @@ export function removeAttributeValue(path, name, attributeValue) {
         setLiteralValue(classAttribute.value, value.replace(RegExp(`\\s?${attributeValue}`), ''));
 }
 
-export function hasDataName(path, value = 'menu') {
+export function hasDataName(path, value = '') {
     const attribute = getAttributeValue(path, 'data-name');
     return attribute === value;
 }

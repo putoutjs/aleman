@@ -17,7 +17,7 @@ export const fix = ({path}) => {
 
 export const traverse = ({push, options}) => ({
     JSXElement(path) {
-        const {index, name} = options;
+        const {index, name = 'menu'} = options;
         
         if (index !== -1)
             return;

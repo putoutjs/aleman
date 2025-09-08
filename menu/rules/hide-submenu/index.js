@@ -16,7 +16,7 @@ export const fix = (path) => {
 
 export const traverse = ({push, options}) => ({
     JSXElement(path) {
-        const {name, showSubmenu} = options;
+        const {name = 'menu', showSubmenu} = options;
         const {parentPath} = path;
         
         if (showSubmenu)
