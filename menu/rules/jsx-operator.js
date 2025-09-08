@@ -69,12 +69,16 @@ export function addClassName(path, name) {
     addAttributeValue(path, 'className', name);
 }
 
+export function getClassName(path) {
+    return getAttributeValue(path, 'className');
+}
+
 export function removeClassName(path, name) {
     removeAttributeValue(path, 'className', name);
 }
 
 export function containsClassName(path, className) {
-    const classNameValue = getAttributeValue(path, 'className');
+    const classNameValue = getClassName(path);
     return classNameValue.includes(className);
 }
 

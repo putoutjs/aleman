@@ -1,18 +1,18 @@
 import {operator, types} from 'putout';
 import {
-    getAttributeValue,
+    containsClassName,
     hasDataName,
     removeClassName,
 } from '../jsx-operator.js';
 
 const {hasTagName} = operator;
-
 const {isJSXElement} = types;
+const SELECTED = 'menu-item-selected';
 
 export const report = () => `Unselect all`;
 
 export const fix = ({path}) => {
-    removeClassName(path, 'menu-item-selected');
+    removeClassName(path, SELECTED);
 };
 
 export const traverse = ({push, options}) => ({
@@ -36,9 +36,7 @@ export const traverse = ({push, options}) => ({
             .filter(isJSXElement);
         
         for (const child of children) {
-            const classNameValue = getAttributeValue(child, 'className');
-            
-            if (classNameValue.includes('menu-item-selected'))
+            if (containsClassName(child, SELECTED))
                 push({
                     path: child,
                 });
