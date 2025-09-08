@@ -1,26 +1,22 @@
 import {operator, types} from 'putout';
 import {
-    addAttributeValue,
-    getAttributePath,
+    addClassName,
     hasDataName,
-    removeAttributeValue,
+    removeClassName,
 } from '../jsx-operator.js';
 
+const {hasTagName} = operator;
 const {isJSXElement} = types;
-const {setLiteralValue} = operator;
+const SELECTED = 'menu-item-selected';
+const SHOW = 'menu-submenu-show';
 
 export const report = () => `Select item`;
 
-export const fix = ({path, current, prev, next, showSubmenu}) => {
-    const {value} = path.node;
-    
-    if (!value.value.includes('menu-item-selected'))
-        setLiteralValue(value, `${value.value} menu-item-selected`);
-    
-    addShowSubmenu(current, {
+export const fix = ({path, prev, next, showSubmenu}) => {
+    addClassName(path, SELECTED);
+    addShowSubmenu(path, {
         showSubmenu,
     });
-    
     unselect(prev);
     unselect(next);
     removeShowSubmenu(next);
@@ -28,25 +24,25 @@ export const fix = ({path, current, prev, next, showSubmenu}) => {
 };
 
 export const traverse = ({options, push}) => ({
-    JSXOpeningElement(path) {
+    JSXElement(path) {
         const {
             name = 'menu',
             index = 1,
             showSubmenu,
         } = options;
         
-        if (path.node.name.name !== 'li')
+        if (!hasTagName(path, 'li'))
             return;
         
-        const parentParentPath = path.parentPath.parentPath;
+        const {parentPath} = path;
         
-        if (!isJSXElement(parentParentPath))
+        if (!isJSXElement(parentPath))
             return;
         
-        if (!hasDataName(parentParentPath, name))
+        if (!hasDataName(parentPath, name))
             return;
         
-        const children = parentParentPath.get('children').filter(isJSXElement);
+        const children = parentPath.get('children').filter(isJSXElement);
         
         const prev = children[index - 1];
         const current = children[index];
@@ -55,11 +51,8 @@ export const traverse = ({options, push}) => ({
         if (!current)
             return;
         
-        const attributePath = getAttributePath(current, 'className');
-        
         push({
-            path: attributePath,
-            current,
+            path: current,
             prev,
             next,
             showSubmenu,
@@ -68,14 +61,14 @@ export const traverse = ({options, push}) => ({
 });
 
 function unselect(path) {
-    removeAttributeValue(path, 'className', 'menu-item-selected');
+    removeClassName(path, SELECTED);
 }
 
 function addShowSubmenu(path, {showSubmenu}) {
     if (showSubmenu)
-        return addAttributeValue(path, 'className', 'menu-submenu-show');
+        return addClassName(path, SHOW);
 }
 
 function removeShowSubmenu(path) {
-    removeAttributeValue(path, 'className', 'menu-submenu-show');
+    removeClassName(path, SHOW);
 }

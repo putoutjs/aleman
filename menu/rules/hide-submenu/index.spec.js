@@ -28,4 +28,3 @@ test('menu: hide-submenu: no report: no-menu', (t) => {
     t.noReport('no-menu');
     t.end();
 });
-

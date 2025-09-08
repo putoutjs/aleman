@@ -1,6 +1,5 @@
 import {operator, types} from 'putout';
 import {
-    addAttributeValue,
     addClassName,
     getAttributeValue,
     hasDataName,

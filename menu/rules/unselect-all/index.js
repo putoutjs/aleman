@@ -5,10 +5,7 @@ import {
     removeClassName,
 } from '../jsx-operator.js';
 
-const {
-    hasTagName,
-    setLiteralValue,
-} = operator;
+const {hasTagName} = operator;
 
 const {isJSXElement} = types;
 
@@ -48,4 +45,3 @@ export const traverse = ({push, options}) => ({
         }
     },
 });
-
