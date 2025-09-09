@@ -28,23 +28,6 @@ export function getAttributeNode(path, name) {
     return result;
 }
 
-export function getAttributePath(path, name) {
-    if (isJSXElement(path))
-        path = path.get('openingElement');
-    
-    let result = null;
-    const attributes = path.get('attributes');
-    
-    for (const attr of attributes) {
-        if (attr.node.name.name === name) {
-            result = attr;
-            break;
-        }
-    }
-    
-    return result;
-}
-
 export function addAttributeValue(path, name, value) {
     const node = path.node || path;
     const attributeNode = getAttributeNode(node, name);
@@ -98,3 +81,4 @@ export function hasDataName(path, value = '') {
     const attribute = getAttributeValue(path, 'data-name');
     return attribute === value;
 }
+

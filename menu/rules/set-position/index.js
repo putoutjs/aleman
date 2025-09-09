@@ -1,10 +1,11 @@
-import {types} from 'putout';
+import {types, operator} from 'putout';
 import {
-    getAttributePath,
     getAttributeValue,
     hasDataName,
     setAttributeValue,
 } from '../jsx-operator.js';
+
+const {getAttributePath} = operator;
 
 const {
     stringLiteral,
@@ -73,3 +74,4 @@ function parsePosition(str) {
         Number(y),
     ];
 }
+
