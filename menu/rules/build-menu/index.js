@@ -1,10 +1,9 @@
 import {template, operator} from 'putout';
 import {
+    addClassName,
     hasDataName,
     setAttributeValue,
 } from '../jsx-operator.js';
-
-const {addAttributeValue} = operator;
 
 const {entries} = Object;
 
@@ -82,7 +81,7 @@ export const traverse = ({options, push}) => ({
 });
 
 function setSubmenu(menuItem) {
-    addAttributeValue(menuItem, 'className', 'menu-submenu');
+    addClassName(menuItem, 'menu-submenu');
 }
 
 function setDataMenuPath(key, name, menuItem) {
@@ -91,7 +90,7 @@ function setDataMenuPath(key, name, menuItem) {
 }
 
 function setIcon(name, menuItem) {
-    addAttributeValue(menuItem, 'className', `icon ${getIconName(name)}`);
+    addClassName(menuItem, `icon ${getIconName(name)}`);
 }
 
 function getIconName(name) {
