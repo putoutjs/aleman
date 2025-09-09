@@ -76,4 +76,3 @@ function parsePosition(str) {
         Number(y),
     ];
 }
-

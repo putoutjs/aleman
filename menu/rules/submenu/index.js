@@ -1,15 +1,12 @@
 import {operator, types} from 'putout';
 import {
     addClassName,
+    containsClassName,
     hasDataName,
-    removeAttributeValue,
     removeClassName,
 } from '../jsx-operator.js';
 
-const {
-    getAttributeValue,
-    hasTagName,
-} = operator;
+const {hasTagName} = operator;
 
 const {isJSXElement} = types;
 
@@ -68,14 +65,12 @@ export const traverse = ({options, push}) => ({
 });
 
 function isParentSelected(path) {
-    const classAttributeValue = getAttributeValue(path, 'className');
-    return classAttributeValue.includes('menu-item-selected');
+    return containsClassName(path, 'menu-item-selected');
 }
 
 function unselect(path) {
     if (!path)
         return;
     
-    removeAttributeValue(path, 'className', 'menu-item-selected');
+    removeClassName(path, 'menu-item-selected');
 }
-

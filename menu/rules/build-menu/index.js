@@ -1,4 +1,4 @@
-import {template, operator} from 'putout';
+import {template} from 'putout';
 import {
     addClassName,
     hasDataName,
@@ -99,4 +99,3 @@ function getIconName(name) {
         .replace(/\s/g, '-')
         .toLowerCase();
 }
-
