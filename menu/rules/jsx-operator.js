@@ -1,6 +1,9 @@
 import {operator} from 'putout';
 
-const {setLiteralValue} = operator;
+const {
+    setLiteralValue,
+    getAttributeNode,
+} = operator;
 
 export function getAttributeValue(path, attributeName) {
     const attribute = getAttributeNode(path, attributeName);
@@ -9,22 +12,6 @@ export function getAttributeValue(path, attributeName) {
         return '';
     
     return attribute.value.value;
-}
-
-export function getAttributeNode(path, name) {
-    let result = null;
-    
-    const node = path.node || path;
-    const {attributes} = node.openingElement;
-    
-    for (const attr of attributes) {
-        if (attr.name.name === name) {
-            result = attr;
-            break;
-        }
-    }
-    
-    return result;
 }
 
 export function addAttributeValue(path, name, value) {
@@ -80,3 +67,4 @@ export function hasDataName(path, value = '') {
     const attribute = getAttributeValue(path, 'data-name');
     return attribute === value;
 }
+
