@@ -1,13 +1,15 @@
 import {operator, types} from 'putout';
 import {
     addClassName,
-    getAttributeValue,
     hasDataName,
     removeAttributeValue,
     removeClassName,
 } from '../jsx-operator.js';
 
-const {hasTagName} = operator;
+const {
+    getAttributeValue,
+    hasTagName,
+} = operator;
 
 const {isJSXElement} = types;
 
@@ -76,3 +78,4 @@ function unselect(path) {
     
     removeAttributeValue(path, 'className', 'menu-item-selected');
 }
+

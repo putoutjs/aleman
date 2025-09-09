@@ -3,26 +3,9 @@ import {operator} from 'putout';
 const {
     setLiteralValue,
     getAttributeNode,
+    addAttributeValue,
+    getAttributeValue,
 } = operator;
-
-export function getAttributeValue(path, attributeName) {
-    const attribute = getAttributeNode(path, attributeName);
-    
-    if (!attribute)
-        return '';
-    
-    return attribute.value.value;
-}
-
-export function addAttributeValue(path, name, value) {
-    const node = path.node || path;
-    const attributeNode = getAttributeNode(node, name);
-    
-    if (attributeNode.value.value.includes(value))
-        return;
-    
-    setLiteralValue(attributeNode.value, `${attributeNode.value.value} ${value}`);
-}
 
 export function setAttributeValue(node, name, value) {
     node = node.node || node;

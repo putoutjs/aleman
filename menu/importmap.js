@@ -1,6 +1,6 @@
 export const importmap = {
     imports: {
-        'putout': 'https://esm.sh/@putout/bundle@4.6.3',
+        'putout': 'https://esm.sh/@putout/bundle@4.6.5',
         '@putout/processor-html': 'https://esm.sh/@putout/processor-html',
         'fullstore': 'https://esm.sh/fullstore',
         'jessy': 'https://esm.sh/jessy',

@@ -1,9 +1,10 @@
-import {template} from 'putout';
+import {template, operator} from 'putout';
 import {
-    addAttributeValue,
     hasDataName,
     setAttributeValue,
 } from '../jsx-operator.js';
+
+const {addAttributeValue} = operator;
 
 const {entries} = Object;
 
@@ -99,3 +100,4 @@ function getIconName(name) {
         .replace(/\s/g, '-')
         .toLowerCase();
 }
+
