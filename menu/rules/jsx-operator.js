@@ -1,6 +1,5 @@
-import {operator, types} from 'putout';
+import {operator} from 'putout';
 
-const {isJSXElement} = types;
 const {setLiteralValue} = operator;
 
 export function getAttributeValue(path, attributeName) {
@@ -81,4 +80,3 @@ export function hasDataName(path, value = '') {
     const attribute = getAttributeValue(path, 'data-name');
     return attribute === value;
 }
-
