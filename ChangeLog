@@ -1,3 +1,9 @@
+2025.09.09, v1.4.5
+
+feature:
+- 3adffdf aleman: menu: use getAttributePath from operator
+- 92d48da jsx-operator: simplify
+
 2025.09.08, v1.4.4
 
 feature:
