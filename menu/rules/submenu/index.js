@@ -1,12 +1,12 @@
 import {operator, types} from 'putout';
-import {
-    addClassName,
-    containsClassName,
-    hasDataName,
-    removeClassName,
-} from '../jsx-operator.js';
 
-const {hasTagName} = operator;
+const {
+    hasTagName,
+    removeClassName,
+    addClassName,
+    hasDataName,
+    containsClassName,
+} = operator;
 
 const {isJSXElement} = types;
 
@@ -74,3 +74,4 @@ function unselect(path) {
     
     removeClassName(path, 'menu-item-selected');
 }
+

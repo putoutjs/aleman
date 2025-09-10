@@ -1,7 +1,10 @@
 import {template, operator} from 'putout';
-import {addClassName, hasDataName} from '../jsx-operator.js';
 
-const {setAttributeValue} = operator;
+const {
+    setAttributeValue,
+    hasDataName,
+    addClassName,
+} = operator;
 const {entries} = Object;
 
 const noop = () => {};

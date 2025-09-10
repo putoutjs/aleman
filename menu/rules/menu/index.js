@@ -1,9 +1,11 @@
-import {
-    addClassName,
+import {operator} from 'putout';
+
+const {
     containsClassName,
     hasDataName,
+    addClassName,
     removeClassName,
-} from '../jsx-operator.js';
+} = operator;
 
 export const report = ({command}) => {
     const [first, ...rest] = command;
@@ -36,3 +38,4 @@ export const traverse = ({push, options}) => ({
             });
     },
 });
+

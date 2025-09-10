@@ -1,10 +1,10 @@
 import {types, operator} from 'putout';
-import {hasDataName} from '../jsx-operator.js';
 
 const {
     setAttributeValue,
     getAttributeValue,
     getAttributePath,
+    hasDataName,
 } = operator;
 
 const {
