@@ -1,21 +1,10 @@
 import {operator} from 'putout';
 
 const {
-    setLiteralValue,
-    getAttributeNode,
     addAttributeValue,
     getAttributeValue,
     removeAttributeValue,
 } = operator;
-
-export function setAttributeValue(node, name, value) {
-    node = node.node || node;
-    
-    const attributeNode = getAttributeNode(node, name);
-    
-    if (attributeNode)
-        setLiteralValue(attributeNode.value, value);
-}
 
 export function addClassName(path, name) {
     addAttributeValue(path, 'className', name);
@@ -38,4 +27,3 @@ export function hasDataName(path, value = '') {
     const attribute = getAttributeValue(path, 'data-name');
     return attribute === value;
 }
-
