@@ -5,6 +5,7 @@ const {
     getAttributeNode,
     addAttributeValue,
     getAttributeValue,
+    removeAttributeValue,
 } = operator;
 
 export function setAttributeValue(node, name, value) {
@@ -33,20 +34,8 @@ export function containsClassName(path, className) {
     return classNameValue.includes(className);
 }
 
-export function removeAttributeValue(path, name, attributeValue) {
-    if (!path)
-        return;
-    
-    const {node} = path;
-    const classAttribute = getAttributeNode(node, name);
-    
-    const {value} = classAttribute.value;
-    
-    if (value.includes(attributeValue))
-        setLiteralValue(classAttribute.value, value.replace(RegExp(`\\s?${attributeValue}`), ''));
-}
-
 export function hasDataName(path, value = '') {
     const attribute = getAttributeValue(path, 'data-name');
     return attribute === value;
 }
+
