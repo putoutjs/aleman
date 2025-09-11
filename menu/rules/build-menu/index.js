@@ -5,6 +5,7 @@ const {
     hasDataName,
     addClassName,
 } = operator;
+
 const {entries} = Object;
 
 const noop = () => {};
@@ -99,4 +100,3 @@ function getIconName(name) {
         .replace(/\s/g, '-')
         .toLowerCase();
 }
-

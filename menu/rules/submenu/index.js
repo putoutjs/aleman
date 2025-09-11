@@ -74,4 +74,3 @@ function unselect(path) {
     
     removeClassName(path, 'menu-item-selected');
 }
-

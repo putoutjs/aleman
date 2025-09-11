@@ -73,4 +73,3 @@ function addShowSubmenu(path, {showSubmenu}) {
 function removeShowSubmenu(path) {
     removeClassName(path, SHOW);
 }
-
