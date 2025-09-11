@@ -12,6 +12,8 @@
 >
 > Yamamoto Tsunetomo, Hagakure
 
+🐊Putout-based framework for web.
+
 ## Install
 
 ```
