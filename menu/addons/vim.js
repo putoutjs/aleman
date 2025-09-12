@@ -19,7 +19,7 @@ const createListener = (buffer) => ({event, state, options}) => {
     
     if (!buffer.length && key === 'g') {
         buffer.push('g');
-        return;
+        return null;
     }
     
     if (buffer[0] === 'g' && key === 'g') {

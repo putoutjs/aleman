@@ -54,11 +54,6 @@ export const traverse = ({options, push}) => ({
         if (!current)
             return;
         
-        const dataMenuIndex = getAttributeValue(current, 'data-menu-index');
-        
-        if (index !== Number(dataMenuIndex))
-            return;
-        
         push({
             path: current,
             prev,
