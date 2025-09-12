@@ -6,7 +6,6 @@ const {
     addClassName,
     hasDataName,
     removeClassName,
-    getAttributeValue,
 } = operator;
 
 const SELECTED = 'menu-item-selected';
