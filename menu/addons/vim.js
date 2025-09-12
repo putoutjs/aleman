@@ -24,11 +24,20 @@ const createListener = (buffer) => ({event, state, options}) => {
     
     if (buffer[0] === 'g' && key === 'g') {
         buffer = [];
+        const {
+            insideSubmenu,
+            index,
+            submenuIndex,
+        } = state;
+        
+        const newState = {
+            ...state,
+            index: insideSubmenu ? index : 1,
+            submenuIndex: insideSubmenu ? 1 : submenuIndex,
+        };
+        
         return up.listener({
-            state: {
-                ...state,
-                index: 1,
-            },
+            state: newState,
             options,
         });
     }

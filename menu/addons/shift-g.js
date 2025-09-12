@@ -14,18 +14,18 @@ export const listener = ({state, options}) => {
     
     const menuValues = Object.values(menu);
     
-    if (insideSubmenu && submenuIndex > 0)
-        submenuIndex = 0;
-    
-    if (!insideSubmenu)
-        index = menuValues.length - 1;
-    
     const submenu = getSubmenu({
         index,
         options,
     });
     
     const submenuCount = Object.keys(submenu).length;
+    
+    if (insideSubmenu)
+        submenuIndex = submenuCount - 1;
+    else
+        index = menuValues.length - 1;
+    
     const showSubmenu = submenuCount > 0;
     
     return {

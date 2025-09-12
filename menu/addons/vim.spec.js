@@ -55,6 +55,43 @@ test('aleman: menu: addons: vim: gg', (t) => {
     t.end();
 });
 
+test('aleman: menu: addons: vim: gg: insideSubmenu', (t) => {
+    const {listener} = createVim();
+    const state = {
+        index: 0,
+        submenuIndex: 5,
+        insideSubmenu: true,
+    };
+    
+    const options = {
+        menu: {},
+    };
+    
+    const event = {
+        key: 'g',
+    };
+    
+    listener({
+        event,
+        state,
+        options,
+    });
+    const result = listener({
+        event,
+        state,
+        options,
+    });
+    
+    const expected = {
+        index: 0,
+        showSubmenu: false,
+        submenuIndex: 0,
+    };
+    
+    t.deepEqual(result, expected);
+    t.end();
+});
+
 test('aleman: menu: addons: vim: g, x, g', (t) => {
     const {listener} = createVim();
     const state = {
