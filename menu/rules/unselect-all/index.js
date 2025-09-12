@@ -12,7 +12,7 @@ const SELECTED = 'menu-item-selected';
 
 export const report = () => `Unselect all`;
 
-export const fix = ({path}) => {
+export const fix = (path) => {
     removeClassName(path, SELECTED);
 };
 
@@ -38,9 +38,7 @@ export const traverse = ({push, options}) => ({
         
         for (const child of children) {
             if (containsClassName(child, SELECTED))
-                push({
-                    path: child,
-                });
+                push(child);
         }
     },
 });
