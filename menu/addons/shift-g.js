@@ -1,9 +1,6 @@
 import {getSubmenu} from './submenu/index.js';
 
-export const keys = [
-    'ArrowUp',
-    'k',
-];
+export const keys = ['G'];
 
 export const preventDefault = true;
 
@@ -15,16 +12,13 @@ export const listener = ({state, options}) => {
         submenuIndex,
     } = state;
     
-    const count = Object.keys(menu).length;
+    const menuValues = Object.values(menu);
     
     if (insideSubmenu && submenuIndex > 0)
-        --submenuIndex;
+        submenuIndex = 0;
     
-    if (!insideSubmenu && index > 0)
-        --index;
-    
-    if (index === -1)
-        index = count - 1;
+    if (!insideSubmenu)
+        index = menuValues.length - 1;
     
     const submenu = getSubmenu({
         index,
@@ -40,3 +34,4 @@ export const listener = ({state, options}) => {
         showSubmenu,
     };
 };
+

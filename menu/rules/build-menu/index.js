@@ -14,7 +14,7 @@ const isObject = (a) => a && typeof a === 'object';
 export const report = () => `Build menu`;
 
 const createMenuItem = template(`
-    <li data-name="menu-item" className="menu-item" data-menu-path=""><label data-menu-path="">NAME</label></li>
+    <li data-name="menu-item" data-menu-index="" className="menu-item" data-menu-path=""><label data-menu-path="">NAME</label></li>
 `);
 
 const createMenu = template(`
@@ -28,6 +28,7 @@ const DefaultMenu = {
 
 export const fix = ({path, menu, icon, name = ''}) => {
     const {children} = path.node;
+    let i = 0;
     
     for (const [key, value] of entries(menu)) {
         const menuItem = createMenuItem();
@@ -37,6 +38,7 @@ export const fix = ({path, menu, icon, name = ''}) => {
         if (icon)
             setIcon(key, menuItem);
         
+        setDataMenuIndex(i++, menuItem);
         setDataMenuPath(key, name, menuItem);
         setDataMenuPath(key, name, menuItem.children[0]);
         
@@ -88,6 +90,10 @@ function setSubmenu(menuItem) {
 function setDataMenuPath(key, name, menuItem) {
     const dataMenuPath = name ? `${name}.${key}` : key;
     setAttributeValue(menuItem, 'data-menu-path', dataMenuPath);
+}
+
+function setDataMenuIndex(index, menuItem) {
+    setAttributeValue(menuItem, 'data-menu-index', index);
 }
 
 function setIcon(name, menuItem) {

@@ -6,6 +6,7 @@ const {
     addClassName,
     hasDataName,
     removeClassName,
+    getAttributeValue,
 } = operator;
 
 const SELECTED = 'menu-item-selected';
@@ -20,6 +21,7 @@ export const fix = ({path, prev, next, showSubmenu}) => {
     });
     unselect(prev);
     unselect(next);
+    
     removeShowSubmenu(next);
     removeShowSubmenu(prev);
 };
@@ -50,6 +52,11 @@ export const traverse = ({options, push}) => ({
         const next = children[index + 1];
         
         if (!current)
+            return;
+        
+        const dataMenuIndex = getAttributeValue(current, 'data-menu-index');
+        
+        if (index !== Number(dataMenuIndex))
             return;
         
         push({
