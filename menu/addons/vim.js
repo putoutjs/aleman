@@ -32,4 +32,6 @@ const createListener = (buffer) => ({event, state, options}) => {
             options,
         });
     }
+    
+    buffer = [];
 };

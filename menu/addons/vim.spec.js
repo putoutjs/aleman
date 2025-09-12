@@ -54,3 +54,39 @@ test('aleman: menu: addons: vim: gg', (t) => {
     t.deepEqual(result, expected);
     t.end();
 });
+
+test('aleman: menu: addons: vim: g, x, g', (t) => {
+    const {listener} = createVim();
+    const state = {
+        submenuIndex: 0,
+    };
+    
+    const options = {
+        menu: {},
+    };
+    
+    const event = {
+        key: 'g',
+    };
+    
+    listener({
+        event,
+        state,
+        options,
+    });
+    listener({
+        event: {
+            key: 'x',
+        },
+        state,
+        options,
+    });
+    const result = listener({
+        event,
+        state,
+        options,
+    });
+    
+    t.notOk(result);
+    t.end();
+});
