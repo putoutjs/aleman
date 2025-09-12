@@ -1,3 +1,8 @@
+2025.09.12, v1.6.2
+
+fix:
+- acc7a86 aleman: menu: vim: gg: showSubmenu
+
 2025.09.12, v1.6.1
 
 fix:
