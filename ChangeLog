@@ -1,3 +1,8 @@
+2025.09.12, v1.6.1
+
+fix:
+- 7cf44ae vim: clear buffer
+
 2025.09.12, v1.6.0
 
 feature:
