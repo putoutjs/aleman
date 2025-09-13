@@ -1,5 +1,5 @@
 import {test} from 'supertape';
-import {createVim} from './vim.js';
+import {createVim} from './index.js';
 
 const noop = () => {};
 
