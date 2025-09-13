@@ -1,9 +1,6 @@
 import {getSubmenu} from './submenu/index.js';
 
-export const keys = [
-    'ArrowDown',
-    'j',
-];
+export const keys = ['ArrowDown'];
 export const preventDefault = true;
 
 export const filter = ({state}) => state.command === 'show';

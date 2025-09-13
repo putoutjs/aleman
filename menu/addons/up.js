@@ -1,9 +1,6 @@
 import {getSubmenu} from './submenu/index.js';
 
-export const keys = [
-    'ArrowUp',
-    'k',
-];
+export const keys = ['ArrowUp'];
 
 export const preventDefault = true;
 
