@@ -6,7 +6,9 @@ const noop = () => {};
 test('aleman: menu: addons: vim: filter', (t) => {
     const {filter} = createVim();
     const state = {};
-    const result = filter({state});
+    const result = filter({
+        state,
+    });
     
     t.notOk(result);
     t.end();
@@ -17,7 +19,10 @@ test('aleman: menu: addons: vim: filter: show', (t) => {
     const state = {
         command: 'show',
     };
-    const result = filter({state});
+    
+    const result = filter({
+        state,
+    });
     
     t.ok(result);
     t.end();
@@ -359,4 +364,3 @@ test('aleman: menu: addons: vim: j: insideSubmenu', (t) => {
     t.deepEqual(result, expected);
     t.end();
 });
-
