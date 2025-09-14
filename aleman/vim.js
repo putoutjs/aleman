@@ -1,8 +1,6 @@
 const isNumber = (a) => !Number.isNaN(a) && typeof a === 'number';
 
-export const createVimParser = (buffer = []) => (event) => {
-    const {key} = event;
-    
+export const createVimParser = (buffer = []) => ({key}) => {
     if (!buffer.length && key === 'g') {
         buffer.push('g');
         return [''];

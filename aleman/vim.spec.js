@@ -81,4 +81,3 @@ test('vim: x', (t) => {
     t.equal(command, expected);
     t.end();
 });
-

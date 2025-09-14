@@ -21,4 +21,3 @@ export function listener({state, options}) {
         options,
     });
 }
-

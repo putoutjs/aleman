@@ -23,6 +23,7 @@ bun i aleman
 ## Rules and Addons
 
 Aleman supports two main concepts:
+
 - ✅addons - events;
 - ✅rules - 🐊**Putout** rules that changes HTML;
 
@@ -44,6 +45,7 @@ When you need to filter out events according to `state` use `filter`:
 ```js
 export const filter = ({state}) => state.command === 'show';
 ```
+
 #### Global
 
 Any browser event you need to listen globally:
@@ -63,7 +65,7 @@ export const listener = () => ({
 Any browser event you need to listen according to element with `data-name="hello":
 
 ```js
-export const name = 'hello'
+export const name = 'hello';
 export const events = ['click'];
 export const listener = () => ({
     command: 'hide',
@@ -84,7 +86,7 @@ export const listener = ({state, options}) => {
         command: 'hide',
         showSubmenu: false,
         index: -1,
-    }
+    };
 };
 ```
 
@@ -101,7 +103,7 @@ export function listener({state, options}) {
         index,
         submenuIndex,
     } = state;
-
+    
     const newState = {
         ...state,
         index: insideSubmenu ? index : 1,

@@ -37,4 +37,3 @@ export function listener({count, state, options}) {
         options,
     });
 }
-
