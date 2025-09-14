@@ -24,8 +24,8 @@ bun i aleman
 
 Aleman supports two main concepts:
 
-- ✅addons - events;
-- ✅rules - 🐊**Putout** rules that changes HTML;
+- ✅ addons - events;
+- ✅ rules - 🐊**Putout** rules that changes HTML;
 
 All interaction with DOM made using rules, and we interact not with DOM directly, but with JSX AST.
 It makes testing simple, states predictable and independent.
@@ -35,10 +35,10 @@ It makes testing simple, states predictable and independent.
 Addon responsible for UI and interfaction with outer world: clicks, fetches and everything like this.
 Aleman supports next types of addons:
 
-- Global
-- Events
-- Keys
-- Vim
+- ✅ [Global](#globals);
+- ✅ [Events](#events);
+- ✅ [Keys](#keys);
+- ✅ [Vim](#vim);
 
 When you need to filter out events according to `state` use `filter`:
 
