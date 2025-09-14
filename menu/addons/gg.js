@@ -1,6 +1,9 @@
-import * as up from '../up.js';
+import * as up from './up.js';
 
-export function gg({state, options}) {
+export const {filter} = up;
+export const commands = ['gg'];
+
+export function listener({state, options}) {
     const {
         insideSubmenu,
         index,
@@ -18,3 +21,4 @@ export function gg({state, options}) {
         options,
     });
 }
+

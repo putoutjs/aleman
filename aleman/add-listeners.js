@@ -1,3 +1,5 @@
+import {createVimParser} from './vim.js';
+
 const queryElement = ({name}) => {
     return document.querySelector(`[data-name="${name}"]`);
 };
@@ -61,7 +63,7 @@ export const addGlobalListeners = ({globalAddons, options, readState, writeState
     }
 };
 
-const createListener = ({options, addon, readState, writeState}) => (event) => {
+const createListener = ({options, addon, readState, writeState, parseVim = createVimParser()}) => (event) => {
     const {
         keys,
         listener,
@@ -70,9 +72,15 @@ const createListener = ({options, addon, readState, writeState}) => (event) => {
         filter,
         after,
         afterIf,
+        commands,
     } = addon;
     
     if (keys && !keys.includes(event.key))
+        return;
+    
+    const [command, count] = parseVim(event);
+    
+    if (commands && !commands.includes(command))
         return;
     
     const state = readState();
@@ -93,6 +101,7 @@ const createListener = ({options, addon, readState, writeState}) => (event) => {
         event.stopPropagation();
     
     const newState = listener({
+        count,
         event,
         state,
         options,

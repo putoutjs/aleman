@@ -1,7 +1,10 @@
-import * as down from '../down.js';
-import {getSubmenu} from '../submenu/index.js';
+import * as down from './down.js';
+import {getSubmenu} from './submenu/index.js';
 
-export function j({count, state, options}) {
+export const {filter} = down;
+export const commands = ['j'];
+
+export function listener({count, state, options}) {
     const {
         index,
         insideSubmenu,
@@ -34,3 +37,4 @@ export function j({count, state, options}) {
         options,
     });
 }
+

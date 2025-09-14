@@ -1,6 +1,9 @@
-import * as down from '../down.js';
+import * as down from './down.js';
 
-export function k({count, state, options}) {
+export const {filter} = down;
+export const commands = ['k'];
+
+export function listener({count, state, options}) {
     const {
         insideSubmenu,
         index,
@@ -27,3 +30,4 @@ export function k({count, state, options}) {
         options,
     });
 }
+

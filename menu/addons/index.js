@@ -6,7 +6,9 @@ import * as enter from './enter.js';
 import * as left from './left.js';
 import * as right from './right.js';
 import * as shiftG from './shift-g.js';
-import {createVim} from './vim/index.js';
+import * as gg from './gg.js';
+import * as j from './j.js';
+import * as k from './k.js';
 
 export const addons = [
     click,
@@ -17,5 +19,7 @@ export const addons = [
     left,
     right,
     shiftG,
-    createVim(),
+    gg,
+    j,
+    k,
 ];
