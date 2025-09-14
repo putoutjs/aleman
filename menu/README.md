@@ -11,6 +11,19 @@
 - ✅[`submenu`](https://putout.cloudcmd.io/#/gist/b0a3b64d14f3497869a345e7e438d66e/feb671c4a59a555ff408af92fab602bae3a94e2f);
 - ✅[`hide-submenu`](https://putout.cloudcmd.io/#/gist/fdf6cf60a7fdfa2bae64279eda2ab023/ce0d5e24dc5e0b3436b7e87585c62e8a5132a9ab);
 
+## Hot Keys
+
+| Key          | Operation               |
+|:-------------|:------------------------|
+| `F9`         | open                    |
+| `Esc`        | close                   |
+| `Up`, `j`    | move cursor up          |
+| `Down`, `k`  | move cursor down        |
+| `Left`, `h`  | close submenu           |
+| `Right`, `l` | open submenu            |
+| `G` or `$`   | navigate to bottom file |
+| `gg` or `^`  | navigate to top file    |
+
 ## License
 
 MIT
