@@ -34,11 +34,10 @@ async function loadStyle() {
 }
 
 function createLink() {
-    const href = new URL('menu.css', import.meta.url).pathname;
     const link = document.createElement('link');
     
     link.rel = 'stylesheet';
-    link.href = href;
+    link.href = new URL('menu.css', import.meta.url).pathname;
     document.head.appendChild(link);
 }
 
@@ -116,4 +115,3 @@ async function tryToCatch(fn, args) {
         return [error];
     }
 }
-
