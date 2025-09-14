@@ -7,8 +7,11 @@ export const run = ({options, state}) => {
     
     const fn = values(menu)[index];
     
-    if (isObject(fn))
-        return setTimeout(values(fn)[submenuIndex]);
+    if (isObject(fn) && submenuIndex === -1)
+        return [false];
     
-    setTimeout(fn);
+    if (isObject(fn))
+        return [true, setTimeout(values(fn)[submenuIndex])];
+    
+    return [true, setTimeout(fn)];
 };
