@@ -30,4 +30,3 @@ export const listener = ({options, state}) => {
         insideSubmenu: false,
     };
 };
-

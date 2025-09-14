@@ -32,4 +32,3 @@ const listener = ({event, options, getMenuPath = _getMenuPath}) => {
         showSubmenu: false,
     };
 };
-
