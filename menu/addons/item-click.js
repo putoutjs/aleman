@@ -1,12 +1,24 @@
 import jessy from 'jessy';
+import {getMenuPath as _getMenuPath} from './menu/get-menu-path.js';
+
+const isFn = (a) => typeof a === 'function';
 
 export const createItemClick = (name) => ({
     name,
     events: ['click'],
     listener,
+    filter,
 });
 
-const listener = ({event, options}) => {
+const filter = ({event, options, getMenuPath = _getMenuPath}) => {
+    const {menu} = options;
+    const menuPath = getMenuPath(event);
+    const fn = jessy(menuPath, menu);
+    
+    return isFn(fn);
+};
+
+const listener = ({event, options, getMenuPath = _getMenuPath}) => {
     const {menu} = options;
     const menuPath = getMenuPath(event);
     const fn = jessy(menuPath, menu);
@@ -21,12 +33,3 @@ const listener = ({event, options}) => {
     };
 };
 
-function getMenuPath(event) {
-    let menuItemElement = document.elementFromPoint(event.clientX, event.clientY);
-    const {menuPath} = menuItemElement.dataset;
-    
-    if (!menuPath)
-        menuItemElement = menuItemElement.querySelector('[data-menu-path]');
-    
-    return menuItemElement.dataset.menuPath;
-}
