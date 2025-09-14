@@ -1,6 +1,6 @@
 import {getSubmenu} from './submenu/index.js';
 
-export const keys = ['G'];
+export const keys = ['G', '$'];
 
 export const preventDefault = true;
 

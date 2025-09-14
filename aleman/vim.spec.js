@@ -81,3 +81,27 @@ test('vim: x', (t) => {
     t.equal(command, expected);
     t.end();
 });
+
+test('vim: $', (t) => {
+    const parseVim = createVimParser();
+    const [command] = parseVim({
+        key: '$',
+    });
+    
+    const expected = '$';
+    
+    t.equal(command, expected);
+    t.end();
+});
+
+test('vim: ^', (t) => {
+    const parseVim = createVimParser();
+    const [command] = parseVim({
+        key: '^',
+    });
+    
+    const expected = '^';
+    
+    t.equal(command, expected);
+    t.end();
+});

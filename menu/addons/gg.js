@@ -1,7 +1,10 @@
 import * as up from './up.js';
 
 export const {filter} = up;
-export const commands = ['gg'];
+export const commands = [
+    'gg',
+    '^',
+];
 
 export function listener({state, options}) {
     const {
