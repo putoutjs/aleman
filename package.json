@@ -29,7 +29,8 @@
     "html-escaper": "^3.0.3",
     "jessy": "^4.1.0",
     "once": "^1.4.0",
-    "putout": "^40.5.1"
+    "putout": "^40.5.1",
+    "try-to-catch": "^3.0.1"
   },
   "keywords": [
     "putout",

@@ -7,7 +7,7 @@ export const createMenu = async (elementName, options, menu) => {
     const hydrateElement = createHydrate(name);
     
     await createMap();
-    await createLink();
+    await loadStyle();
     
     createStateElement(name);
     const {hydrateMenu} = await import('./hydrate-menu.js');
@@ -19,20 +19,39 @@ export const createMenu = async (elementName, options, menu) => {
     });
 };
 
-async function createLink() {
+async function loadStyle() {
     const name = 'aleman-menu-style';
     
     if (findByName(name))
         return;
     
-    const style = document.createElement('style');
+    const [error] = await tryToCatch(importCSS);
     
-    style.dataset.name = name;
+    if (!error)
+        return;
+    
+    createLink();
+}
+
+function createLink() {
+    const href = new URL('menu.css', import.meta.url).pathname;
+    const link = document.createElement('link');
+    
+    link.rel = 'stylesheet';
+    link.href = href;
+    document.head.appendChild(link);
+}
+
+async function importCSS() {
     const content = await import('./menu.css', {
         with: {
             type: 'css',
         },
     });
+    
+    const style = document.createElement('style');
+    
+    style.dataset.name = name;
     
     for (const rule of content.default.cssRules) {
         style.innerHTML += rule.cssText;
@@ -89,3 +108,12 @@ async function createMap() {
 function findByName(name) {
     return document.querySelector(`[data-name=${name}]`);
 }
+
+async function tryToCatch(fn, args) {
+    try {
+        return [null, await fn(...args)];
+    } catch(error) {
+        return [error];
+    }
+}
+
