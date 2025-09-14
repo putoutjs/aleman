@@ -1,3 +1,8 @@
+2025.09.14, v1.10.0
+
+feature:
+- d50edf7 aleman: menu: do not close menu when click on submenu name
+
 2025.09.14, v1.9.1
 
 feature:
