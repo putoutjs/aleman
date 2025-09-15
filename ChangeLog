@@ -1,3 +1,11 @@
+2025.09.15, v1.12.0
+
+fix:
+- 12ad11b menu: left: submenuIndex
+
+feature:
+- 18b1403 menu: unselect submenu items
+
 2025.09.14, v1.11.0
 
 feature:
