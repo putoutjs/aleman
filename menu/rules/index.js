@@ -1,3 +1,4 @@
+import * as unselectAllSubmenuItems from './unselect-all-submenu-items/index.js';
 import * as unselectWronglySelected from './unselect-wrongly-selected/index.js';
 import * as hideSubmenu from './hide-submenu/index.js';
 import * as submenu from './submenu/index.js';
@@ -16,4 +17,5 @@ export const rules = {
     'submenu': submenu,
     'hide-submenu': hideSubmenu,
     'unselect-wrongly-selected': unselectWronglySelected,
+    'unselect-all-submenu-items': unselectAllSubmenuItems,
 };

@@ -10,6 +10,7 @@
 - ✅[`set-position`](https://putout.cloudcmd.io/#/gist/215bb4654a27f15235f3e380a3035138/7f4af88aaa4863be4f1b8a90b9f0f4b1cf4744a0);
 - ✅[`submenu`](https://putout.cloudcmd.io/#/gist/b0a3b64d14f3497869a345e7e438d66e/feb671c4a59a555ff408af92fab602bae3a94e2f);
 - ✅[`hide-submenu`](https://putout.cloudcmd.io/#/gist/fdf6cf60a7fdfa2bae64279eda2ab023/ce0d5e24dc5e0b3436b7e87585c62e8a5132a9ab);
+- ✅[`unsele-all-submenu-items`](https://putout.cloudcmd.io/#/gist/ad9d9c2d6b4f0daded8cdce7fc2e95d8/38c95ec76778bdf9e93bd1d15eef392874fc7c19);
 
 ## Hot Keys
 
