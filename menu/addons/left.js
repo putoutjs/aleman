@@ -5,7 +5,7 @@ export const keys = [
 export const preventDefault = true;
 
 export const listener = () => ({
-    submenuIndex: 0,
+    submenuIndex: -1,
     insideSubmenu: false,
     showSubmenu: false,
 });
