@@ -1,7 +1,30 @@
-import {test} from 'supertape';
-import {listener} from './enter.js';
+import {setTimeout} from 'node:timers/promises';
+import {test, stub} from 'supertape';
+import {filter, listener} from './enter.js';
 
 const noop = () => {};
+
+test('aleman: menu: enter: filter', (t) => {
+    const result = filter({
+        state: {
+            command: 'show',
+        },
+    });
+    
+    t.ok(result);
+    t.end();
+});
+
+test('aleman: menu: enter: filter: no', (t) => {
+    const result = filter({
+        state: {
+            command: 'hide',
+        },
+    });
+    
+    t.notOk(result);
+    t.end();
+});
 
 test('aleman: menu: enter: listener: submenu name', (t) => {
     const state = {
@@ -27,5 +50,51 @@ test('aleman: menu: enter: listener: submenu name', (t) => {
     };
     
     t.deepEqual(result, expected);
+    t.end();
+});
+
+test('aleman: menu: enter: listener: run', async (t) => {
+    const state = {
+        index: 0,
+        submenuIndex: 0,
+    };
+    
+    const fn = stub();
+    
+    listener({
+        state,
+        options: {
+            menu: {
+                hello: fn,
+            },
+        },
+    });
+    
+    await setTimeout(0);
+    
+    t.calledWithNoArgs(fn);
+    t.end();
+});
+
+test('aleman: menu: enter: listener: options: beforeHide', (t) => {
+    const beforeHide = stub();
+    const state = {
+        index: 0,
+        submenuIndex: 0,
+    };
+    
+    const fn = stub();
+    
+    listener({
+        state,
+        options: {
+            beforeHide,
+            menu: {
+                hello: fn,
+            },
+        },
+    });
+    
+    t.calledWith(beforeHide, [state]);
     t.end();
 });
