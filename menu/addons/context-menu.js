@@ -1,4 +1,4 @@
-import {setPosition} from './set-position.js';
+import {setPosition} from './set-position/set-position.js';
 
 export const createContextMenu = (name) => ({
     name,

@@ -6,7 +6,7 @@ import {createMouseEnter} from './addons/mouse-enter.js';
 import {createItemClick} from './addons/item-click.js';
 import * as click from './addons/click.js';
 import {createContextMenu} from './addons/context-menu.js';
-import {setPosition} from './addons/set-position.js';
+import {setPosition} from './addons/set-position/set-position.js';
 
 const {assign} = Object;
 
