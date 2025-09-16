@@ -8,7 +8,6 @@ const {
 
 const {entries} = Object;
 
-const noop = () => {};
 const isObject = (a) => a && typeof a === 'object';
 
 export const report = () => `Build menu`;
@@ -22,8 +21,8 @@ const createMenu = template(`
 `);
 
 const DefaultMenu = {
-    hello: noop,
-    world: noop,
+    hello: null,
+    world: null,
 };
 
 export const fix = ({path, menu, icon, name = ''}) => {
