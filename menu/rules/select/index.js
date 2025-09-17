@@ -4,7 +4,6 @@ const {isJSXElement} = types;
 const {
     hasTagName,
     addClassName,
-    hasDataName,
     removeClassName,
     hasAttributeValue,
     containsClassName,
@@ -29,11 +28,7 @@ export const fix = ({path, prev, next, showSubmenu}) => {
 
 export const traverse = ({options, push}) => ({
     JSXElement(path) {
-        const {
-            name = 'menu',
-            index = 1,
-            showSubmenu,
-        } = options;
+        const {index = 1, showSubmenu} = options;
         
         if (!hasTagName(path, 'li'))
             return;
