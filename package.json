@@ -23,6 +23,9 @@
     "coverage": "madrun coverage",
     "report": "madrun report"
   },
+  "imports": {
+    "#test": "./test/create-test.js"
+  },
   "dependencies": {
     "@putout/processor-html": "^14.0.2",
     "fullstore": "^3.0.0",

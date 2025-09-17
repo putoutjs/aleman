@@ -6,6 +6,8 @@ const {
     addClassName,
     hasDataName,
     removeClassName,
+    hasAttributeValue,
+    containsClassName,
 } = operator;
 
 const SELECTED = 'menu-item-selected';
@@ -36,22 +38,18 @@ export const traverse = ({options, push}) => ({
         if (!hasTagName(path, 'li'))
             return;
         
+        if (!hasAttributeValue(path, 'data-menu-index', String(index)))
+            return;
+        
+        if (containsClassName(path, 'menu-item-selected'))
+            return;
+        
         const {parentPath} = path;
-        
-        if (!isJSXElement(parentPath))
-            return;
-        
-        if (!hasDataName(parentPath, name))
-            return;
-        
         const children = parentPath.get('children').filter(isJSXElement);
         
         const prev = children[index - 1];
         const current = children[index];
         const next = children[index + 1];
-        
-        if (!current)
-            return;
         
         push({
             path: current,

@@ -1,4 +1,9 @@
 import {createVimParser} from './vim.js';
+import {
+    emitBefore,
+    emitIf,
+    emitRun,
+} from './emit.js';
 
 const queryElement = ({name}) => {
     return document.querySelector(`[data-name="${name}"]`);
@@ -65,34 +70,30 @@ export const addGlobalListeners = ({globalAddons, options, readState, writeState
 
 const createListener = ({options, addon, readState, writeState, parseVim = createVimParser()}) => (event) => {
     const {
-        keys,
-        listener,
         preventDefault,
         stopPropagation,
-        filter,
         after,
         afterIf,
-        commands,
     } = addon;
     
-    if (keys && !keys.includes(event.key))
-        return;
+    const [isEmitBefore, count] = emitBefore(addon, {
+        event,
+        parseVim,
+    });
     
-    const [command, count] = parseVim(event);
-    
-    if (commands && !commands.includes(command))
-        return;
+    if (!isEmitBefore)
+        return false;
     
     const state = readState();
     
-    const is = filter?.({
+    const is = emitIf(addon, {
         event,
         state,
         options,
     });
     
-    if (filter && !is)
-        return false;
+    if (!is)
+        return;
     
     if (preventDefault)
         event.preventDefault();
@@ -100,12 +101,11 @@ const createListener = ({options, addon, readState, writeState, parseVim = creat
     if (stopPropagation)
         event.stopPropagation();
     
-    const newState = listener({
+    const newState = emitRun(addon, {
         count,
         event,
         state,
         options,
-        writeState,
     });
     
     writeState(newState);

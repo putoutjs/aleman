@@ -8,7 +8,7 @@ import * as right from './right.js';
 import * as shiftG from './shift-g.js';
 import * as gg from './gg.js';
 import * as j from './j.js';
-import * as k from './k.js';
+import * as k from './k/k.js';
 
 export const addons = [
     click,

@@ -1,0 +1,102 @@
+import {createTest as create} from '@putout/test';
+import {emit} from '../aleman/emit.js';
+import {createVimParser} from '../aleman/vim.js';
+import {createRender} from '../aleman/render.js';
+
+const {isArray} = Array;
+const maybeArray = (a) => isArray(a) ? a : [a];
+
+function lint(source, {rules, plugins}) {
+    const [, options] = rules.aleman;
+    const render = createRender(source, {
+        options,
+        rules: plugins[0][1].rules,
+    });
+    
+    const [transformed, code, places] = render(options);
+    
+    if (!transformed)
+        return {
+            code: source,
+            places,
+        };
+    
+    return {
+        code,
+        places,
+    };
+}
+
+export const createTest = (dir, addon, {rules, state, options}) => {
+    const parseVim = createVimParser();
+    const testOptions = {
+        lint,
+        extension: 'html',
+        plugins: [
+            ['aleman', {
+                rules,
+            }],
+        ],
+    };
+    
+    return create(dir, testOptions, {
+        render: (operator) => (name, overrides = {}) => {
+            const {
+                event = {},
+                options: newOptions = {},
+                state: newState,
+            } = overrides;
+            
+            let currentState = state;
+            
+            for (const currentEvent of maybeArray(event)) {
+                currentState = emit(addon, {
+                    event: currentEvent,
+                    parseVim,
+                    state: {
+                        ...state,
+                        ...newState,
+                    },
+                    options: {
+                        ...options,
+                        ...newOptions,
+                    },
+                });
+            }
+            
+            const rulesOptions = {
+                ...options,
+                ...newOptions,
+                ...state,
+                ...newState,
+                ...currentState,
+            };
+            
+            return operator.transformWithOptions(name, rulesOptions);
+        },
+        noReportOnRender: (operator) => (name, overrides = {}) => {
+            const {
+                event = {},
+                options: newOptions = {},
+                state: newState,
+            } = overrides;
+            
+            for (const currentEvent of maybeArray(event)) {
+                state = emit(addon, {
+                    event: currentEvent,
+                    parseVim,
+                    state: {
+                        ...state,
+                        ...newState,
+                    },
+                    options: {
+                        ...options,
+                        ...newOptions,
+                    },
+                });
+            }
+            
+            return operator.noReportWithOptions(name, state);
+        },
+    });
+};

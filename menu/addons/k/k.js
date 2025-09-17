@@ -1,6 +1,6 @@
-import * as down from './down.js';
+import * as up from '../up.js';
 
-export const {filter} = down;
+export const {filter} = up;
 export const commands = ['k'];
 
 export function listener({count, state, options}) {
@@ -10,8 +10,8 @@ export function listener({count, state, options}) {
         submenuIndex,
     } = state;
     
-    let newIndex = insideSubmenu ? index : index - count - 1;
-    let newSubmenuIndex = insideSubmenu ? submenuIndex - count - 1 : submenuIndex;
+    let newIndex = insideSubmenu ? index : index - count + 1;
+    let newSubmenuIndex = insideSubmenu ? submenuIndex - count + 1 : submenuIndex;
     
     if (newIndex < -1)
         newIndex = -1;
@@ -25,7 +25,7 @@ export function listener({count, state, options}) {
         submenuIndex: newSubmenuIndex,
     };
     
-    return down.listener({
+    return up.listener({
         state: newState,
         options,
     });

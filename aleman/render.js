@@ -33,7 +33,7 @@ export const createRender = (html, {options, rules}) => {
         });
         
         if (!places.length)
-            return [SKIP];
+            return [SKIP, '', places];
         
         transform(ast, '', {
             rules: currentRules,
@@ -53,6 +53,10 @@ export const createRender = (html, {options, rules}) => {
         const suffix = '<\\template>\n';
         const result = merge('', [code]).slice(prefix.length, -suffix.length);
         
-        return [TRANSFORM, result];
+        return [
+            TRANSFORM,
+            result,
+            places,
+        ];
     };
 };
