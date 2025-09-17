@@ -12,8 +12,10 @@ test('menu: select: report', (t) => {
     t.end();
 });
 
-test('menu: select: transform', (t) => {
-    t.transform('select');
+test('menu: select: transform with options', (t) => {
+    t.transformWithOptions('select', {
+        insideSubmenu: true,
+    });
     t.end();
 });
 
@@ -43,3 +45,4 @@ test('menu: select: no report: wrong-data-name', (t) => {
     t.noReport('wrong-data-name');
     t.end();
 });
+

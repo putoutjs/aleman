@@ -3,6 +3,9 @@ import {getSubmenu} from './submenu/index.js';
 export const keys = ['ArrowUp'];
 
 export const preventDefault = true;
+export const filter = ({state, options}) => {
+    return state.command === 'show';
+};
 
 export const listener = ({state, options}) => {
     const {menu} = options;

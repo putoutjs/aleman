@@ -4,6 +4,7 @@ const {isJSXElement} = types;
 const {
     hasTagName,
     addClassName,
+    hasDataName,
     removeClassName,
     hasAttributeValue,
     containsClassName,
@@ -28,18 +29,30 @@ export const fix = ({path, prev, next, showSubmenu}) => {
 
 export const traverse = ({options, push}) => ({
     JSXElement(path) {
-        const {index = 1, showSubmenu} = options;
+        const {
+            name = 'menu',
+            index = 1,
+            showSubmenu,
+            insideSubmenu,
+        } = options;
         
         if (!hasTagName(path, 'li'))
             return;
         
-        if (!hasAttributeValue(path, 'data-menu-index', String(index)))
-            return;
-        
-        if (containsClassName(path, 'menu-item-selected'))
-            return;
-        
         const {parentPath} = path;
+        
+        if (!isJSXElement(parentPath))
+            return;
+        
+        if (!hasDataName(parentPath, name))
+            return;
+        
+        if (!insideSubmenu && !hasAttributeValue(path, 'data-menu-index', `${index}`))
+            return;
+        
+        if (!insideSubmenu && containsClassName(path, 'menu-item-selected'))
+            return;
+        
         const children = parentPath.get('children').filter(isJSXElement);
         
         const prev = children[index - 1];
@@ -67,3 +80,4 @@ function addShowSubmenu(path, {showSubmenu}) {
 function removeShowSubmenu(path) {
     removeClassName(path, SHOW);
 }
+
