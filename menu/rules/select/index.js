@@ -47,7 +47,7 @@ export const traverse = ({options, push}) => ({
         if (!hasDataName(parentPath, name))
             return;
         
-        if (!insideSubmenu && !hasAttributeValue(path, 'data-menu-index', `${index}`))
+        if (!insideSubmenu && !hasAttributeValue(path, 'data-menu-index', String(index)))
             return;
         
         if (!insideSubmenu && containsClassName(path, 'menu-item-selected'))
@@ -80,4 +80,3 @@ function addShowSubmenu(path, {showSubmenu}) {
 function removeShowSubmenu(path) {
     removeClassName(path, SHOW);
 }
-

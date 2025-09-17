@@ -45,4 +45,3 @@ test('menu: select: no report: wrong-data-name', (t) => {
     t.noReport('wrong-data-name');
     t.end();
 });
-
