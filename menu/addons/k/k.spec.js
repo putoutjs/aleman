@@ -71,4 +71,3 @@ test('aleman: menu: addons: k: insideSubmenu', (t) => {
     });
     t.end();
 });
-
