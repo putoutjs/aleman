@@ -48,3 +48,11 @@ test('aleman: unselect-all: no report: no-parent', (t) => {
     t.noReport('no-parent');
     t.end();
 });
+
+test('aleman: unselect-all: no report with options: hide', (t) => {
+    t.noReportWithOptions('hide', {
+        index: -1,
+        command: 'hide',
+    });
+    t.end();
+});

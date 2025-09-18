@@ -1,9 +1,11 @@
-import {getSubmenu} from './submenu/index.js';
+import {getSubmenu} from '../submenu/index.js';
 
 export const keys = [
     'G',
     '$',
 ];
+
+export const filter = ({state}) => state.command === 'show';
 
 export const preventDefault = true;
 

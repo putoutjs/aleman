@@ -15,7 +15,10 @@ export const fix = (path) => {
 
 export const traverse = ({push, options}) => ({
     JSXElement(path) {
-        const {index = 1} = options;
+        const {index = 1, command} = options;
+        
+        if (command === 'hide')
+            return;
         
         if (!hasTagName(path, 'li'))
             return;

@@ -16,3 +16,10 @@ test('menu: unselect-wrongly-selected: transform', (t) => {
     t.transform('unselect-wrongly-selected');
     t.end();
 });
+
+test('menu: unselect-wrongly-selected: no report with options: hide', (t) => {
+    t.noReportWithOptions('hide', {
+        command: 'hide',
+    });
+    t.end();
+});
