@@ -38,3 +38,37 @@ test('aleman: menu: addons: k', (t) => {
     });
     t.end();
 });
+
+test('aleman: menu: addons: k: -1', (t) => {
+    t.render('submenu', {
+        state: {
+            command: 'show',
+            index: -1,
+            insideSubmenu: false,
+        },
+        event: [{
+            key: '3',
+        }, {
+            key: 'k',
+        }],
+    });
+    t.end();
+});
+
+test('aleman: menu: addons: k: insideSubmenu', (t) => {
+    t.render('submenu', {
+        state: {
+            command: 'show',
+            index: 1,
+            submenuIndex: -1,
+            insideSubmenu: true,
+        },
+        event: [{
+            key: '3',
+        }, {
+            key: 'k',
+        }],
+    });
+    t.end();
+});
+
