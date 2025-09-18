@@ -28,7 +28,7 @@
 .menu-item {
     position: relative;
     padding: 3px 20px;
-    white-space: pre;
+    white-space: nowrap;
 }
 
 .menu-item::after {

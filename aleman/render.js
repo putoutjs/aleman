@@ -14,6 +14,7 @@ export const TRANSFORM = true;
 export const createRender = (html, {options, rules}) => {
     const {source} = branch(html)[0];
     const withDiv = `<template>${source}</template>`;
+    
     const ast = parse(withDiv);
     
     return function render(state) {
@@ -43,7 +44,7 @@ export const createRender = (html, {options, rules}) => {
         const code = print(ast, {
             printer: ['putout', {
                 format: {
-                    newline: '',
+                    newline: '\n',
                     endOfFile: '',
                 },
             }],
@@ -51,6 +52,7 @@ export const createRender = (html, {options, rules}) => {
         
         const prefix = '<template>';
         const suffix = '<\\template>\n';
+        
         const result = merge('', [code]).slice(prefix.length, -suffix.length);
         
         return [
@@ -60,3 +62,4 @@ export const createRender = (html, {options, rules}) => {
         ];
     };
 };
+
