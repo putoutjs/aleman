@@ -62,4 +62,3 @@ export const createRender = (html, {options, rules}) => {
         ];
     };
 };
-
