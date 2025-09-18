@@ -53,7 +53,8 @@ export const createRender = (html, {options, rules}) => {
         const prefix = '<template>';
         const suffix = '<\\template>\n';
         
-        const result = merge('', [code]).slice(prefix.length, -suffix.length)
+        const result = merge('', [code])
+            .slice(prefix.length, -suffix.length)
             .trim();
         
         return [
