@@ -9,6 +9,7 @@ const maybeArray = (a) => isArray(a) ? a : [a];
 function lint(source, {rules, plugins}) {
     const [, options] = rules.aleman;
     const render = createRender(source, {
+        type: 'jsx',
         options,
         rules: plugins[0][1].rules,
     });
@@ -31,7 +32,6 @@ export const createTest = (dir, addon, {rules, state, options}) => {
     const parseVim = createVimParser();
     const testOptions = {
         lint,
-        extension: 'html',
         plugins: [
             ['aleman', {
                 rules,

@@ -11,12 +11,8 @@ const {entries} = Object;
 export const SKIP = false;
 export const TRANSFORM = true;
 
-export const createRender = (html, {options, rules}) => {
-    const {source} = branch(html)[0];
-    const withDiv = `<template>${source}</template>`;
-    
-    const ast = parse(withDiv);
-    
+export const createRender = (html, {options, rules, type}) => {
+    const {ast, source} = parseAccordingToType(html, type);
     return function render(state) {
         const currentRules = {};
         const plugins = entries(rules);
@@ -34,9 +30,9 @@ export const createRender = (html, {options, rules}) => {
         });
         
         if (!places.length)
-            return [SKIP, '', places];
+            return [SKIP, source, places];
         
-        transform(ast, '', {
+        transform(ast, source, {
             rules: currentRules,
             plugins,
         });
@@ -49,6 +45,13 @@ export const createRender = (html, {options, rules}) => {
                 },
             }],
         });
+        
+        if (type === 'jsx')
+            return [
+                TRANSFORM,
+                code,
+                places,
+            ];
         
         const prefix = '<template>';
         const suffix = '<\\template>\n';
@@ -64,3 +67,21 @@ export const createRender = (html, {options, rules}) => {
         ];
     };
 };
+
+function parseAccordingToType(html, type) {
+    if (type === 'jsx')
+        return {
+            ast: parse(html),
+            source: html,
+        };
+    
+    const {source} = branch(html)[0];
+    const withDiv = `<template>${source}</template>`;
+    
+    const ast = parse(withDiv);
+    
+    return {
+        ast,
+        source,
+    };
+}
