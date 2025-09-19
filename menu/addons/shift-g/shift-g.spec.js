@@ -22,9 +22,7 @@ test('aleman: menu: addons: shift+g: command: hide', (t) => {
         state: {
             command: 'hide',
         },
-        event: {
-            key: 'G',
-        },
+        command: 'G',
     });
     t.end();
 });
@@ -35,9 +33,7 @@ test('aleman: menu: addons: shift+g: command: show', (t) => {
             command: 'show',
             index: 1,
         },
-        event: {
-            key: 'G',
-        },
+        command: 'G',
     });
     t.end();
 });
@@ -49,9 +45,7 @@ test('aleman: menu: addons: shift+g: command: insideSubmenu', (t) => {
             index: 1,
             insideSubmenu: true,
         },
-        event: {
-            key: 'G',
-        },
+        command: 'G',
     });
     t.end();
 });

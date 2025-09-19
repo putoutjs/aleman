@@ -42,7 +42,8 @@ export const createTest = (dir, addon, {rules, state, options}) => {
     return create(dir, testOptions, {
         render: (operator) => (name, overrides = {}) => {
             const {
-                event = {},
+                command = '',
+                event = createEvent(command),
                 options: newOptions = {},
                 state: newState,
             } = overrides;
@@ -76,7 +77,8 @@ export const createTest = (dir, addon, {rules, state, options}) => {
         },
         noReportOnRender: (operator) => (name, overrides = {}) => {
             const {
-                event = {},
+                command = '',
+                event = createEvent(command),
                 options: newOptions = {},
                 state: newState,
             } = overrides;
@@ -100,3 +102,15 @@ export const createTest = (dir, addon, {rules, state, options}) => {
         },
     });
 };
+
+function createEvent(command) {
+    const events = [];
+    
+    for (const key of command.split('')) {
+        events.push({
+            key,
+        });
+    }
+    
+    return events;
+}

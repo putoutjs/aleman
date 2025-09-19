@@ -19,9 +19,7 @@ const test = createTest(import.meta.url, addon, {
 
 test('aleman: menu: addons: k: no key k', (t) => {
     t.noReportOnRender('m', {
-        event: {
-            key: 'm',
-        },
+        command: 'm',
     });
     t.end();
 });
@@ -32,9 +30,7 @@ test('aleman: menu: addons: k', (t) => {
             command: 'show',
             index: 1,
         },
-        event: {
-            key: 'k',
-        },
+        command: 'k',
     });
     t.end();
 });
@@ -46,11 +42,7 @@ test('aleman: menu: addons: k: -1', (t) => {
             index: -1,
             insideSubmenu: false,
         },
-        event: [{
-            key: '3',
-        }, {
-            key: 'k',
-        }],
+        command: '3k',
     });
     t.end();
 });
@@ -63,11 +55,7 @@ test('aleman: menu: addons: k: insideSubmenu', (t) => {
             submenuIndex: -1,
             insideSubmenu: true,
         },
-        event: [{
-            key: '3',
-        }, {
-            key: 'k',
-        }],
+        command: '3k',
     });
     t.end();
 });
