@@ -4,7 +4,6 @@ import {createRender} from './render.js';
 
 const {
     hasTagName,
-    addAttribute,
     setAttributeValue,
     remove,
 } = operator;
