@@ -3,6 +3,8 @@ import {operator} from 'putout';
 import {createRender} from './render.js';
 
 const {
+    hasTagName,
+    addAttribute,
     setAttributeValue,
     remove,
 } = operator;
@@ -49,10 +51,11 @@ test('aleman: render', (t) => {
 });
 
 test('aleman: render: state', (t) => {
-    const html = '<div data-name="hello" class="hello"></div>';
+    const html = '<div class="hello"></div>';
     const addDataName = {
         report: () => '',
         include: () => ['JSXElement'],
+        filter: (path) => hasTagName(path, 'div'),
         fix: (path, {options}) => {
             const {name} = options;
             setAttributeValue(path, 'data-name', name);
@@ -70,7 +73,7 @@ test('aleman: render: state', (t) => {
         name: 'world',
     });
     
-    const expected = '<div data-name="world" class="hello"></div>';
+    const expected = '<div class="hello" data-name="world"></div>';
     
     t.equal(result, expected);
     t.end();
