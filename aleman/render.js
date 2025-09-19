@@ -13,6 +13,7 @@ export const TRANSFORM = true;
 
 export const createRender = (html, {options, rules, type}) => {
     const {ast, source} = parseAccordingToType(html, type);
+    
     return function render(state) {
         const currentRules = {};
         const plugins = entries(rules);
@@ -30,7 +31,11 @@ export const createRender = (html, {options, rules, type}) => {
         });
         
         if (!places.length)
-            return [SKIP, source, places];
+            return [
+                SKIP,
+                source,
+                places,
+            ];
         
         transform(ast, source, {
             rules: currentRules,
