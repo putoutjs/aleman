@@ -1,5 +1,5 @@
-import * as down from './down.js';
-import {getSubmenu} from './submenu/index.js';
+import * as down from '../down.js';
+import {getSubmenu} from '../submenu/index.js';
 
 export const {filter} = down;
 export const commands = ['j'];
