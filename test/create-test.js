@@ -76,6 +76,7 @@ export const createTest = (dir, addon, {rules, state, options}) => {
             return operator.transformWithOptions(name, rulesOptions);
         },
         noReportOnRender: (operator) => (name, overrides = {}) => {
+            let currentState = state;
             const {
                 command = '',
                 event = createEvent(command),
@@ -84,12 +85,13 @@ export const createTest = (dir, addon, {rules, state, options}) => {
             } = overrides;
             
             for (const currentEvent of maybeArray(event)) {
-                state = emit(addon, {
+                currentState = emit(addon, {
                     event: currentEvent,
                     parseVim,
                     state: {
                         ...state,
                         ...newState,
+                        ...currentState,
                     },
                     options: {
                         ...options,
@@ -98,7 +100,15 @@ export const createTest = (dir, addon, {rules, state, options}) => {
                 });
             }
             
-            return operator.noReportWithOptions(name, state);
+            const rulesOptions = {
+                ...options,
+                ...newOptions,
+                ...state,
+                ...newState,
+                ...currentState,
+            };
+            
+            return operator.noReportWithOptions(name, rulesOptions);
         },
     });
 };

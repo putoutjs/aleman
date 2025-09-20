@@ -22,6 +22,7 @@ test('menu: select: transform with options', (t) => {
 test('menu: select: transform with options: submenu', (t) => {
     t.transformWithOptions('submenu', {
         showSubmenu: true,
+        insideSubmenu: true,
     });
     t.end();
 });

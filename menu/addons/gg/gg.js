@@ -1,4 +1,4 @@
-import * as up from './up.js';
+import * as up from '../up.js';
 
 export const {filter} = up;
 export const commands = [

@@ -27,7 +27,7 @@ export const traverse = ({push, options}) => ({
         const {name, command} = options;
         
         if (!hasDataName(path, name))
-            return false;
+            return;
         
         const shown = !containsClassName(path, 'menu-hidden');
         

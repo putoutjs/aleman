@@ -6,7 +6,7 @@ import * as enter from './enter.js';
 import * as left from './left.js';
 import * as right from './right.js';
 import * as shiftG from './shift-g/shift-g.js';
-import * as gg from './gg.js';
+import * as gg from './gg/gg.js';
 import * as j from './j/j.js';
 import * as k from './k/k.js';
 

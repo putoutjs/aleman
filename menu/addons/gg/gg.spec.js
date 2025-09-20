@@ -1,5 +1,5 @@
 import {createTest} from '#test';
-import * as addon from './shift-g.js';
+import * as addon from './gg.js';
 import {rules} from '../../rules/index.js';
 import {initState} from '../../state.js';
 
@@ -8,8 +8,11 @@ const test = createTest(import.meta.url, addon, {
     rules,
     options: {
         menu: {
-            View: noop,
-            Edit: noop,
+            Upload: noop,
+            New: {
+                File: noop,
+                Directory: noop,
+            },
         },
     },
     state: initState({
@@ -17,47 +20,48 @@ const test = createTest(import.meta.url, addon, {
     }),
 });
 
-test('aleman: menu: addons: shift+g: command: hide', (t) => {
+test('aleman: menu: addons: gg: command: hide', (t) => {
     t.noReportOnRender('hide', {
         state: {
             command: 'hide',
         },
-        command: 'G',
+        command: 'gg',
     });
     t.end();
 });
 
-test('aleman: menu: addons: shift+g: command: show', (t) => {
-    t.render('shift-g', {
+test('aleman: menu: addons: gg: command: show', (t) => {
+    t.render('gg', {
         state: {
             command: 'show',
             index: 1,
         },
-        command: 'G',
+        command: 'gg',
     });
     t.end();
 });
 
-test('aleman: menu: addons: shift+g: command: insideSubmenu', (t) => {
-    t.render('shift-g', {
+test('aleman: menu: addons: gg: command: insideSubmenu', (t) => {
+    t.render('submenu', {
         state: {
             command: 'show',
             index: 1,
+            submenuIndex: 1,
             insideSubmenu: true,
+            showSubmenu: true,
         },
-        command: 'G',
+        command: 'gg',
     });
     t.end();
 });
 
-test('aleman: menu: addons: shift+g: command: $', (t) => {
-    t.render('shift-g', {
+test('aleman: menu: addons: gg: command: ^', (t) => {
+    t.render('gg', {
         state: {
             command: 'show',
             index: 0,
-            insideSubmenu: false,
         },
-        command: '$',
+        command: '^',
     });
     t.end();
 });

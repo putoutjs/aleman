@@ -8,6 +8,7 @@ const {
     removeClassName,
     hasAttributeValue,
     containsClassName,
+    getAttributeValue,
 } = operator;
 
 const SELECTED = 'menu-item-selected';
@@ -73,6 +74,11 @@ function unselect(path) {
 }
 
 function addShowSubmenu(path, {showSubmenu}) {
+    const menuPath = getAttributeValue(path, 'data-menu-path');
+    
+    if (menuPath.includes('.'))
+        return;
+    
     if (showSubmenu)
         return addClassName(path, SHOW);
 }
