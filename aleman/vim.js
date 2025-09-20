@@ -1,6 +1,11 @@
 const isNumber = (a) => !Number.isNaN(a) && typeof a === 'number';
 
 export const createVimParser = (buffer = []) => ({key}) => {
+    if (/F\d/.test(key)) {
+        buffer = [];
+        return [''];
+    }
+    
     if (key === '^')
         return ['^'];
     

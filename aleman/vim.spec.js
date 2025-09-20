@@ -105,3 +105,19 @@ test('vim: ^', (t) => {
     t.equal(command, expected);
     t.end();
 });
+
+test('vim: F9 j', (t) => {
+    const parseVim = createVimParser();
+    
+    parseVim({
+        key: 'F9',
+    });
+    const [command] = parseVim({
+        key: 'j',
+    });
+    
+    const expected = 'j';
+    
+    t.equal(command, expected);
+    t.end();
+});
