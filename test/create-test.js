@@ -42,8 +42,9 @@ export const createTest = (dir, addon, {rules, state, options}) => {
     return create(dir, testOptions, {
         render: (operator) => (name, overrides = {}) => {
             const {
+                key = '',
                 command = '',
-                event = createEvent(command),
+                event = createEvent(key, command),
                 options: newOptions = {},
                 state: newState,
             } = overrides;
@@ -113,8 +114,13 @@ export const createTest = (dir, addon, {rules, state, options}) => {
     });
 };
 
-function createEvent(command) {
+function createEvent(key, command) {
     const events = [];
+    
+    if (key)
+        return [{
+            key,
+        }];
     
     for (const key of command.split('')) {
         events.push({
