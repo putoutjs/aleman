@@ -5,9 +5,12 @@ export const emit = (addon, {state, options, event, parseVim}) => {
     });
     
     if (!isEmitBefore)
-        return false;
+        return state;
     
     if (!emitIf(addon, {state, event}))
+        return state;
+    
+    if (addon.events && !addon.events.includes(event.type))
         return state;
     
     return emitRun(addon, {

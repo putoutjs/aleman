@@ -77,13 +77,14 @@ export const createTest = (dir, addon, {rules, state, options}) => {
             return operator.transformWithOptions(name, rulesOptions);
         },
         noReportOnRender: (operator) => (name, overrides = {}) => {
-            let currentState = state;
             const {
                 command = '',
                 event = createEvent(command),
                 options: newOptions = {},
                 state: newState,
             } = overrides;
+            
+            let currentState = newState;
             
             for (const currentEvent of maybeArray(event)) {
                 currentState = emit(addon, {
