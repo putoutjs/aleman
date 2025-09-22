@@ -4,6 +4,7 @@ import {getMenuPath} from './menu/get-menu-path.js';
 const isFn = (a) => typeof a === 'function';
 
 export const events = ['click'];
+export const preventDefault = true;
 
 export const filter = ({event, state, options}) => {
     const {menu} = options;
