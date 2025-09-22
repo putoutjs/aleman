@@ -4,6 +4,9 @@
         "convert-array-copy-to-slice": "off"
     },
     "match": {
+        "aleman": {
+            "nodejs": "off"
+        },
         "addons/**/*.js": {
             "nodejs": "off"
         },

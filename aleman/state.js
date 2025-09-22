@@ -1,4 +1,3 @@
-import {setTimeout} from 'node:timers/promises';
 import fullstore from 'fullstore';
 
 const {assign} = Object;
@@ -78,3 +77,4 @@ export const createWriteState = (prev, stateElement) => (newState) => {
         prev(str);
     });
 };
+
