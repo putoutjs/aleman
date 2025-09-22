@@ -69,6 +69,18 @@ test('aleman: menu: addons: item-click: hide', (t) => {
 test('aleman: menu: addons: item-click: beforeHide', (t) => {
     const getMenuPath = stub().returns('Edit');
     const beforeHide = stub();
+    const args = [{
+        command: 'hide',
+        index: 1,
+        insideSubmenu: false,
+        name: 'menu',
+        position: {
+            x: 0,
+            y: 20,
+        },
+        showSubmenu: false,
+        submenuIndex: 0,
+    }];
     
     t.render('item-click', {
         event: 'click',
@@ -81,7 +93,7 @@ test('aleman: menu: addons: item-click: beforeHide', (t) => {
         },
     });
     
-    t.calledWithNoArgs(beforeHide);
+    t.calledWith(beforeHide, args);
     t.end();
 }, {
     checkAssertionsCount: false,
@@ -127,3 +139,4 @@ test('aleman: menu: item-click: listener', (t) => {
     t.notOk(result);
     t.end();
 });
+

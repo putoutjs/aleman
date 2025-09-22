@@ -22,7 +22,7 @@ const filter = ({event, options}) => {
     return isFn(fn);
 };
 
-const listener = ({event, options}) => {
+const listener = ({event, state, options}) => {
     const {
         menu,
         getMenuPath = _getMenuPath,
@@ -33,7 +33,7 @@ const listener = ({event, options}) => {
     
     setTimeout(fn);
     
-    options.beforeHide?.();
+    options.beforeHide?.(state);
     
     return {
         index: -1,

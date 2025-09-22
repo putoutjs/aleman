@@ -1,5 +1,5 @@
 import jessy from 'jessy';
-import {getMenuPath} from './menu/get-menu-path.js';
+import {getMenuPath as _getMenuPath} from '../menu/get-menu-path.js';
 
 const isFn = (a) => typeof a === 'function';
 
@@ -7,7 +7,10 @@ export const events = ['click'];
 export const preventDefault = true;
 
 export const filter = ({event, state, options}) => {
-    const {menu} = options;
+    const {
+        menu,
+        getMenuPath = _getMenuPath,
+    } = options;
     const menuPath = getMenuPath(event);
     
     if (!menuPath)
