@@ -77,4 +77,3 @@ export const createWriteState = (prev, stateElement) => (newState) => {
         prev(str);
     });
 };
-
