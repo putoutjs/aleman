@@ -7,7 +7,7 @@ export const emit = (addon, {state, options, event, parseVim}) => {
     if (!isEmitBefore)
         return state;
     
-    if (!emitIf(addon, {state, event}))
+    if (!emitIf(addon, {state, event, options}))
         return state;
     
     if (addon.events && !addon.events.includes(event.type))

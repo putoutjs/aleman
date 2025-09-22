@@ -1,5 +1,5 @@
 import jessy from 'jessy';
-import {getMenuPath as _getMenuPath} from './menu/get-menu-path.js';
+import {getMenuPath as _getMenuPath} from '../menu/get-menu-path.js';
 
 const isFn = (a) => typeof a === 'function';
 
@@ -10,16 +10,21 @@ export const createItemClick = (name) => ({
     filter,
 });
 
-const filter = ({event, options, getMenuPath = _getMenuPath}) => {
-    const {menu} = options;
+const filter = ({event, options}) => {
+    const {getMenuPath = _getMenuPath(), menu} = options;
+    
     const menuPath = getMenuPath(event);
     const fn = jessy(menuPath, menu);
     
     return isFn(fn);
 };
 
-const listener = ({event, options, getMenuPath = _getMenuPath}) => {
-    const {menu} = options;
+const listener = ({event, options}) => {
+    const {
+        menu,
+        getMenuPath = _getMenuPath,
+    } = options;
+    
     const menuPath = getMenuPath(event);
     const fn = jessy(menuPath, menu);
     
@@ -32,3 +37,4 @@ const listener = ({event, options, getMenuPath = _getMenuPath}) => {
         showSubmenu: false,
     };
 };
+

@@ -3,6 +3,10 @@ import {emit} from '../aleman/emit.js';
 import {createVimParser} from '../aleman/vim.js';
 import {createRender} from '../aleman/render.js';
 
+const isObject = (a) => a && typeof a === 'object';
+
+const isString = (a) => typeof a === 'string';
+
 const {isArray} = Array;
 const maybeArray = (a) => isArray(a) ? a : [a];
 
@@ -41,15 +45,11 @@ export const createTest = (dir, addon, {rules, state, options}) => {
     
     return create(dir, testOptions, {
         render: (operator) => (name, overrides = {}) => {
-            const {
-                key = '',
-                command = '',
-                event = createEvent(key, command),
-                options: newOptions = {},
-                state: newState,
+            const {options: newOptions = {}, state: newState,
             } = overrides;
             
             let currentState = state;
+            const event = createEvent(overrides);
             
             for (const currentEvent of maybeArray(event)) {
                 currentState = emit(addon, {
@@ -77,13 +77,10 @@ export const createTest = (dir, addon, {rules, state, options}) => {
             return operator.transformWithOptions(name, rulesOptions);
         },
         noReportOnRender: (operator) => (name, overrides = {}) => {
-            const {
-                command = '',
-                event = createEvent(command),
-                options: newOptions = {},
-                state: newState,
+            const {options: newOptions = {}, state: newState,
             } = overrides;
             
+            const event = createEvent(overrides);
             let currentState = newState;
             
             for (const currentEvent of maybeArray(event)) {
@@ -115,7 +112,15 @@ export const createTest = (dir, addon, {rules, state, options}) => {
     });
 };
 
-function createEvent(key, command) {
+function createEvent({event, key = '', command = ''}) {
+    if (isObject(event))
+        return [event];
+    
+    if (isString(event))
+        return [{
+            type: event,
+        }];
+    
     const events = [];
     
     if (key)
@@ -131,3 +136,4 @@ function createEvent(key, command) {
     
     return events;
 }
+
