@@ -11,6 +11,7 @@ export const filter = ({event, state, options}) => {
         menu,
         getMenuPath = _getMenuPath,
     } = options;
+    
     const menuPath = getMenuPath(event);
     
     if (!menuPath)

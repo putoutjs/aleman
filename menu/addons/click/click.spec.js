@@ -96,4 +96,3 @@ test('aleman: menu: addons: click: beforeHide', (t) => {
 }, {
     checkAssertionsCount: false,
 });
-

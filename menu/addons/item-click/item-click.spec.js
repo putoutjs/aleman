@@ -139,4 +139,3 @@ test('aleman: menu: item-click: listener', (t) => {
     t.notOk(result);
     t.end();
 });
-
