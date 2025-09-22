@@ -11,7 +11,10 @@ export const createItemClick = (name) => ({
 });
 
 const filter = ({event, options}) => {
-    const {getMenuPath = _getMenuPath, menu} = options;
+    const {
+        getMenuPath = _getMenuPath,
+        menu,
+    } = options;
     
     const menuPath = getMenuPath(event);
     const fn = jessy(menuPath, menu);
