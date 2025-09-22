@@ -1,3 +1,8 @@
+2025.09.22, v1.14.4
+
+fix:
+- b345d29 aleman: menu: click: preventDefault
+
 2025.09.20, v1.14.3
 
 feature:
