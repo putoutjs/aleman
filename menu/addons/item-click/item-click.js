@@ -37,4 +37,3 @@ const listener = ({event, options}) => {
         showSubmenu: false,
     };
 };
-

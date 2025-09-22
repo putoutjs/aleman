@@ -136,4 +136,3 @@ function createEvent({event, key = '', command = ''}) {
     
     return events;
 }
-
