@@ -29,6 +29,7 @@ const listener = ({event, options}) => {
     const fn = jessy(menuPath, menu);
     
     setTimeout(fn);
+    
     options.beforeHide?.();
     
     return {

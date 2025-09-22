@@ -1,3 +1,4 @@
+import {setTimeout} from 'node:timers/promises';
 import {stub} from 'supertape';
 import {createTest} from '#test';
 import {createItemClick} from './item-click.js';
@@ -48,6 +49,65 @@ test('aleman: menu: addons: item-click: not-fn', (t) => {
         },
     });
     t.end();
+});
+
+test('aleman: menu: addons: item-click: hide', (t) => {
+    const getMenuPath = stub().returns('Edit');
+    
+    t.render('item-click', {
+        event: 'click',
+        options: {
+            getMenuPath,
+        },
+        state: {
+            index: 1,
+        },
+    });
+    t.end();
+});
+
+test('aleman: menu: addons: item-click: beforeHide', (t) => {
+    const getMenuPath = stub().returns('Edit');
+    const beforeHide = stub();
+    
+    t.render('item-click', {
+        event: 'click',
+        options: {
+            beforeHide,
+            getMenuPath,
+        },
+        state: {
+            index: 1,
+        },
+    });
+    
+    t.calledWithNoArgs(beforeHide);
+    t.end();
+}, {
+    checkAssertionsCount: false,
+});
+
+test('aleman: menu: addons: item-click: run', async (t) => {
+    const getMenuPath = stub().returns('View');
+    const View = stub();
+    
+    t.render('run', {
+        event: 'click',
+        options: {
+            getMenuPath,
+            menu: {
+                View,
+            },
+        },
+        state: {
+            index: 0,
+        },
+    });
+    await setTimeout(1000);
+    t.calledWithNoArgs(View);
+    t.end();
+}, {
+    checkAssertionsCount: false,
 });
 
 test('aleman: menu: item-click: listener', (t) => {

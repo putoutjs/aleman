@@ -43,7 +43,7 @@ export const createTest = (dir, addon, {rules, state, options}) => {
         ],
     };
     
-    return create(dir, testOptions, {
+    const test = create(dir, testOptions, {
         render: (operator) => (name, overrides = {}) => {
             const {options: newOptions = {}, state: newState,
             } = overrides;
@@ -110,6 +110,8 @@ export const createTest = (dir, addon, {rules, state, options}) => {
             return operator.noReportWithOptions(name, rulesOptions);
         },
     });
+    
+    return test;
 };
 
 function createEvent({event, key = '', command = ''}) {
