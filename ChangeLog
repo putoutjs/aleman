@@ -1,3 +1,8 @@
+2025.09.23, v1.15.1
+
+fix:
+- 92a0e34 aleman: menu: addons: k: jmp to bottom
+
 2025.09.23, v1.15.0
 
 feature:
