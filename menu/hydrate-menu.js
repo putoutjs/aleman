@@ -2,7 +2,7 @@ import {rules} from './rules/index.js';
 import {hydrate} from '../aleman/index.js';
 import {initState} from './state.js';
 import {addons} from './addons/index.js';
-import {createMouseEnter} from './addons/mouse-enter/mouse-enter.js';
+import {createMouseEnter} from './addons/mouse-leave/index.js';
 import {createItemClick} from './addons/item-click/item-click.js';
 import * as click from './addons/click/click.js';
 import {createContextMenu} from './addons/context-menu.js';

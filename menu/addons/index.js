@@ -2,7 +2,7 @@ import * as click from './click/click.js';
 import * as escape from './escape/escape.js';
 import * as down from './down.js';
 import * as up from './up.js';
-import * as enter from './enter.js';
+import * as enter from './enter/enter.js';
 import * as left from './left.js';
 import * as right from './right.js';
 import * as shiftG from './shift-g/shift-g.js';

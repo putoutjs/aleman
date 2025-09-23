@@ -1,6 +1,6 @@
 export const createMouseEnter = (name) => ({
     name,
-    events: ['mouseenter'],
+    events: ['mouseleave'],
     listener: () => ({
         index: -1,
         showSubmenu: false,

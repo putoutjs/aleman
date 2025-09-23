@@ -1,5 +1,5 @@
 import {createTest} from '#test';
-import {createMouseEnter} from './mouse-enter.js';
+import {createMouseEnter} from './index.js';
 import {rules} from '../../rules/index.js';
 import {initState} from '../../state.js';
 
@@ -39,7 +39,7 @@ test('aleman: menu: addons: mouseenter: command: hide', (t) => {
             command: 'show',
         },
         event: {
-            type: 'mouseenter',
+            type: 'mouseleave',
         },
     });
     t.end();

@@ -1,17 +1,35 @@
 import {setTimeout} from 'node:timers/promises';
-import {test, stub} from 'supertape';
+import {stub} from 'supertape';
+import {createTest} from '#test';
 import {filter, listener} from './enter.js';
+import * as addon from '../escape/escape.js';
+import {rules} from '../../rules/index.js';
+import {initState} from '../../state.js';
 
 const noop = () => {};
 
-test('aleman: menu: enter: filter', (t) => {
-    const result = filter({
+const test = createTest(import.meta.url, addon, {
+    rules,
+    options: {
+        menu: {
+            Upload: noop,
+            New: {
+                File: noop,
+                Directory: noop,
+            },
+        },
+    },
+    state: initState({
+        name: 'menu',
+    }),
+});
+
+test('aleman: menu: enter: run', (t) => {
+    t.render('enter', {
         state: {
-            command: 'show',
+            index: 1,
         },
     });
-    
-    t.ok(result);
     t.end();
 });
 
@@ -98,3 +116,4 @@ test('aleman: menu: enter: listener: options: beforeHide', (t) => {
     t.calledWith(beforeHide, [state]);
     t.end();
 });
+

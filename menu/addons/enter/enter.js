@@ -1,5 +1,5 @@
-import {run} from './run/index.js';
-import * as right from './right.js';
+import {run} from '../run/index.js';
+import * as right from '../right.js';
 
 export const keys = ['Enter'];
 
