@@ -36,7 +36,7 @@ test('aleman: menu: addons: k', (t) => {
 });
 
 test('aleman: menu: addons: k: -1', (t) => {
-    t.render('submenu', {
+    t.noReportOnRender('submenu', {
         state: {
             command: 'show',
             index: -1,
