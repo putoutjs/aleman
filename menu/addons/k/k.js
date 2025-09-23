@@ -13,8 +13,10 @@ export function listener({count, state, options}) {
     let newIndex = insideSubmenu ? index : index - count + 1;
     let newSubmenuIndex = insideSubmenu ? submenuIndex - count + 1 : submenuIndex;
     
-    if (newIndex <= -1)
-        newIndex = 0;
+    const {infiniteScroll} = options;
+    
+    if (newIndex <= 0)
+        newIndex = infiniteScroll ? -1 : 0;
     
     if (newSubmenuIndex < -1)
         newSubmenuIndex = -1;

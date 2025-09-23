@@ -47,6 +47,21 @@ test('aleman: menu: addons: k: -1', (t) => {
     t.end();
 });
 
+test('aleman: menu: addons: k: infiniteScroll', (t) => {
+    t.render('infinite-scroll', {
+        options: {
+            infiniteScroll: true,
+        },
+        state: {
+            command: 'show',
+            index: -1,
+            insideSubmenu: false,
+        },
+        command: '3k',
+    });
+    t.end();
+});
+
 test('aleman: menu: addons: k: insideSubmenu', (t) => {
     t.render('submenu', {
         state: {
