@@ -53,7 +53,7 @@ export const splitAddons = (addons) => {
     };
 };
 
-export const addGlobalListeners = ({globalAddons, options, readState, writeState}) => {
+export const addGlobalListeners = ({globalAddons, options, readState, writeState, document = globalThis.document}) => {
     for (const addon of globalAddons) {
         const events = maybeEvents(addon);
         
