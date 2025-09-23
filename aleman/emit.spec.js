@@ -23,4 +23,3 @@ test('aleman: emit', (t) => {
     t.deepEqual(result, expected);
     t.end();
 });
-
