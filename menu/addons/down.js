@@ -12,11 +12,14 @@ export const listener = ({state, options}) => {
         submenuIndex,
     } = state;
     
-    const {menu} = options;
+    const {menu, infiniteScroll} = options;
     const n = Object.keys(menu).length - 1;
     
-    if (!insideSubmenu && index < n)
+    if (infiniteScroll && index === n || !insideSubmenu && index < n)
         ++index;
+    
+    if (infiniteScroll && index > n)
+        index -= n + 1;
     
     const submenu = getSubmenu({
         index,

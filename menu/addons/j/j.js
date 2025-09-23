@@ -5,13 +5,15 @@ export const {filter} = down;
 export const commands = ['j'];
 
 export function listener({count, state, options}) {
+    const {menu, infiniteScroll} = options;
     const {
         index,
         insideSubmenu,
         submenuIndex,
     } = state;
     
-    const menuCount = Object.keys(options.menu).length;
+    const menuCount = Object.keys(menu).length;
+    
     const submenuCount = Object.keys(getSubmenu({
         index,
         options,
@@ -21,7 +23,7 @@ export function listener({count, state, options}) {
     let newSubmenuIndex = insideSubmenu ? submenuIndex + count : submenuIndex;
     
     if (newIndex > menuCount - 1)
-        newIndex = menuCount - 1;
+        newIndex = infiniteScroll ? 0 : menuCount - 1;
     
     if (newSubmenuIndex > submenuCount - 1)
         newSubmenuIndex = submenuCount - 1;

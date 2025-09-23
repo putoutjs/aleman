@@ -6,7 +6,7 @@ export const preventDefault = true;
 export const filter = ({state}) => state.command === 'show';
 
 export const listener = ({state, options}) => {
-    const {menu} = options;
+    const {menu, infiniteScroll} = options;
     let {
         index,
         insideSubmenu,
@@ -18,7 +18,9 @@ export const listener = ({state, options}) => {
     if (insideSubmenu && submenuIndex > 0)
         --submenuIndex;
     
-    if (!insideSubmenu && index > 0)
+    if (infiniteScroll && !index)
+        index = count - 1;
+    else if (!insideSubmenu && index > 0)
         --index;
     
     if (index === -1)
