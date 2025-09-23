@@ -116,4 +116,3 @@ test('aleman: menu: enter: listener: options: beforeHide', (t) => {
     t.calledWith(beforeHide, [state]);
     t.end();
 });
-
