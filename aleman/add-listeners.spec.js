@@ -5,15 +5,15 @@ test('aleman: add-listeners: addGlobalListeners: name', (t) => {
     const addEventListener = stub();
     const readState = stub();
     const writeState = stub();
+    
     const addon = {
         keys: ['Esc'],
         listener: () => ({
             index: 1,
         }),
     };
-    const globalAddons = [
-        addon,
-    ];
+    
+    const globalAddons = [addon];
     
     const document = {
         addEventListener,
@@ -52,4 +52,3 @@ test('aleman: add-listeners: addGlobalListeners: no addons', (t) => {
     t.notCalled(addEventListener);
     t.end();
 });
-
