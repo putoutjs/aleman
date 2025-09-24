@@ -1,6 +1,6 @@
 import * as click from './click/click.js';
 import * as escape from './escape/escape.js';
-import * as down from './down.js';
+import * as down from './down/down.js';
 import * as up from './up.js';
 import * as enter from './enter/enter.js';
 import * as left from './left.js';

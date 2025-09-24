@@ -63,6 +63,9 @@ export const traverse = ({options, push}) => ({
         const current = children[index];
         const next = children[index + 1];
         
+        if (!current)
+            return;
+        
         push({
             path: current,
             prev,

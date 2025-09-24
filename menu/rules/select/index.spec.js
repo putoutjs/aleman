@@ -54,3 +54,11 @@ test('menu: select: no report with options: no-index', (t) => {
     });
     t.end();
 });
+
+test('menu: select: no report with options: no-current', (t) => {
+    t.noReportWithOptions('no-current', {
+        index: 5,
+        insideSubmenu: true,
+    });
+    t.end();
+});

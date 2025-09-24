@@ -1,4 +1,4 @@
-import * as down from '../down.js';
+import * as down from '../down/down.js';
 import {getSubmenu} from '../submenu/index.js';
 
 export const {filter} = down;

@@ -1,4 +1,4 @@
-import {getSubmenu} from './submenu/index.js';
+import {getSubmenu} from '../submenu/index.js';
 
 export const keys = ['ArrowDown'];
 export const preventDefault = true;
@@ -15,10 +15,10 @@ export const listener = ({state, options}) => {
     const {menu, infiniteScroll} = options;
     const n = Object.keys(menu).length - 1;
     
-    if (infiniteScroll && index === n || !insideSubmenu && index < n)
+    if (!insideSubmenu && (infiniteScroll && index === n || index < n))
         ++index;
     
-    if (infiniteScroll && index > n)
+    if (!insideSubmenu && infiniteScroll && index > n)
         index -= n + 1;
     
     const submenu = getSubmenu({
@@ -28,8 +28,11 @@ export const listener = ({state, options}) => {
     
     const submenuCount = Object.keys(submenu).length - 1;
     
-    if (insideSubmenu && submenuIndex < submenuCount)
-        ++submenuIndex;
+    if (insideSubmenu)
+        if (submenuIndex < submenuCount)
+            ++submenuIndex;
+        else if (infiniteScroll && submenuIndex === submenuCount)
+            submenuIndex = 0;
     
     const showSubmenu = submenuCount > -1;
     
