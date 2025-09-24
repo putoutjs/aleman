@@ -54,4 +54,3 @@ test('menu: select: no report with options: no-index', (t) => {
     });
     t.end();
 });
-
