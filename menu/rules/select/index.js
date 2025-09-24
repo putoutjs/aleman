@@ -37,6 +37,9 @@ export const traverse = ({options, push}) => ({
             insideSubmenu,
         } = options;
         
+        if (index < 0)
+            return;
+        
         if (!hasTagName(path, 'li'))
             return;
         

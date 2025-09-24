@@ -46,3 +46,12 @@ test('menu: select: no report: wrong-data-name', (t) => {
     t.noReport('wrong-data-name');
     t.end();
 });
+
+test('menu: select: no report with options: no-index', (t) => {
+    t.noReportWithOptions('no-index', {
+        index: -1,
+        insideSubmenu: true,
+    });
+    t.end();
+});
+
