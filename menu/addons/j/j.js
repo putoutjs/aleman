@@ -19,23 +19,19 @@ export function listener({count, state, options}) {
         options,
     })).length;
     
-    let newIndex = insideSubmenu ? index : index + count - 1;
+    let newIndex = insideSubmenu ? index : index + count;
     let newSubmenuIndex = insideSubmenu ? submenuIndex + count : submenuIndex;
     
     if (newIndex > menuCount - 1)
         newIndex = infiniteScroll ? 0 : menuCount - 1;
     
-    if (newSubmenuIndex > submenuCount - 1)
+    if (infiniteScroll && newSubmenuIndex === submenuCount)
+        newSubmenuIndex = 0;
+    else if (newSubmenuIndex > submenuCount - 1)
         newSubmenuIndex = submenuCount - 1;
     
-    const newState = {
-        ...state,
+    return {
         index: newIndex,
         submenuIndex: newSubmenuIndex,
     };
-    
-    return down.listener({
-        state: newState,
-        options,
-    });
 }

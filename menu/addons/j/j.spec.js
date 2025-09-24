@@ -69,7 +69,30 @@ test('aleman: menu: addons: j: infiniteScroll', (t) => {
         },
         options: {
             infiniteScroll: true,
-            insideSubmenu: false,
+        },
+        command: 'j',
+    });
+    t.end();
+});
+
+test('aleman: menu: addons: j: submenu: infiniteScroll', (t) => {
+    t.render('submenu-infinite-scroll', {
+        state: {
+            command: 'show',
+            index: 1,
+            submenuIndex: 1,
+            insideSubmenu: true,
+            showSubmenu: true,
+        },
+        options: {
+            infiniteScroll: true,
+            menu: {
+                A: noop,
+                New: {
+                    File: noop,
+                    Directory: noop,
+                },
+            },
         },
         command: 'j',
     });
