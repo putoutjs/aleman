@@ -1,3 +1,9 @@
+2025.09.24, v1.16.1
+
+feature:
+- 8d33547 menu: addons: down: submenu: infiniteScroll
+- 5aba427 aleman: menu: rules: select: index: -1
+
 2025.09.23, v1.16.0
 
 feature:
