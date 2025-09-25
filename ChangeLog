@@ -1,3 +1,8 @@
+2025.09.25, v1.16.2
+
+fix:
+- 1f21a8f aleman: menu: j: show submenu
+
 2025.09.24, v1.16.1
 
 feature:
