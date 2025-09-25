@@ -13,7 +13,6 @@ export function listener({count, state, options}) {
     } = state;
     
     const menuCount = Object.keys(menu).length;
-    
     const submenuCount = Object.keys(getSubmenu({
         index,
         options,
@@ -30,8 +29,11 @@ export function listener({count, state, options}) {
     else if (newSubmenuIndex > submenuCount - 1)
         newSubmenuIndex = submenuCount - 1;
     
+    const showSubmenu = submenuCount > -1;
+    
     return {
         index: newIndex,
         submenuIndex: newSubmenuIndex,
+        showSubmenu,
     };
 }

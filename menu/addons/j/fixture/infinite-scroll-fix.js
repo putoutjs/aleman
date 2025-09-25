@@ -1,5 +1,5 @@
 <ul data-name="menu" className="menu" style="left: 0px; top: 20px;">
-    <li data-name="menu-item" data-menu-index="0" className="menu-item icon icon-view menu-item-selected">
+    <li data-name="menu-item" data-menu-index="0" className="menu-item icon icon-view menu-item-selected menu-submenu-show">
         <label data-menu-path="View">View</label>
     </li>
     <li data-name="menu-item" data-menu-index="1" className="menu-item icon icon-edit">
