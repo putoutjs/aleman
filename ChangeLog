@@ -1,3 +1,8 @@
+2025.09.26, v1.16.3
+
+fix:
+- b1b6854 aleman: menu: item-click: run listener (coderaiser/cloudcmd#446)
+
 2025.09.25, v1.16.2
 
 fix:
