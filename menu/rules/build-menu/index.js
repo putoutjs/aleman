@@ -49,7 +49,8 @@ export const fix = ({path, menu, icon, name = ''}) => {
         
         setDataMenuIndex(i++, menuItem);
         setDataMenuPath(key, name, menuItem);
-        // setDataMenuPath(key, name, menuItem.children[3]);
+        
+        setDataMenuPath(key, name, menuItem.children[1]);
         children.push(INDENT, menuItem);
         
         if (isObject(value)) {

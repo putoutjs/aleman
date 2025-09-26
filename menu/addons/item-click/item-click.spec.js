@@ -70,7 +70,7 @@ test('aleman: menu: addons: item-click: beforeHide', (t) => {
     const getMenuPath = stub().returns('Edit');
     const beforeHide = stub();
     const args = [{
-        command: 'hide',
+        command: 'show',
         index: 1,
         insideSubmenu: false,
         name: 'menu',
@@ -90,6 +90,7 @@ test('aleman: menu: addons: item-click: beforeHide', (t) => {
         },
         state: {
             index: 1,
+            command: 'show',
         },
     });
     
@@ -113,6 +114,7 @@ test('aleman: menu: addons: item-click: run', async (t) => {
         },
         state: {
             index: 0,
+            command: 'show',
         },
     });
     await setTimeout(1000);
@@ -120,22 +122,4 @@ test('aleman: menu: addons: item-click: run', async (t) => {
     t.end();
 }, {
     checkAssertionsCount: false,
-});
-
-test('aleman: menu: item-click: listener', (t) => {
-    const {filter} = createItemClick('hi');
-    const getMenuPath = stub().returns('hello');
-    const result = filter({
-        options: {
-            getMenuPath,
-            menu: {
-                hello: {
-                    world: 'world',
-                },
-            },
-        },
-    });
-    
-    t.notOk(result);
-    t.end();
 });

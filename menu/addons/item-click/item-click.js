@@ -10,7 +10,10 @@ export const createItemClick = (name) => ({
     filter,
 });
 
-const filter = ({event, options}) => {
+const filter = ({event, state, options}) => {
+    if (state.command !== 'show')
+        return;
+    
     const {
         getMenuPath = _getMenuPath,
         menu,
