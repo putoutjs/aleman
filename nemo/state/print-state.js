@@ -1,5 +1,4 @@
-export const printState = (state) => {
-    const {items} = state;
+export const printState = ({items}) => {
     const result = [];
     
     for (const {selected, name, submenu} of items) {

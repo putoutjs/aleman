@@ -67,7 +67,7 @@ test('state: createState', (t) => {
     t.end();
 });
 
-test.only('state: updateState: down', (t) => {
+test('state: updateState: down', (t) => {
     const from = montag`
         -Hello
         -World*
@@ -82,7 +82,7 @@ test.only('state: updateState: down', (t) => {
     t.end();
 });
 
-test.only('state: updateState: down: first selected', (t) => {
+test('state: updateState: down: first selected', (t) => {
     const from = montag`
         +Hello
         -World*
@@ -97,7 +97,7 @@ test.only('state: updateState: down: first selected', (t) => {
     t.end();
 });
 
-test.only('state: updateState: down: last selected', (t) => {
+test('state: updateState: down: last selected', (t) => {
     const from = montag`
         -Hello
         +World
@@ -112,7 +112,7 @@ test.only('state: updateState: down: last selected', (t) => {
     t.end();
 });
 
-test.only('state: updateState: up', (t) => {
+test('state: updateState: up', (t) => {
     const from = montag`
         -Hello
         +World
@@ -127,7 +127,7 @@ test.only('state: updateState: up', (t) => {
     t.end();
 });
 
-test.only('state: updateState: first', (t) => {
+test('state: updateState: first', (t) => {
     const from = montag`
         +Hello
         -World
@@ -142,7 +142,7 @@ test.only('state: updateState: first', (t) => {
     t.end();
 });
 
-test.only('state: updateState: down: 2', (t) => {
+test('state: updateState: down: 2', (t) => {
     const from = montag`
         +Hello
         -World

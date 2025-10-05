@@ -1,5 +1,3 @@
-import {parseState} from './parse-state.js';
-
 const isObject = (a) => a && typeof a === 'object';
 const {entries} = Object;
 
@@ -44,9 +42,7 @@ function createMenuItems(menu, path = '') {
 }
 
 export const updateState = (command, state, {count = 1} = {}) => {
-    for (let i = 0; i < count; i ++) {
-        console.log(i, count);
-        
+    for (let i = 0; i < count; i++) {
         if (command === 'down') {
             down(state);
             continue;
@@ -90,4 +86,3 @@ function up(state) {
     
     return state;
 }
-
