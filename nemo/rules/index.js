@@ -1,0 +1,21 @@
+import * as unselectAllSubmenuItems from './unselect-all-submenu-items/index.js';
+import * as unselectWronglySelected from './unselect-wrongly-selected/index.js';
+import * as hideSubmenu from './hide-submenu/index.js';
+import * as submenu from './submenu/index.js';
+import * as setPosition from './set-position/index.js';
+import * as buildMenu from './build-menu/index.js';
+import * as menu from './menu/index.js';
+import * as select from './select/index.js';
+import * as unselectAll from './unselect-all/index.js';
+
+export const rules = {
+    'menu': menu,
+    'build-menu': buildMenu,
+    'set-position': setPosition,
+    'select': select,
+    'unselect-all': unselectAll,
+    'submenu': submenu,
+    'hide-submenu': hideSubmenu,
+    'unselect-wrongly-selected': unselectWronglySelected,
+    'unselect-all-submenu-items': unselectAllSubmenuItems,
+};
