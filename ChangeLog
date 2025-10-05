@@ -198,7 +198,7 @@ feature:
 
 feature:
 - f745059 aleman: menu: build-menu: simplify
-- 88f4f81 aleman: menu: rules: hide-submenu: siplify
+- 88f4f81 aleman: menu: rules: hide-submenu: simplify
 - ffe78e2 aleman: menu: jsx-operator: containsClass
 - 779f1e6 aleman: menu: rules: menu: simplify
 - fe341ff menu: set-position: simplify
