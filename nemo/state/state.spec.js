@@ -161,7 +161,7 @@ test('state: updateState: down: 2', (t) => {
     t.end();
 });
 
-test.only('state: updateState: down: more', (t) => {
+test('state: updateState: down: more', (t) => {
     const from = montag`
         +Hello
         -World
@@ -181,7 +181,7 @@ test.only('state: updateState: down: more', (t) => {
     t.end();
 });
 
-test.only('state: updateState: up: couple', (t) => {
+test('state: updateState: up: couple', (t) => {
     const from = montag`
         -Hello
         -World
@@ -200,7 +200,7 @@ test.only('state: updateState: up: couple', (t) => {
     t.end();
 });
 
-test.only('state: updateState: up: infiniteScroll', (t) => {
+test('state: updateState: up: infiniteScroll', (t) => {
     const from = montag`
         -Hello
         -World
