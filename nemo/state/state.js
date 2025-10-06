@@ -41,15 +41,24 @@ function createMenuItems(menu, path = '') {
     return items;
 }
 
-export const updateState = (command, state, {count = 1} = {}) => {
+export const updateState = (command, state, options = {}) => {
+    const {
+        count = 1,
+        infiniteScroll = state.infiniteScroll,
+    } = options;
+    
     for (let i = 0; i < count; i++) {
         if (command === 'down') {
-            down(state);
+            down(state, {
+                infiniteScroll,
+            });
             continue;
         }
         
         if (command === 'up') {
-            up(state);
+            up(state, {
+                infiniteScroll,
+            });
             continue;
         }
     }
@@ -57,7 +66,7 @@ export const updateState = (command, state, {count = 1} = {}) => {
     return state;
 };
 
-function down(state) {
+function down(state, {infiniteScroll}) {
     let {index, items} = state;
     
     if (index === -1) {
@@ -67,6 +76,12 @@ function down(state) {
     } else if (index < items.length - 1) {
         items[index].selected = false;
         ++index;
+        items[index].selected = true;
+    }
+    
+    if (infiniteScroll && index === items.length - 1) {
+        items[index].selected = false;
+        index = 0;
         items[index].selected = true;
     }
     

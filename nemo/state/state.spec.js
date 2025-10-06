@@ -160,3 +160,23 @@ test('state: updateState: down: 2', (t) => {
     });
     t.end();
 });
+
+test.only('state: updateState: down: more', (t) => {
+    const from = montag`
+        +Hello
+        -World
+        -ABC
+    `;
+    
+    const to = montag`
+        +Hello
+        -World
+        -ABC
+    `;
+    
+    t.updateState('down', from, to, {
+        count: 4,
+        infiniteScroll: true,
+    });
+    t.end();
+});
