@@ -180,3 +180,42 @@ test.only('state: updateState: down: more', (t) => {
     });
     t.end();
 });
+
+test.only('state: updateState: up: couple', (t) => {
+    const from = montag`
+        -Hello
+        -World
+        +ABC
+    `;
+    
+    const to = montag`
+        +Hello
+        -World
+        -ABC
+    `;
+    
+    t.updateState('up', from, to, {
+        count: 4,
+    });
+    t.end();
+});
+
+test.only('state: updateState: up: infiniteScroll', (t) => {
+    const from = montag`
+        -Hello
+        -World
+        +ABC
+    `;
+    
+    const to = montag`
+        -Hello
+        +World
+        -ABC
+    `;
+    
+    t.updateState('up', from, to, {
+        count: 4,
+        infiniteScroll: true,
+    });
+    t.end();
+});
