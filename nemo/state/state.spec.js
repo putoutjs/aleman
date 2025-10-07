@@ -220,7 +220,7 @@ test('state: updateState: up: infiniteScroll', (t) => {
     t.end();
 });
 
-test.only('state: updateState: up: submenu', (t) => {
+test('state: updateState: up: submenu', (t) => {
     const from = montag`
         -Hello
         -World
@@ -239,7 +239,7 @@ test.only('state: updateState: up: submenu', (t) => {
     t.end();
 });
 
-test.only('state: updateState: down: submenu', (t) => {
+test('state: updateState: down: submenu', (t) => {
     const from = montag`
         -Hello
         +World
