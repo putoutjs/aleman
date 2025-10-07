@@ -219,3 +219,39 @@ test('state: updateState: up: infiniteScroll', (t) => {
     });
     t.end();
 });
+
+test.only('state: updateState: up: submenu', (t) => {
+    const from = montag`
+        -Hello
+        -World
+        +ABC>
+            -A
+            -B
+    `;
+    
+    const to = montag`
+        -Hello
+        +World
+        -ABC*
+    `;
+    
+    t.updateState('up', from, to);
+    t.end();
+});
+
+test.only('state: updateState: down: submenu', (t) => {
+    const from = montag`
+        -Hello
+        +World
+        -ABC*
+    `;
+    
+    const to = montag`
+        -Hello
+        -World
+        +ABC>
+    `;
+    
+    t.updateState('down', from, to);
+    t.end();
+});

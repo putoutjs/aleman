@@ -3,7 +3,7 @@ export const printState = ({items}) => {
     
     for (const {selected, name, submenu} of items) {
         const selectionMark = selected ? '+' : '-';
-        const submenuMark = submenu ? '*' : '';
+        const submenuMark = submenu ? submenu.show ? '>' : '*' : '';
         
         const current = `${selectionMark}${name}${submenuMark}`;
         

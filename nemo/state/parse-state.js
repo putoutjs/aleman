@@ -15,11 +15,13 @@ export const parseState = (source) => {
         items,
     };
     
-    for (const [index, line] of lines.entries()) {
+    for (let index = 0; index < lines.length; index++) {
+        const line = lines[index];
         const {
             mark,
             name,
             hasSubmenu,
+            show,
         } = parseLine(line);
         
         const selected = mark === '+';
@@ -33,13 +35,33 @@ export const parseState = (source) => {
             path: name,
         };
         
-        if (hasSubmenu)
+        if (hasSubmenu) {
             assign(current, {
                 submenu: {
-                    show: false,
+                    show,
                     items: [],
                 },
             });
+            
+            for (;index < lines.length; index++) {
+                const line = lines[index];
+                const {
+                    mark,
+                    name: submenuName,
+                } = parseLine(line);
+                
+                const selected = mark === '+';
+                
+                if (selected)
+                    state.index = index;
+                
+                current.submenu.items.push({
+                    selected,
+                    name,
+                    path: `${name}.${submenuName}`,
+                });
+            }
+        }
         
         items.push(current);
     }
@@ -49,10 +71,15 @@ export const parseState = (source) => {
 
 function parseLine(line) {
     let hasSubmenu = false;
+    let show = false;
     
     if (line.endsWith('*')) {
         line = line.slice(0, -1);
         hasSubmenu = true;
+    } else if (line.endsWith('>')) {
+        line = line.slice(0, -1);
+        hasSubmenu = true;
+        show = true;
     }
     
     const [mark, ...nameChars] = line;
@@ -62,5 +89,7 @@ function parseLine(line) {
         mark,
         name,
         hasSubmenu,
+        show,
     };
 }
+

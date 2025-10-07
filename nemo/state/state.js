@@ -65,15 +65,21 @@ export const updateState = (command, state, options = {}) => {
 
 function down(state, {infiniteScroll}) {
     let {index, items} = state;
+    const current = items[index];
     
     if (index === -1) {
         const [first] = items;
         ++index;
         first.selected = true;
     } else if (index < items.length - 1) {
-        items[index].selected = false;
+        current.selected = false;
         ++index;
-        items[index].selected = true;
+        const next = items[index];
+        
+        next.selected = true;
+        
+        if (next.submenu)
+            next.submenu.show = true;
     }
     
     if (infiniteScroll && index === items.length - 1) {
@@ -89,9 +95,14 @@ function down(state, {infiniteScroll}) {
 
 function up(state, {infiniteScroll}) {
     let {index, items} = state;
+    const current = items[index];
     
     if (index > 0) {
-        items[index].selected = false;
+        current.selected = false;
+        
+        if (current.submenu)
+            current.submenu.show = false;
+        
         --index;
         items[index].selected = true;
         
