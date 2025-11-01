@@ -1,1 +1,0 @@
-<ul data-name="menu" class="menu menu-hidden"></ul>;

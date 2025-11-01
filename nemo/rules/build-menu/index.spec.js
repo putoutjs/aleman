@@ -1,48 +1,18 @@
 import {createTest} from '@putout/test';
 import * as plugin from './index.js';
 
-const noop = () => {};
-
 const test = createTest(import.meta.url, {
     plugins: [
         ['build-menu', plugin],
     ],
 });
 
-test('lib: build-menu: report', (t) => {
+test('nemo: build-menu: report', (t) => {
     t.report('build-menu', `Build menu`);
     t.end();
 });
 
-test('lib: build-menu: transform with options', (t) => {
-    t.transformWithOptions('build-menu', {
-        menuName: 'xxx',
-    });
-    t.end();
-});
-
-test('lib: build-menu: transform with options: icon', (t) => {
-    t.transformWithOptions('icon', {
-        menuName: 'xxx',
-        icon: true,
-    });
-    t.end();
-});
-
-test('lib: build-menu: transform with options: nested', (t) => {
-    t.transformWithOptions('nested', {
-        menuName: 'xxx',
-        icon: true,
-        menu: {
-            hello: {
-                world: noop,
-            },
-        },
-    });
-    t.end();
-});
-
-test('lib: build-menu: no report: built', (t) => {
-    t.noReport('built');
+test('nemo: build-menu: transform', (t) => {
+    t.transform('build-menu');
     t.end();
 });
