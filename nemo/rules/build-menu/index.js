@@ -10,7 +10,8 @@ const {
     removeClassName,
     hasDataName,
 } = operator;
-const {isJSXElement, jsxText} = types;
+
+const {jsxText} = types;
 
 export const report = () => `Build menu`;
 
@@ -47,35 +48,6 @@ const createUL = ({show}) => {
         removeClassName(node, 'menu-hidden');
     
     return node;
-};
-
-const DefaultMenu = {
-    show: true,
-    position: {
-        x: 0,
-        y: 20,
-    },
-    items: [{
-        name: 'Upload',
-        path: 'Upload',
-        selected: true,
-    }, {
-        name: 'New',
-        path: 'New',
-        selected: false,
-        submenu: {
-            show: false,
-            items: [{
-                name: 'File',
-                path: 'New.File',
-                selected: false,
-            }, {
-                name: 'Directory',
-                path: 'New.Directory',
-                selected: false,
-            }],
-        },
-    }],
 };
 
 function createMenu(menu) {
@@ -116,20 +88,14 @@ export const fix = ({path, menu}) => {
 
 export const traverse = ({options, push}) => ({
     JSXElement(path) {
-        const {
-            name = 'menu',
-            menu = DefaultMenu,
-        } = options;
+        const {name = 'menu'} = options;
         
         if (!hasDataName(path, name))
             return;
         
-        if (isJSXElement(path.parentPath))
-            return;
-        
         push({
             path,
-            menu,
+            menu: options,
         });
     },
 });
