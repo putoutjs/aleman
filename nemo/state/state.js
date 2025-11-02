@@ -1,10 +1,11 @@
 const isObject = (a) => a && typeof a === 'object';
 const {entries} = Object;
 
-export const createState = ({name = 'menu', menu = {}}) => {
+export const createState = ({name = 'menu', infinitScroll = false, menu = {}}) => {
     const items = createMenuItems(menu);
     const result = {
         name,
+        infinitScroll: false,
         index: -1,
         submenuIndex: -1,
         insideSubmenu: false,
