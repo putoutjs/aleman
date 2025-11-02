@@ -24,7 +24,7 @@ const test = createTest(import.meta.url, addon, {
     }),
 });
 
-test('aleman: menu: enter: run', (t) => {
+test('aleman: nemo: enter: run', (t) => {
     t.render('enter', {
         state: {
             index: 1,
@@ -33,7 +33,7 @@ test('aleman: menu: enter: run', (t) => {
     t.end();
 });
 
-test('aleman: menu: enter: filter: no', (t) => {
+test('aleman: nemo: enter: filter: no', (t) => {
     const result = filter({
         state: {
             command: 'hide',
@@ -44,7 +44,7 @@ test('aleman: menu: enter: filter: no', (t) => {
     t.end();
 });
 
-test('aleman: menu: enter: listener: submenu name', (t) => {
+test('aleman: nemo: enter: listener: submenu name', (t) => {
     const state = {
         index: 0,
         submenuIndex: -1,
@@ -71,7 +71,7 @@ test('aleman: menu: enter: listener: submenu name', (t) => {
     t.end();
 });
 
-test('aleman: menu: enter: listener: run', async (t) => {
+test('aleman: nemo: enter: listener: run', async (t) => {
     const state = {
         index: 0,
         submenuIndex: 0,
@@ -94,7 +94,7 @@ test('aleman: menu: enter: listener: run', async (t) => {
     t.end();
 });
 
-test('aleman: menu: enter: listener: options: beforeHide', (t) => {
+test('aleman: nemo: enter: listener: options: beforeHide', (t) => {
     const beforeHide = stub();
     const state = {
         index: 0,
