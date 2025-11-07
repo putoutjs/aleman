@@ -43,12 +43,9 @@ export const parseState = (source) => {
                 },
             });
             
-            for (;index < lines.length; index++) {
+            for (; index < lines.length; index++) {
                 const line = lines[index];
-                const {
-                    mark,
-                    name: submenuName,
-                } = parseLine(line);
+                const {mark, name: submenuName} = parseLine(line);
                 
                 const selected = mark === '+';
                 
@@ -92,4 +89,3 @@ function parseLine(line) {
         show,
     };
 }
-
