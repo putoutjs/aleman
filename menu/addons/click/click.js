@@ -12,6 +12,9 @@ export const filter = ({event, state, options}) => {
         getMenuPath = _getMenuPath,
     } = options;
     
+    if (state.command === 'hide')
+        return false;
+    
     const menuPath = getMenuPath(event);
     
     if (!menuPath)
@@ -19,10 +22,7 @@ export const filter = ({event, state, options}) => {
     
     const fn = jessy(menuPath, menu);
     
-    if (!isFn(fn))
-        return false;
-    
-    return state.command === 'show';
+    return isFn(fn);
 };
 
 export const listener = ({options, state}) => {

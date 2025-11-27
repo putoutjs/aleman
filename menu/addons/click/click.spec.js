@@ -96,3 +96,25 @@ test('aleman: menu: addons: click: beforeHide', (t) => {
 }, {
     checkAssertionsCount: false,
 });
+
+test('aleman: menu: addons: click: no report with options: no menu path: not show', (t) => {
+    const getMenuPath = stub().returns('');
+    const state = {
+        command: 'hide',
+    };
+    
+    const options = {
+        getMenuPath,
+    };
+    
+    const event = 'click';
+    
+    const result = addon.filter({
+        state,
+        options,
+        event,
+    });
+    
+    t.notOk(result);
+    t.end();
+});
