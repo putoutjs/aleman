@@ -1,3 +1,14 @@
+2025.11.27, v1.16.4
+
+fix:
+- eb62430 aleman: click (coderaiser/cloudcmd#449)
+
+feature:
+- a79d551 nemo: state: infiniteScroll
+- 2fd1806 nemo: j: updateState
+- 9c2e36a nemo: build-menu: update
+- 4d0e263 nemo: add
+
 2025.09.26, v1.16.3
 
 fix:
