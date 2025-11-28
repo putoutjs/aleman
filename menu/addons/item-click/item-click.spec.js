@@ -24,6 +24,13 @@ const test = createTest(import.meta.url, addon, {
     }),
 });
 
+test('aleman: menu: addons: item-click: createItemClick', (t) => {
+    const {stopPropagation} = createItemClick('menu');
+    
+    t.ok(stopPropagation);
+    t.end();
+});
+
 test('aleman: menu: addons: item-click: no click', (t) => {
     const getMenuPath = stub().returns('Upload');
     

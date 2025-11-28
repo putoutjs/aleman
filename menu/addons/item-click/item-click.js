@@ -8,6 +8,7 @@ export const createItemClick = (name) => ({
     events: ['click'],
     listener,
     filter,
+    stopPropagation: true,
 });
 
 const filter = ({event, state, options}) => {
