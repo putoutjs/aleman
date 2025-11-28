@@ -1,3 +1,8 @@
+2025.11.28, v1.16.5
+
+feature:
+- 2b344d2 menu: item-click: stopPropagation (coderaiser/cloudcmd#448)
+
 2025.11.27, v1.16.4
 
 fix:
