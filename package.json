@@ -33,7 +33,7 @@
     "html-escaper": "^3.0.3",
     "jessy": "^5.0.0",
     "once": "^1.4.0",
-    "putout": "^40.5.1",
+    "putout": "^41.12.0",
     "try-to-catch": "^3.0.1"
   },
   "keywords": [
