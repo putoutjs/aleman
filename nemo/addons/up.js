@@ -1,42 +1,10 @@
 import {getSubmenu} from './submenu/index.js';
+import {updateState} from '../state/state.js';
 
 export const keys = ['ArrowUp'];
 
 export const preventDefault = true;
-export const filter = ({state}) => state.command === 'show';
 
 export const listener = ({state, options}) => {
-    const {menu, infiniteScroll} = options;
-    let {
-        index,
-        insideSubmenu,
-        submenuIndex,
-    } = state;
-    
-    const count = Object.keys(menu).length;
-    
-    if (insideSubmenu && submenuIndex > 0)
-        --submenuIndex;
-    
-    if (infiniteScroll && !index)
-        index = count - 1;
-    else if (!insideSubmenu && index > 0)
-        --index;
-    
-    if (index === -1)
-        index = count - 1;
-    
-    const submenu = getSubmenu({
-        index,
-        options,
-    });
-    
-    const submenuCount = Object.keys(submenu).length;
-    const showSubmenu = submenuCount > 0;
-    
-    return {
-        index,
-        submenuIndex,
-        showSubmenu,
-    };
+    return updateState('up', state, options);
 };
