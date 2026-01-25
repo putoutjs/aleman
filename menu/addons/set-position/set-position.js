@@ -4,7 +4,7 @@ export const setPosition = (name, event) => {
     const element = document.querySelector(`[data-name="${name}"]`);
     const heightMenu = getMenuHeight(element);
     const widthMenu = getMenuWidth(element);
-    const {innerHeight, innerWidth} = window;
+    const {innerHeight, innerWidth} = globalThis;
     
     const {x, y} = calculate(event, {
         heightMenu,

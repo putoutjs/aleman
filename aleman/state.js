@@ -1,4 +1,4 @@
-import fullstore from 'fullstore';
+import {fullstore} from 'fullstore';
 
 const {assign} = Object;
 const {stringify, parse} = JSON;
@@ -39,7 +39,7 @@ export const createState = (state, {options, listener, stateName = 'aleman-state
     
     history[str] = true;
     stateElement.textContent = str;
-    window.alemanSync = fn;
+    globalThis.alemanSync = fn;
     
     document.addEventListener('keydown', ({key}) => {
         if (key === '`')

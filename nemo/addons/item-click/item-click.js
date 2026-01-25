@@ -1,4 +1,4 @@
-import jessy from 'jessy';
+import {jessy} from 'jessy';
 import {getMenuPath as _getMenuPath} from '../menu/get-menu-path.js';
 
 const isFn = (a) => typeof a === 'function';

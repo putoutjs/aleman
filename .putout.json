@@ -1,7 +1,6 @@
 {
     "rules": {
-        "putout": "on",
-        "convert-array-copy-to-slice": "off"
+        "putout": "on"
     },
     "match": {
         "aleman": {
