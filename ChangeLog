@@ -1,3 +1,16 @@
+2026.04.04, v2.0.1
+
+fix:
+- 514ce5b aleman: left: filter
+
+feature:
+- 74339b8 aleman: putout v42.4.2
+- 36c6aa4 aleman: madrun v13.0.1
+- bb8206b aleman: eslint-plugin-putout v31.1.2
+- 41dc50e aleman: eslint v10.2.0
+- ac383b2 aleman: superc8 v12.3.1
+- 3b703e8 nemo: up/down: use updateState
+
 2026.01.25, v2.0.0
 
 feature:
