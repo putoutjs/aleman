@@ -45,7 +45,7 @@
   ],
   "devDependencies": {
     "@putout/test": "^15.1.0",
-    "eslint": "^9.0.0",
+    "eslint": "^10.2.0",
     "eslint-plugin-putout": "^30.0.1",
     "just-kebab-case": "^4.2.0",
     "madrun": "^12.1.0",
