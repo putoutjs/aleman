@@ -35,6 +35,7 @@ export const traverse = ({options, push}) => ({
             name = 'menu',
             position = {},
         } = options;
+        
         const {
             x = 0,
             y = 20,
