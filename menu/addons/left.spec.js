@@ -1,5 +1,5 @@
 import {test} from 'supertape';
-import {listener} from './left.js';
+import {listener, filter} from './left.js';
 
 test('aleman: menu: addons: left', (t) => {
     const result = listener();
@@ -10,5 +10,27 @@ test('aleman: menu: addons: left', (t) => {
     };
     
     t.deepEqual(result, expected);
+    t.end();
+});
+
+test('aleman: menu: addons: left: filter: hide', (t) => {
+    const result = filter({
+        state: {
+            command: 'hide',
+        },
+    });
+    
+    t.notOk(result);
+    t.end();
+});
+
+test('aleman: menu: addons: left: filter: show', (t) => {
+    const result = filter({
+        state: {
+            command: 'show',
+        },
+    });
+    
+    t.ok(result);
     t.end();
 });
