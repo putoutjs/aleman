@@ -80,10 +80,12 @@ function createMenu(menu) {
 export const fix = ({path, menu}) => {
     path.node.children = createMenu(menu);
     
-    if (menu.show)
+    if (menu.show) {
         removeClassName(path, 'menu-hidden');
-    else
-        addClassName(path, 'menu-hidden');
+        return;
+    }
+    
+    addClassName(path, 'menu-hidden');
 };
 
 export const traverse = ({options, push}) => ({

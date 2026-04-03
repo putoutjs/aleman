@@ -32,7 +32,9 @@ test('aleman: render', (t) => {
     const html = '<div class="hello"></div>';
     const addDataName = {
         report: () => '',
-        include: () => ['JSXElement'],
+        include: () => [
+            'JSXElement',
+        ],
         fix: (path) => remove(path),
     };
     
@@ -53,7 +55,9 @@ test('aleman: render: state', (t) => {
     const html = '<div class="hello"></div>';
     const addDataName = {
         report: () => '',
-        include: () => ['JSXElement'],
+        include: () => [
+            'JSXElement',
+        ],
         filter: (path) => hasTagName(path, 'div'),
         fix: (path, {options}) => {
             const {name} = options;

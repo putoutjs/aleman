@@ -25,7 +25,7 @@ export const createRender = (html, {options, rules, type}) => {
             }];
         }
         
-        const places = findPlaces(ast, source, {
+        const places = findPlaces(ast, {
             rules: currentRules,
             plugins,
         });
@@ -37,7 +37,7 @@ export const createRender = (html, {options, rules, type}) => {
                 places,
             ];
         
-        transform(ast, source, {
+        transform(ast, {
             rules: currentRules,
             plugins,
         });

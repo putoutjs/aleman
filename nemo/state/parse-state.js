@@ -3,6 +3,7 @@ const {assign} = Object;
 export const parseState = (source) => {
     const lines = source.split('\n');
     const items = [];
+    
     const state = {
         index: -1,
         submenuIndex: -1,

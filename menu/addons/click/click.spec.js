@@ -67,6 +67,7 @@ test('aleman: menu: addons: click', (t) => {
 test('aleman: menu: addons: click: beforeHide', (t) => {
     const getMenuPath = stub().returns('Upload');
     const beforeHide = stub();
+    
     const args = [{
         command: 'show',
         index: -1,

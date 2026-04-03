@@ -69,6 +69,7 @@ test('aleman: menu: addons: item-click: hide', (t) => {
 test('aleman: menu: addons: item-click: beforeHide', (t) => {
     const getMenuPath = stub().returns('Edit');
     const beforeHide = stub();
+    
     const args = [{
         command: 'hide',
         index: 1,
@@ -125,6 +126,7 @@ test('aleman: menu: addons: item-click: run', async (t) => {
 test('aleman: menu: item-click: listener', (t) => {
     const {filter} = createItemClick('hi');
     const getMenuPath = stub().returns('hello');
+    
     const result = filter({
         options: {
             getMenuPath,

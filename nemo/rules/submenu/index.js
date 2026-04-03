@@ -32,7 +32,10 @@ export const traverse = ({options, push}) => ({
         if (!isJSXElement(path.parentPath))
             return;
         
-        const {insideSubmenu = true, submenuIndex = 1} = options;
+        const {
+            insideSubmenu = true,
+            submenuIndex = 1,
+        } = options;
         const parentMenu = path.parentPath.parentPath.parentPath;
         
         if (!isJSXElement(parentMenu))

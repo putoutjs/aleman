@@ -76,6 +76,7 @@ test('aleman: menu: addons: item-click: hide', (t) => {
 test('aleman: menu: addons: item-click: beforeHide', (t) => {
     const getMenuPath = stub().returns('Edit');
     const beforeHide = stub();
+    
     const args = [{
         command: 'show',
         index: 1,

@@ -5,6 +5,7 @@ import {
 } from 'putout';
 
 const {jsxText} = types;
+
 const {
     setAttributeValue,
     hasDataName,

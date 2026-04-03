@@ -31,8 +31,14 @@ export const fix = ({path, attr, x, y}) => {
 
 export const traverse = ({options, push}) => ({
     JSXElement(path) {
-        const {name = 'menu', position = {}} = options;
-        const {x = 0, y = 20} = position;
+        const {
+            name = 'menu',
+            position = {},
+        } = options;
+        const {
+            x = 0,
+            y = 20,
+        } = position;
         
         if (!hasDataName(path, name))
             return;

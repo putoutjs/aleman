@@ -43,7 +43,10 @@ function createMenuItems(menu, path = '') {
 }
 
 export const updateState = (command, state, options = {}) => {
-    const {count = 1, infiniteScroll = state.infiniteScroll} = options;
+    const {
+        count = 1,
+        infiniteScroll = state.infiniteScroll,
+    } = options;
     
     for (let i = 0; i < count; i++) {
         if (command === 'down') {

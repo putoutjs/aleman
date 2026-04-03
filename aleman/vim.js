@@ -46,5 +46,6 @@ export const createVimParser = (buffer = []) => ({key}) => {
     }
     
     buffer = [];
+    
     return [''];
 };

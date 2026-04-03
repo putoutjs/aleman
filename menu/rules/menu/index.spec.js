@@ -7,7 +7,7 @@ const test = createTest(import.meta.url, {
     ],
 });
 
-test('lib: show-menu: report', (t) => {
+test('lib: show-menu: report: hide-menu', (t) => {
     t.reportWithOptions('hide-menu', `Hide menu`, {
         command: 'hide',
         name: 'menu',

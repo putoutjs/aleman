@@ -3,13 +3,13 @@
     "all": true,
     "exclude": [
         "**/*.spec.*",
+        "**/*.config.*",
         "**/fixture",
-        "test",
+        "**/nemo",
         ".*.*",
         "eslint.config.js",
-        "**/*.config.*",
-        "coverage",
-        "**/nemo"
+        "test",
+        "coverage"
     ],
     "branches": 100,
     "lines": 100,
