@@ -32,7 +32,7 @@ It makes testing simple, states predictable and independent.
 
 ### Addons
 
-Addon responsible for UI and interfaction with outer world: clicks, fetches and everything like this.
+Addon responsible for UI and interaction with outer world: clicks, fetches and everything like this.
 Aleman supports next types of addons:
 
 - ✅ [Global](#globals);
