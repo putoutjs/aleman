@@ -27,7 +27,7 @@ Aleman supports two main concepts:
 - ✅ addons - events;
 - ✅ rules - 🐊**Putout** rules that changes HTML;
 
-All interaction with DOM made using rules, and we interact not with DOM directly, but with JSX AST.
+All interaction with DOM made by using the rules, and we interact not with DOM directly, but with JSX AST.
 It makes testing simple, states predictable and independent.
 
 ### Addons
