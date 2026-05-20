@@ -1,11 +1,5 @@
+import {updateState} from '../../state/state.js';
+
 export const keys = ['Escape'];
 
-export const listener = ({state, options}) => {
-    options.beforeHide?.(state);
-    
-    return {
-        command: 'hide',
-        showSubmenu: false,
-        index: -1,
-    };
-};
+export const listener = ({state, options}) => updateState('esc', state, options);
