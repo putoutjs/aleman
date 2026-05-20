@@ -1,4 +1,4 @@
-import {createMenu} from '../nemo/nemo.js';
+import {createMenu} from '../../menu/menu.js';
 
 const menuData = {
     hello: () => alert('x'),
