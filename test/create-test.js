@@ -4,7 +4,6 @@ import {createVimParser} from '../aleman/vim.js';
 import {createRender} from '../aleman/render.js';
 
 const isObject = (a) => a && typeof a === 'object';
-
 const isString = (a) => typeof a === 'string';
 
 const {isArray} = Array;
