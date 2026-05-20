@@ -1,7 +1,7 @@
 *.config.*
 *.spec.js
 *.log
-*.loc
+*.lock
 
 .*
 

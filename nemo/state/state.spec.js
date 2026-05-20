@@ -1,5 +1,5 @@
 import {extend} from 'supertape';
-import montag from 'montag';
+import {montag} from 'montag';
 import {createState, updateState} from './state.js';
 import {printState} from './print-state.js';
 import {parseState} from './parse-state.js';

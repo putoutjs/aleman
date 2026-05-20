@@ -1,7 +1,5 @@
 {
-  "action": "up",
-  "keys": [
-    "ArrowUp"
-  ],
-  "preventDefault": true
+    "action": "up",
+    "keys": ["ArrowUp"],
+    "preventDefault": true
 }
