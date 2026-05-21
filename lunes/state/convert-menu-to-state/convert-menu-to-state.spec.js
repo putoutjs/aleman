@@ -3,7 +3,7 @@ import {parse, print} from 'putout';
 import {montag} from 'montag';
 import {convertMenuToState} from './convert-menu-to-state.js';
 
-test.only('lunes: state: convert-menu-to-state', (t) => {
+test('lunes: state: convert-menu-to-state', (t) => {
     const menu = {
         view: () => alert('x'),
         edit: () => alert('y'),
@@ -31,4 +31,3 @@ test.only('lunes: state: convert-menu-to-state', (t) => {
     t.equal(result, expected);
     t.end();
 });
-
