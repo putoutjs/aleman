@@ -1,10 +1,14 @@
-import {types} from 'putout';
+import {types, operator} from 'putout';
+
+const {remove} = operator;
 
 const {
     stringLiteral,
     isArrayExpression,
     isIdentifier,
     identifier,
+    isObjectProperty,
+    isObjectExpression,
 } = types;
 
 export function last(path) {
@@ -50,12 +54,25 @@ export function next(path) {
     if (prevCursor.node)
         return prevCursor;
     
-    return path.parentPath
+    const {parentPath} = path;
+    
+    if (isObjectExpression(parentPath))
+        return parentPath.get('properties').at(-1);
+    
+    return parentPath.parentPath
         .get('properties')
         .at(-1);
 }
 
 export function clearCursor({parentPath}) {
-    parentPath.node.value = identifier(parentPath.node.key.name);
-    parentPath.node.shorthand = true;
+    if (isObjectProperty(parentPath)) {
+        parentPath.node.value = identifier(parentPath.node.key.name);
+        parentPath.node.shorthand = true;
+        
+        return;
+    }
+    
+    if (isArrayExpression(parentPath))
+        remove(parentPath.get('elements.0'));
 }
+

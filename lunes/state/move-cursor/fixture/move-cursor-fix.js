@@ -1,4 +1,4 @@
-['open', {
+['open', 'new', {
     view,
     edit,
     rename,

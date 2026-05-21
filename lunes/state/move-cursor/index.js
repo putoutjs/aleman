@@ -1,4 +1,4 @@
-import {types} from 'putout';
+import {types, operator} from 'putout';
 import {
     next,
     prev,
@@ -6,7 +6,16 @@ import {
     clearCursor,
 } from '../cursor.js';
 
-const {isArrayExpression} = types;
+const {setLiteralValue} = operator;
+const operations = {
+    prev,
+    next,
+};
+
+const {
+    isArrayExpression,
+    isExpressionStatement,
+} = types;
 
 export const report = () => `Move cursor`;
 
@@ -15,12 +24,9 @@ export const include = () => [
 ];
 
 export const filter = (path, {options}) => {
-    const {
-        operation = 'next',
-        cursor = 'view',
-    } = options;
-    
+    const {operation = 'next'} = options;
     const {parentPath} = path;
+    const cursor = getCursorLink(path).node.value;
     
     if (!operations[operation])
         return false;
@@ -29,11 +35,6 @@ export const filter = (path, {options}) => {
         return parentPath.parentPath.node.key.name === cursor;
     
     return parentPath.node.key.name === cursor;
-};
-
-const operations = {
-    prev,
-    next,
 };
 
 export const fix = (path, options) => {
@@ -50,4 +51,19 @@ export const fix = (path, options) => {
     
     clearCursor(path);
     setCursor(cursorPath);
+    
+    const cursor = getNextCursorValue(cursorPath);
+    const cursorLink = getCursorLink(path);
+    
+    setLiteralValue(cursorLink, cursor);
 };
+
+function getNextCursorValue(path) {
+    const keyPath = path.get('key');
+    return keyPath.node.name;
+}
+
+function getCursorLink(path) {
+    const expressionPath = path.find(isExpressionStatement);
+    return expressionPath.get('expression.elements.1');
+}
