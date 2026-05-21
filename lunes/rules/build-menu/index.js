@@ -1,17 +1,26 @@
-import {template} from 'putout';
-import {types} from 'putout';
-import {operator} from 'putout';
+import {
+    template,
+    types,
+    operator,
+} from 'putout';
 
-const {isExpressionStatement} = types;
-const {replaceWith} = operator;
-const {isObjectProperty} = types;
-const {removeClassName} = operator;
-const {addClassName} = operator;
-const {jsxText} = types;
-const {isArrayExpression} = types;
+const {
+    isExpressionStatement,
+    isObjectProperty,
+    jsxText,
+    isArrayExpression,
+} = types;
+const {
+    replaceWith,
+    removeClassName,
+    addClassName,
+} = operator;
 
 export const report = () => `Build menu`;
-export const include = () => ['ObjectProperty', 'ArrayExpression'];
+export const include = () => [
+    'ObjectProperty',
+    'ArrayExpression',
+];
 
 const createMenuItem = (path) => {
     const {name} = path.node.key;
