@@ -43,7 +43,6 @@ export const fix = (path, options) => {
     } = options;
     
     const getCursor = operations[operation];
-    
     let cursorPath = path.parentPath;
     
     for (let i = 0; i < count; i++)
