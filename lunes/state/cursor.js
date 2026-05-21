@@ -75,4 +75,3 @@ export function clearCursor({parentPath}) {
     if (isArrayExpression(parentPath))
         remove(parentPath.get('elements.0'));
 }
-

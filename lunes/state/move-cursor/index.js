@@ -7,6 +7,7 @@ import {
 } from '../cursor.js';
 
 const {setLiteralValue} = operator;
+
 const operations = {
     prev,
     next,
