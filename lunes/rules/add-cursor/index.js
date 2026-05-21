@@ -1,11 +1,9 @@
-import {types, operator} from 'putout';
-import {first, last, setCursor} from '../cursor.js';
-
-const {
-    stringLiteral,
-    isArrayExpression,
-    isIdentifier,
-} = types;
+import {operator} from 'putout';
+import {
+    first,
+    last,
+    setCursor,
+} from '../cursor.js';
 
 const {remove} = operator;
 

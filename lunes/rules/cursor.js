@@ -1,4 +1,4 @@
-import {types, operator} from 'putout';
+import {types} from 'putout';
 
 const {
     stringLiteral,
@@ -11,14 +11,14 @@ export function last(path) {
     return path
         .getNextSibling()
         .get('properties')
-        .at(-1)
+        .at(-1);
 }
 
 export function first(path) {
     return path
         .getNextSibling()
         .get('properties')
-        .at(0)
+        .at(0);
 }
 
 export function setCursor(path) {
@@ -55,10 +55,7 @@ export function next(path) {
         .at(-1);
 }
 
-export function clearCursor(path) {
-    const {parentPath} = path;
-    
+export function clearCursor({parentPath}) {
     parentPath.node.value = identifier(parentPath.node.key.name);
     parentPath.node.shorthand = true;
 }
-

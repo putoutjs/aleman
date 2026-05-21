@@ -1,11 +1,12 @@
 import {types} from 'putout';
+import {
+    next,
+    prev,
+    setCursor,
+    clearCursor,
+} from '../cursor.js';
 
-const {stringLiteral} = types;
-const {isIdentifier} = types;
-const {identifier} = types;
 const {isArrayExpression} = types;
-
-import {next, prev, setCursor, clearCursor} from '../cursor.js';
 
 export const report = () => `Move cursor`;
 
@@ -18,7 +19,7 @@ export const filter = (path, {options}) => {
         operation = 'next',
         cursor = 'view',
     } = options;
-     
+    
     const {parentPath} = path;
     
     if (!operations[operation])
@@ -39,7 +40,6 @@ export const fix = (path, options) => {
     const {
         operation = 'next',
         count = 1,
-        cursor,
     } = options;
     
     const getCursor = operations[operation];
