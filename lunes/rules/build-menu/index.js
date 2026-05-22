@@ -14,7 +14,7 @@ const {
 const {
     replaceWith,
     removeClassName,
-    addClassName,
+    setAttributeValue,
 } = operator;
 
 export const report = () => `Build menu`;
@@ -36,30 +36,24 @@ const createMenuItem = (path) => {
             children.push(jsxText('\n'));
         }
         
-        const ul = createUL(valuePath);
+        const submenu = createSubmenu(valuePath);
         
-        ul.children = [
+        submenu.children[3].children = [
             jsxText('\n'),
             ...children,
         ];
         
-        return ul;
+        return submenu;
     }
     
     const selected = path.node.value.value === 'cursor';
+    const classSelected = selected ? ' menu-item-selected' : '';
     
     const node = template.ast.fresh(`
-        <li data-name="menu-item" className="menu-item">
-            <label>NAME</label>
+        <li data-name="menu-item" className="menu-item${classSelected}">
+            <label>${name}</label>
         </li>
     `);
-    
-    const [, labelNode] = node.children;
-    
-    if (selected)
-        addClassName(node, 'menu-item-selected');
-    
-    labelNode.children[0].value = name;
     
     return node;
 };
@@ -76,6 +70,39 @@ const createUL = (path) => {
     return node;
 };
 
+const createSubmenu = (path) => {
+    const {name} = path.parentPath.node.key;
+    
+    const selected = path.node.elements[1].value === 'cursor';
+    const show = path.node.elements[0].value === 'open';
+    
+    const menuHidden = show ? '' : ' menu-hidden';
+    const classSelected = selected ? '  menu-item-selected' : '';
+    
+    const node = template.ast.fresh(`
+        <li data-name="menu-item" className="menu-item${classSelected}">
+            <label>${name}</label>
+            <ul className="menu${menuHidden}"></ul>
+        </li>
+    `);
+    
+    return node;
+};
+
+const parsePosition = (path) => {
+    const [left, top] = path
+        .node
+        .elements
+        .at(-2)
+        .value
+        .split(':');
+    
+    return {
+        left,
+        top,
+    };
+};
+
 export const fix = (path) => {
     if (isObjectProperty(path)) {
         replaceWith(path, createMenuItem(path));
@@ -83,15 +110,20 @@ export const fix = (path) => {
     }
     
     if (isArrayExpression(path)) {
-        const [, second] = path.node.elements;
         const ul = createUL(path);
         
-        if (isExpressionStatement(path.parentPath))
+        if (isExpressionStatement(path.parentPath)) {
             replaceWith(path, ul);
+            
+            const {left, top} = parsePosition(path);
+            
+            setAttributeValue(ul, 'style', `left: ${left}px; top: ${top}px`);
+        }
         
+        const {properties} = path.node.elements.at(-1);
         const children = [];
         
-        for (const prop of second.properties) {
+        for (const prop of properties) {
             children.push(prop);
             children.push(jsxText('\n'));
         }
