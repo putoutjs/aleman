@@ -1,4 +1,4 @@
-['open', 'view', {
+['open', '10:20', {
     view: 'cursor',
     edit,
     rename,

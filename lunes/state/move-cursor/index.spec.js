@@ -8,11 +8,15 @@ const test = createTest(import.meta.url, {
 });
 
 test('lunes: move-cursor: report', (t) => {
-    t.report('move-cursor', `Move cursor`);
+    t.reportWithOptions('move-cursor', `Move cursor`, {
+        cursor: 'view',
+    });
     t.end();
 });
 
-test('lunes: move-cursor: transform', (t) => {
-    t.transform('move-cursor');
+test('lunes: move-cursor: transform with options', (t) => {
+    t.transformWithOptions('move-cursor', {
+        cursor: 'view',
+    });
     t.end();
 });

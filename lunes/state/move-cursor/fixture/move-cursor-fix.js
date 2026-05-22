@@ -1,4 +1,4 @@
-['open', 'new', {
+['open', '10:20', {
     view,
     edit,
     rename,
