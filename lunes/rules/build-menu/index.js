@@ -111,8 +111,6 @@ const parsePosition = (path) => {
     };
 };
 
-const JSX_NEWLINE = jsxText('\n');
-
 export const fix = (path) => {
     if (isObjectProperty(path)) {
         replaceWith(path, createMenuItem(path));
@@ -146,4 +144,3 @@ export const fix = (path) => {
         return;
     }
 };
-
