@@ -5,10 +5,7 @@ import {
     setCursor,
 } from '../cursor.js';
 
-const {
-    setLiteralValue,
-    remove,
-} = operator;
+const {remove} = operator;
 
 const operations = {
     last,
@@ -36,4 +33,3 @@ export const fix = (path, {options}) => {
     
     remove(path);
 };
-
