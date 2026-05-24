@@ -97,21 +97,10 @@ const createSubmenu = (path) => {
     return node;
 };
 
-const parsePosition = (path) => {
-    const [left, top] = path
-        .node
-        .elements
-        .at(-2)
-        .value
-        .split(':');
+export const fix = (path, {options}) => {
+    const {position} = options;
+    const {top, left} = position;
     
-    return {
-        left,
-        top,
-    };
-};
-
-export const fix = (path) => {
     if (isObjectProperty(path)) {
         replaceWith(path, createMenuItem(path));
         return;
@@ -122,9 +111,6 @@ export const fix = (path) => {
         
         if (isExpressionStatement(path.parentPath)) {
             replaceWith(path, ul);
-            
-            const {left, top} = parsePosition(path);
-            
             setAttributeValue(ul, 'style', `left: ${left}px; top: ${top}px`);
         }
         

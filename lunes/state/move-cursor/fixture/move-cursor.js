@@ -1,8 +1,8 @@
-['open', '10:20', {
+['on', {
     view: 'cursor',
     edit,
     rename,
-    new: ['close', {
+    new: ['off', {
         file,
         directory,
     }],

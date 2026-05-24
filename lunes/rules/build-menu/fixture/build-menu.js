@@ -1,4 +1,4 @@
-['on', '100:20', {
+['on', {
     view,
     edit,
     rename,

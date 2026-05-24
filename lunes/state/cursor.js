@@ -36,7 +36,7 @@ export function setCursor(path) {
     }
     
     if (isArrayExpression(valuePath))
-        valuePath.node.elements.unshift(stringLiteral('cursor'));
+        valuePath.node.elements.splice(1, 0, stringLiteral('cursor'));
 }
 
 export function prev(path) {

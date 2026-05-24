@@ -12,7 +12,12 @@ test('lunes: build-menu: report', (t) => {
     t.end();
 });
 
-test('lunes: build-menu: transform', (t) => {
-    t.transform('build-menu');
+test('lunes: build-menu: transform with options', (t) => {
+    t.transformWithOptions('build-menu', {
+        position: {
+            left: 100,
+            top: 20,
+        },
+    });
     t.end();
 });

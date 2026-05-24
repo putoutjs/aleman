@@ -5,7 +5,10 @@ import {
     setCursor,
 } from '../cursor.js';
 
-const {setLiteralValue} = operator;
+const {
+    setLiteralValue,
+    remove,
+} = operator;
 
 const operations = {
     last,
@@ -31,8 +34,6 @@ export const fix = (path, {options}) => {
     
     setCursor(cursorPath);
     
-    const keyPath = cursorPath.get('key');
-    const {name} = keyPath.node;
-    
-    setLiteralValue(path.node, name);
+    remove(path);
 };
+
