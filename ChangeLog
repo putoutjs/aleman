@@ -1,3 +1,15 @@
+2026.05.24, v2.0.3
+
+feature:
+- 5afafd1 importmap: @putout/bundle@5.5.0
+- 1c86e51 lunes: move-cursor: options: cursor
+- d862a0e lunes: build-menu: position
+- 54353ab lunes: build-menu: add
+- f2f2e3a aleman: lunes: put cursor to AST
+- 0274408 lunes: rules -> state
+- d2a55a8 aleman: lunes: add
+- ac3c8a1 nemo: rules: simplify
+
 2026.05.20, v2.0.2
 
 feature:
