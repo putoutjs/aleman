@@ -1,9 +1,9 @@
-['open', '100:20', {
+['on', '100:20', {
     view,
     edit,
     rename,
-    new: ['open', 'cursor', {
+    new: ['on', 'cursor', {
         file,
         directory,
-    }]
+    }],
 }];

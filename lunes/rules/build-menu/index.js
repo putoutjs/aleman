@@ -17,6 +17,20 @@ const {
     setAttributeValue,
 } = operator;
 
+const isOn = ({node}) => {
+    if (isObjectProperty(node))
+        return node.value.value;
+    
+    return node.elements[0].value === 'on';
+};
+
+const isSelected = ({node}) => {
+    if (isObjectProperty(node))
+        return node.value.value;
+    
+    return node.elements[1].value === 'cursor';
+};
+
 export const report = () => `Build menu`;
 export const include = () => [
     'ObjectProperty',
@@ -46,8 +60,7 @@ const createMenuItem = (path) => {
         return submenu;
     }
     
-    const selected = path.node.value.value === 'cursor';
-    const classSelected = selected ? ' menu-item-selected' : '';
+    const classSelected = isSelected(path) ? 'menu-item-selected' : '';
     
     const node = template.ast.fresh(`
         <li data-name="menu-item" className="menu-item${classSelected}">
@@ -59,12 +72,11 @@ const createMenuItem = (path) => {
 };
 
 const createUL = (path) => {
-    const show = path.node.elements[0].value === 'open';
     const node = template.ast.fresh(`
         <ul className="menu menu-hidden"></ul>
     `);
     
-    if (show)
+    if (isOn(path))
         removeClassName(node, 'menu-hidden');
     
     return node;
@@ -72,12 +84,8 @@ const createUL = (path) => {
 
 const createSubmenu = (path) => {
     const {name} = path.parentPath.node.key;
-    
-    const selected = path.node.elements[1].value === 'cursor';
-    const show = path.node.elements[0].value === 'open';
-    
-    const menuHidden = show ? '' : ' menu-hidden';
-    const classSelected = selected ? '  menu-item-selected' : '';
+    const menuHidden = isOn(path) ? '' : ' menu-hidden';
+    const classSelected = isSelected(path) ? '  menu-item-selected' : '';
     
     const node = template.ast.fresh(`
         <li data-name="menu-item" className="menu-item${classSelected}">
@@ -102,6 +110,8 @@ const parsePosition = (path) => {
         top,
     };
 };
+
+const JSX_NEWLINE = jsxText('\n');
 
 export const fix = (path) => {
     if (isObjectProperty(path)) {
@@ -136,3 +146,4 @@ export const fix = (path) => {
         return;
     }
 };
+
