@@ -25,7 +25,8 @@
     "report": "madrun report"
   },
   "imports": {
-    "#test": "./test/create-test.js"
+    "#test": "./test/create-test.js",
+    "#aleman": "./aleman/lib/index.js"
   },
   "dependencies": {
     "@putout/processor-html": "^14.0.2",
