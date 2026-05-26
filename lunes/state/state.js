@@ -6,12 +6,10 @@ import * as moveCursor from './move-cursor/index.js';
 export const createState = (menu) => {
     const state = convertMenuToState(menu);
     
-    return {
-        updateState: createUpdateState(state),
-    };
+    return state;
 };
 
-function createUpdateState(state, options) {
+export function createUpdateState(state, options) {
     const {code} = putout(state, {
         rules: {
             'add-cursor': ['on', options],
