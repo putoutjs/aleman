@@ -17,4 +17,3 @@ globalThis.addEventListener('keydown', (event) => {
     if (event.key === 'F9')
         menu.show();
 });
-

@@ -3,11 +3,7 @@ import {convertMenuToState} from './convert-menu-to-state/convert-menu-to-state.
 import * as addCursor from './add-cursor/index.js';
 import * as moveCursor from './move-cursor/index.js';
 
-export const createState = (menu) => {
-    const state = convertMenuToState(menu);
-    
-    return state;
-};
+export const createState = (menu) => convertMenuToState(menu);
 
 export function createUpdateState(state, options) {
     const {code} = putout(state, {
