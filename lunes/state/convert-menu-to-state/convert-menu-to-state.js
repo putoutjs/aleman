@@ -1,7 +1,7 @@
 const {entries} = Object;
 const isObject = (a) => a && typeof a === 'object';
 
-export function convertMenuToState(menu) {
+export function convertMenuToState(menu, {submenu} = {}) {
     const result = [];
     
     for (const [key, value] of entries(menu)) {
@@ -10,8 +10,12 @@ export function convertMenuToState(menu) {
             continue;
         }
         
-        result.push(`${key}: ${convertMenuToState(value)}`);
+        result.push(`${key}: ${convertMenuToState(value, {
+            submenu: true,
+        })}`);
     }
     
-    return `['close',{${result.join(',')}}]`;
+    const noCursor = submenu ? '' : `'no-cursor', `;
+    
+    return `['off', ${noCursor} {${result.join(', ')}}]`;
 }

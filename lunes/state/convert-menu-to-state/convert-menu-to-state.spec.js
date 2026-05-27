@@ -18,10 +18,10 @@ test('lunes: state: convert-menu-to-state', (t) => {
     const result = print(ast);
     
     const expected = montag`
-        ['close', {
+        ['off', 'no-cursor', {
             view,
             edit,
-            new: ['close', {
+            new: ['off', {
                 file,
                 directory,
             }],
