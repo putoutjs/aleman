@@ -7,8 +7,9 @@ export const listen = (events = ['click'], overrides = {}) => ({
         
         const queue = [];
         let resolveNext;
+        const handlers = [];
         
-        const handlers = events.map((event) => {
+        for (const event of events) {
             const fn = () => {
                 if (resolveNext) {
                     resolveNext({
@@ -25,15 +26,15 @@ export const listen = (events = ['click'], overrides = {}) => ({
             
             addEventListener(event, fn);
             
-            return {
+            handlers.push({
                 event,
                 fn,
-            };
-        });
+            });
+        }
         
         const cleanup = () => {
-            for (const h of handlers) {
-                removeEventListener(h.event, h.fn);
+            for (const {event, fn} of handlers) {
+                removeEventListener(event, fn);
             }
         };
         
