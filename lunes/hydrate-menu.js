@@ -3,6 +3,10 @@ import {render} from './render/render.js';
 import {actions} from './actions/index.js';
 import {createLoop} from './engine/engine.js';
 import {createCompiler} from './compiler/compiler.js';
+import {getPosition} from './engine/position/get-position.js';
+
+const isNumber = (a) => !Number.isNaN(a) && typeof a === 'number';
+const isUndefined = (a) => typeof a === 'undefined';
 
 export const hydrateMenu = (elementName, {hydrateElement, menu}) => {
     const {commit} = createState(menu);
@@ -17,7 +21,7 @@ export const hydrateMenu = (elementName, {hydrateElement, menu}) => {
     });
     
     return {
-        show: (top, left) => {
+        show: (top = 0, left = 0) => {
             compile('show', {
                 position: {
                     top,
@@ -26,7 +30,10 @@ export const hydrateMenu = (elementName, {hydrateElement, menu}) => {
             });
         },
         hide: () => {
-            compile('hide');
+            compile('hide', {
+                position: {},
+            });
         },
     };
 };
+

@@ -30,6 +30,5 @@ export const fix = (path, {options}) => {
     const cursorPath = getCursor(path);
     
     setCursor(cursorPath);
-    
     remove(path);
 };

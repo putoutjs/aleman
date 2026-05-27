@@ -1,6 +1,6 @@
-import {calculate} from '../../../lunes/engine/position/calculate.js';
+import {calculate} from './calculate.js';
 
-export const setPosition = (name, event) => {
+export const getPosition = (name, event) => {
     const element = document.querySelector(`[data-name="${name}"]`);
     const heightMenu = getMenuHeight(element);
     const widthMenu = getMenuWidth(element);
@@ -13,13 +13,13 @@ export const setPosition = (name, event) => {
         innerHeight,
     });
     
-    element.style.left = `${x}px`;
-    element.style.top = `${y}px`;
+    const left = x;
+    const top = y;
     
     return {
         position: {
-            x,
-            y,
+            left,
+            top,
         },
     };
 };
