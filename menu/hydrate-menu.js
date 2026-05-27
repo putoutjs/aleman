@@ -6,7 +6,6 @@ import {createMouseEnter} from './addons/mouse-leave/index.js';
 import {createItemClick} from './addons/item-click/item-click.js';
 import * as click from './addons/click/click.js';
 import {createContextMenu} from './addons/context-menu.js';
-import {setPosition} from './addons/set-position/set-position.js';
 
 const {assign} = Object;
 
@@ -29,7 +28,6 @@ export const hydrateMenu = (elementName, {hydrateElement, options, menu}) => {
             ...addons,
         ],
         rules,
-        afterHydrate: setPosition,
         stateName: `aleman-state-${name}`,
     });
     
