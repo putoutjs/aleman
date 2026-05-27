@@ -7,11 +7,15 @@ export const createState = (menu) => {
     const state = convertMenuToState(menu);
     
     return {
-        updateState: createUpdateState(state),
+        commit: createCommit(state),
     };
 };
 
-const createUpdateState = (state) => (options) => {
+const createCommit = (state) => (operation) => {
+    const options = {
+        operation,
+    };
+    
     const {code} = putout(state, {
         rules: {
             'add-cursor': ['on', options],

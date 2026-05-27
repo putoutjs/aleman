@@ -9,7 +9,6 @@ export const createMenu = async (elementName, options, menu) => {
     await createMap();
     await loadStyle();
     
-    createStateElement(name);
     const {hydrateMenu} = await import('./hydrate-menu.js');
     
     return hydrateMenu(elementName, {
@@ -72,20 +71,6 @@ function createHydrate(name) {
     document.body.append(section);
     
     return section;
-}
-
-function createStateElement(name) {
-    const elementName = `aleman-state-${name}`;
-    
-    if (findByName(elementName))
-        return;
-    
-    const section = document.createElement('section');
-    
-    section.dataset.name = elementName;
-    section.classList.add('menu-hidden');
-    section.dataset.name = elementName;
-    document.body.append(section);
 }
 
 async function createMap() {

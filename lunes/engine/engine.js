@@ -1,20 +1,16 @@
-/*
 import {listen} from './listen.js';
-export const hydrate = async (element, config) => {
-    const {
-        options,
-        state,
-        actions,
-    } = config;
-    
-    for await (const ops of listen('editor', actions, {
-        emitBefore,
-        emitIf,
-        emitRun,
-        createVimParser,
-    })) {
-        const state = commit(ops);
-        updateDOM(render(state));
+
+export const createLoop = (element, {actions, compile}) => {
+    setTimeout(async () => {
+        await loop({
+            actions,
+            compile,
+        });
+    });
+};
+
+const loop = async ({actions, compile}) => {
+    for await (const [operation, cursor] of listen(actions)) {
+        compile(operation, cursor);
     }
 };
- */

@@ -1,15 +1,9 @@
 import {putout} from 'putout';
 import {merge} from '@putout/processor-html';
-import * as buildMenu from './rules/build-menu';
+import * as buildMenu from './rules/build-menu/index.js';
 
 export const render = (state, options) => {
     const {code} = putout(state, {
-        printer: ['putout', {
-            format: {
-                newline: '\n',
-                endOfFile: '',
-            },
-        }],
         rules: {
             'lunes/build-menu': ['on', options],
         },
@@ -18,12 +12,5 @@ export const render = (state, options) => {
         ],
     });
     
-    const prefix = '<template>';
-    const suffix = '<\\template>\n';
-    
-    const result = merge('', [code])
-        .slice(prefix.length, -suffix.length)
-        .trim();
-    
-    return result;
+    return merge('', [code]);
 };
