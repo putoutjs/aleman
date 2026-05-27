@@ -1,3 +1,18 @@
+2026.05.27, v2.0.4
+
+fix:
+- 79ad4aa aleman: menu: rm afterHydrate
+- 98c1d80 example: menu
+
+feature:
+- fe3cf8c lunes: Escape
+- b592739 lunes: apply-visibility: add
+- f2b6589 lunes: render
+- 17ac3a2 lunes: event loop
+- af911e2 lunes: hydrate
+- ed3bf43 lunes: cursor
+- 6408584 lunes: build-menu: open/close -> on/off
+
 2026.05.24, v2.0.3
 
 feature:
