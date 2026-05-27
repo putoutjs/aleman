@@ -1,4 +1,5 @@
 import {putout} from 'putout';
+import {fullstore} from 'fullstore';
 import {convertMenuToState} from './convert-menu-to-state/convert-menu-to-state.js';
 import * as addCursor from './rules/add-cursor/index.js';
 import * as moveCursor from './rules/move-cursor/index.js';
@@ -6,18 +7,19 @@ import * as applyVisibility from './rules/apply-visibility/index.js';
 
 export const createState = (menu) => {
     const state = convertMenuToState(menu);
+    const stateStore = fullstore(state);
     
     return {
-        commit: createCommit(state),
+        commit: createCommit(stateStore),
     };
 };
 
-const createCommit = (state) => (operation) => {
+const createCommit = (stateStore) => (operation) => {
     const options = {
         operation,
     };
     
-    const {code} = putout(state, {
+    const {code} = putout(stateStore(), {
         rules: {
             'add-cursor': ['on', options],
             'move-cursor': ['on', options],
@@ -29,6 +31,8 @@ const createCommit = (state) => (operation) => {
             ['apply-visibility', applyVisibility],
         ],
     });
+    
+    stateStore(code);
     
     return code;
 };

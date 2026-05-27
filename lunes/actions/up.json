@@ -1,5 +1,5 @@
 {
     "keys": ["ArrowUp"],
     "preventDefault": true,
-    "operations": ["up"]
+    "operations": ["prev"]
 }
