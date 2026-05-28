@@ -1,9 +1,6 @@
-import {putout} from 'putout';
 import {fullstore} from 'fullstore';
 import {convertMenuToState} from './convert-menu-to-state/convert-menu-to-state.js';
-import * as addCursor from './rules/add-cursor/index.js';
-import * as moveCursor from './rules/move-cursor/index.js';
-import * as applyVisibility from './rules/apply-visibility/index.js';
+import {transform} from './transformer/transformer';
 
 export const createState = (menu) => {
     const state = convertMenuToState(menu);
@@ -19,20 +16,11 @@ const createCommit = (stateStore) => (operation) => {
         operation,
     };
     
-    const {code} = putout(stateStore(), {
-        rules: {
-            'add-cursor': ['on', options],
-            'move-cursor': ['on', options],
-            'apply-visibility': ['on', options],
-        },
-        plugins: [
-            ['add-cursor', addCursor],
-            ['move-cursor', moveCursor],
-            ['apply-visibility', applyVisibility],
-        ],
-    });
+    const state = stateStore();
+    const newState = transform(state, operation, options);
     
-    stateStore(code);
+    stateStore(newState);
     
-    return code;
+    return newState;
 };
+

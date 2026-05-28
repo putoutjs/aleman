@@ -26,7 +26,9 @@
   },
   "imports": {
     "#test": "./test/create-test.js",
-    "#aleman": "./aleman/lib/index.js"
+    "#aleman": "./aleman/lib/index.js",
+    "#lunes/state/rules/move-cursor": "./lunes/state/rules/move-cursor/index.js",
+    "#lunes/state/rules/apply-visibility": "./lunes/state/rules/apply-visibility/index.js"
   },
   "dependencies": {
     "@putout/processor-html": "^14.0.2",
