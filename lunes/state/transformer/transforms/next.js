@@ -1,4 +1,4 @@
-import * as moveCursor from '#lunes/state/rules/move-cursor';
+import * as moveCursor from '../rules/move-cursor/index.js';
 
 export const next = (options) => ({
     rules: {

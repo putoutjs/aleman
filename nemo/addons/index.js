@@ -8,9 +8,7 @@ import * as shiftG from './shift-g/shift-g.js';
 import * as gg from './gg/gg.js';
 import * as j from './j/j.js';
 import * as k from './k/k.js';
-import up from './up.json' with {
-    type: 'json',
-};
+import * as up from './up.js';
 
 export const addons = [
     click,

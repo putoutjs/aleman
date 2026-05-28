@@ -1,8 +1,8 @@
 import {putout} from 'putout';
 import {next} from './transforms/next.js';
 import {prev} from './transforms/prev.js';
-import {hide} from './transforms/hide';
-import {show} from './transforms/show';
+import {hide} from './transforms/hide.js';
+import {show} from './transforms/show.js';
 
 const transforms = {
     next,
@@ -18,4 +18,3 @@ export const transform = (state, operation, options) => {
     
     return code;
 };
-

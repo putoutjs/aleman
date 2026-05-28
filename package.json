@@ -11,8 +11,7 @@
     "url": "git+https://github.com/putoutjs/aleman.git"
   },
   "exports": {
-    "./menu": "./menu/menu.js",
-    "./nemo": "./menu/nemo.js"
+    "./menu": "./menu/menu.js"
   },
   "scripts": {
     "test": "madrun test",
@@ -26,9 +25,7 @@
   },
   "imports": {
     "#test": "./test/create-test.js",
-    "#aleman": "./aleman/lib/index.js",
-    "#lunes/state/rules/move-cursor": "./lunes/state/rules/move-cursor/index.js",
-    "#lunes/state/rules/apply-visibility": "./lunes/state/rules/apply-visibility/index.js"
+    "#aleman": "./aleman/lib/index.js"
   },
   "dependencies": {
     "@putout/processor-html": "^14.0.2",

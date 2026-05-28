@@ -1,6 +1,6 @@
 import {fullstore} from 'fullstore';
 import {convertMenuToState} from './convert-menu-to-state/convert-menu-to-state.js';
-import {transform} from './transformer/transformer';
+import {transform} from './transformer/transformer.js';
 
 export const createState = (menu) => {
     const state = convertMenuToState(menu);
@@ -23,4 +23,3 @@ const createCommit = (stateStore) => (operation) => {
     
     return newState;
 };
-

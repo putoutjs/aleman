@@ -1,4 +1,5 @@
-import * as applyVisibility from '#lunes/state/rules/apply-visibility';
+import * as applyVisibility from '../rules/apply-visibility/index.js';
+
 export const hide = (options) => ({
     rules: {
         'apply-visibility': ['on', options],
