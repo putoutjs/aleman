@@ -5,7 +5,4 @@ import down from './down.json' with {
     type: 'json',
 };
 
-export const actions = [
-    up,
-    down,
-];
+export const actions = [up, down];
