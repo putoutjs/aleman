@@ -60,7 +60,7 @@ const createMenuItem = (path) => {
         return submenu;
     }
     
-    const classSelected = isSelected(path) ? 'menu-item-selected' : '';
+    const classSelected = isSelected(path) ? ' menu-item-selected' : '';
     
     const node = template.ast.fresh(`
         <li data-name="menu-item" className="menu-item${classSelected}">

@@ -12,6 +12,16 @@ test('lunes: build-menu: report', (t) => {
     t.end();
 });
 
+test('lunes: build-menu: transform with options: selected', (t) => {
+    t.transformWithOptions('selected', {
+        position: {
+            left: 100,
+            top: 20,
+        },
+    });
+    t.end();
+});
+
 test('lunes: build-menu: transform with options', (t) => {
     t.transformWithOptions('build-menu', {
         position: {
@@ -21,3 +31,4 @@ test('lunes: build-menu: transform with options', (t) => {
     });
     t.end();
 });
+
