@@ -31,4 +31,3 @@ test('lunes: build-menu: transform with options', (t) => {
     });
     t.end();
 });
-
