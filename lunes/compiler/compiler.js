@@ -11,4 +11,3 @@ export const createCompiler = (element, {commit, render, mainOptions = fullstore
     
     mainOptions(allOptions);
 };
-
