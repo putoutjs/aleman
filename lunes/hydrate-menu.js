@@ -26,9 +26,7 @@ export const hydrateMenu = (elementName, {hydrateElement, menu}) => {
             });
         },
         hide: () => {
-            compile('hide', {
-                position: {},
-            });
+            compile('hide');
         },
     };
 };
