@@ -5,7 +5,5 @@ export const importmap = {
         'fullstore': 'https://esm.sh/fullstore',
         'jessy': 'https://esm.sh/jessy',
         '#aleman': '../aleman/aleman.js',
-        '#lunes/state/rules/apply-visibility': './lunes/state/rules/apply-visibility/index.js',
-        '#lunes/state/rules/move': './lunes/state/rules/move-cursor/index.js',
     },
 };
