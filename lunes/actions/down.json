@@ -1,0 +1,5 @@
+{
+    "keys": ["ArrowDown"],
+    "preventDefault": true,
+    "operations": ["next"]
+}
