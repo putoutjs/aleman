@@ -1,0 +1,8 @@
+{
+    "preventDefault": true,
+    "events": [
+        "contextmenu"
+    ],
+    "operations": ["show"]
+}
+

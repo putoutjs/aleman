@@ -1,0 +1,8 @@
+{
+    "preventDefault": true,
+    "events": [
+        "click"
+    ],
+    "operations": ["hide"]
+}
+

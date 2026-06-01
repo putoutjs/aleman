@@ -4,5 +4,11 @@ import up from './up.json' with {
 import down from './down.json' with {
     type: 'json',
 };
+import click from './click.json' with {
+    type: 'json',
+};
+import contextMenu from './context-menu.json' with {
+    type: 'json',
+};
 
-export const actions = [up, down];
+export const actions = [up, down, click, contextMenu];
