@@ -1,11 +1,22 @@
 import {emitBefore} from '../../aleman/emit.js';
 import {createVimParser} from './vim.js';
 
+const {values} = Object;
+const {isArray} = Array;
+const getDefault = (a) => a.default;
+
 const maybeEvents = ({events}) => {
     if (events)
         return events;
     
     return ['keydown'];
+};
+
+const maybeActions = (actions) => {
+    if (isArray(actions))
+        return actions;
+    
+    return values(actions).map(getDefault);
 };
 
 export const listen = (actions = [], overrides = {}) => ({
@@ -20,7 +31,7 @@ export const listen = (actions = [], overrides = {}) => ({
         let resolveNext;
         const handlers = [];
         
-        for (const action of actions) {
+        for (const action of maybeActions(actions)) {
             const events = maybeEvents(action);
             
             for (const event of events) {
