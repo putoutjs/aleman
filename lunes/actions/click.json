@@ -1,8 +1,5 @@
 {
     "preventDefault": true,
-    "events": [
-        "click"
-    ],
+    "events": ["click"],
     "operations": ["hide"]
 }
-

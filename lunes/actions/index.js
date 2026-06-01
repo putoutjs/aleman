@@ -11,4 +11,9 @@ import contextMenu from './context-menu.json' with {
     type: 'json',
 };
 
-export const actions = [up, down, click, contextMenu];
+export const actions = [
+    up,
+    down,
+    click,
+    contextMenu,
+];
