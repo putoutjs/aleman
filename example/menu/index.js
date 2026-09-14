@@ -1,19 +1,40 @@
 import {createMenu} from '../../menu/menu.js';
 
-const menuData = {
-    hello: () => alert('x'),
-    world: () => alert('y'),
-};
+globalThis.window.__fired = globalThis.window.__fired || [];
 
-const options = {
-    name: 'menu',
-    infiniteScroll: true,
-};
+globalThis.window.__menu = {
+    show: (x, y) => {
+        const menuData = {
+            hello: () => {
+                globalThis.window.__fired.push('hello');
+                alert('x');
+            },
+            world: () => {
+                globalThis.window.__fired.push('world');
+                alert('y');
+            },
+        };
 
-const {name} = document.body.dataset;
-const menu = await createMenu(name, options, menuData);
+        const options = {
+            name: 'menu',
+            infiniteScroll: true,
+        };
+
+        const {name} = document.body.dataset;
+        const menu = createMenu(name, options, menuData);
+        
+        menu.show(x, y);
+        return menu;
+    },
+    hide: () => {
+        const stateElement = document.querySelector('[data-name="menu"]');
+        if (stateElement) {
+            stateElement.textContent = 'null';
+        }
+    },
+};
 
 globalThis.addEventListener('keydown', (event) => {
     if (event.key === 'F9')
-        menu.show();
+        globalThis.window.__menu.show();
 });

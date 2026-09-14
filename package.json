@@ -44,6 +44,7 @@
     "debugger"
   ],
   "devDependencies": {
+    "@playwright/test": "^1.63.0",
     "@putout/test": "^15.1.0",
     "eslint": "^10.2.0",
     "eslint-plugin-putout": "^31.1.2",
@@ -51,6 +52,7 @@
     "madrun": "^13.0.1",
     "montag": "^2.0.1",
     "nodemon": "^3.0.1",
+    "serve": "^14.2.6",
     "superc8": "^12.3.1",
     "supertape": "^13.2.0",
     "try-catch": "^4.0.7"

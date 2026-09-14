@@ -15,4 +15,7 @@ export default {
     'fix:lint': () => run('lint', '--fix'),
     'coverage': async () => `c8 ${await run('test')}`,
     'report': () => 'c8 report --reporter=lcov',
+    'test:e2e': () => `playwright test`,
+    'test:e2e:menu': () => `playwright test --project=menu`,
+    'test:e2e:nemo': () => `playwright test --project=nemo`,
 };
