@@ -3,7 +3,7 @@ import {filter} from './right.js';
 
 const noop = () => {};
 
-test('aleman: menu: addons: right', (t) => {
+test('nemo: addons: right', (t) => {
     const state = {
         index: 0,
     };
@@ -25,7 +25,7 @@ test('aleman: menu: addons: right', (t) => {
     t.end();
 });
 
-test('aleman: menu: addons: right: filter: no', (t) => {
+test('nemo: addons: right: filter: no', (t) => {
     const state = {
         index: 1,
     };

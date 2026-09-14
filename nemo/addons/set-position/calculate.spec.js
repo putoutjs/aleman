@@ -1,7 +1,7 @@
 import {test} from 'supertape';
 import {calculate} from './calculate.js';
 
-test('aleman: menu: addons: set-position: iphone', (t) => {
+test('nemo: addons: set-position: iphone', (t) => {
     const event = {
         clientX: 128,
         clientY: 238,
