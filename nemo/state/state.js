@@ -81,9 +81,6 @@ function down(state, {infiniteScroll}) {
         const next = items[index];
         
         next.selected = true;
-        
-        if (next.submenu)
-            next.submenu.show = true;
     }
     
     if (infiniteScroll && index === items.length - 1) {

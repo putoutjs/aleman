@@ -40,6 +40,7 @@ test('state: createState', (t) => {
         },
         show: true,
         submenuIndex: -1,
+        infiniteScroll: false,
         items: [{
             name: 'Hello',
             path: 'Hello',
@@ -249,7 +250,7 @@ test('state: updateState: down: submenu', (t) => {
     const to = montag`
         -Hello
         -World
-        +ABC>
+        +ABC*
     `;
     
     t.updateState('down', from, to);
