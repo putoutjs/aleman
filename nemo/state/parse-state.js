@@ -28,7 +28,7 @@ export const parseState = (source) => {
         const selected = mark === '+';
         
         if (selected)
-            state.index = index;
+            state.index = items.length;
         
         const current = {
             selected,
@@ -44,18 +44,22 @@ export const parseState = (source) => {
                 },
             });
             
-            for (; index < lines.length; index++) {
-                const line = lines[index];
-                const {mark, name: submenuName} = parseLine(line);
+            while (index + 1 < lines.length) {
+                const nextLine = lines[index + 1];
                 
+                if (!nextLine.startsWith('    '))
+                    break;
+                
+                index++;
+                const {mark, name: submenuName} = parseLine(nextLine.trim());
                 const selected = mark === '+';
                 
                 if (selected)
-                    state.index = index;
+                    state.submenuIndex = current.submenu.items.length;
                 
                 current.submenu.items.push({
                     selected,
-                    name,
+                    name: submenuName,
                     path: `${name}.${submenuName}`,
                 });
             }
