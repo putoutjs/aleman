@@ -37,7 +37,8 @@ export const createState = (state, {options, listener, stateName = 'aleman-state
     const observer = new MutationObserver(fn);
     const str = stringify(state, null, 4);
     
-    history[str] = true;
+    // Do not pollute window.history
+    // history[str] = true;
     stateElement.textContent = str;
     globalThis.alemanSync = fn;
     
