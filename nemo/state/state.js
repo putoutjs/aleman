@@ -62,10 +62,31 @@ export const updateState = (command, state, options = {}) => {
             });
             continue;
         }
+        
+        if (command === 'esc') {
+            esc(state);
+            continue;
+        }
     }
     
     return state;
 };
+
+function esc(state) {
+    for (const item of state.items) {
+        item.selected = false;
+        if (item.submenu) {
+            item.submenu.show = false;
+        }
+    }
+    state.index = -1;
+    state.submenuIndex = -1;
+    state.insideSubmenu = false;
+    state.command = 'hide';
+    state.show = false;
+    
+    return state;
+}
 
 function down(state, {infiniteScroll}) {
     let {index, items} = state;

@@ -256,3 +256,35 @@ test('state: updateState: down: submenu', (t) => {
     t.updateState('down', from, to);
     t.end();
 });
+
+test('state: updateState: esc', (t) => {
+    const from = montag`
+        +Hello
+        -World*
+    `;
+    
+    const to = montag`
+        -Hello
+        -World*
+    `;
+    
+    t.updateState('esc', from, to);
+    t.end();
+});
+
+test('state: updateState: esc: submenu', (t) => {
+    const from = montag`
+        -Hello
+        +ABC>
+            -A
+            -B
+    `;
+    
+    const to = montag`
+        -Hello
+        -ABC*
+    `;
+    
+    t.updateState('esc', from, to);
+    t.end();
+});
