@@ -22,7 +22,7 @@ const test = createTest(import.meta.url, addon, {
     }),
 });
 
-test('aleman: menu: addons: escape: command: show', (t) => {
+test('nemo: addons: escape: command: show', (t) => {
     t.render('escape', {
         state: {
             command: 'hide',
@@ -33,7 +33,7 @@ test('aleman: menu: addons: escape: command: show', (t) => {
     t.end();
 });
 
-test('aleman: menu: addons: escape', (t) => {
+test('nemo: addons: escape', (t) => {
     const beforeHide = stub();
     const state = {
         command: 'hide',
