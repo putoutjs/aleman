@@ -1,66 +1,69 @@
-import {stub} from 'supertape';
-import {createTest} from '#test';
-import * as addon from './escape.js';
-import {rules} from '../../rules/index.js';
-import {createState} from '../../state/state.js';
-
-const noop = () => {};
-
-const test = createTest(import.meta.url, addon, {
-    rules,
-    options: {
-        menu: {
-            Upload: noop,
-            New: {
-                File: noop,
-                Directory: noop,
-            },
-        },
-    },
-    state: createState({
-        name: 'menu',
-    }),
-});
-
-test('nemo: addons: escape: command: show', (t) => {
-    t.render('escape', {
-        state: {
-            command: 'hide',
-            index: 1,
-        },
-        command: 'Escape',
-    });
-    t.end();
-});
+import {test} from 'supertape';
+import {montag} from 'montag';
+import {listener} from './escape.js';
+import {printState} from '../../state/print-state.js';
+import {parseState} from '../../state/parse-state.js';
 
 test('nemo: addons: escape', (t) => {
-    const beforeHide = stub();
-    const state = {
-        command: 'hide',
-        index: 1,
-        insideSubmenu: false,
-        name: 'menu',
-        position: {
-            x: 0,
-            y: 20,
-        },
-        showSubmenu: false,
-        submenuIndex: 0,
-    };
+    const from = montag`
+        -Hello
+        +World
+    `;
     
-    t.render('escape', {
-        options: {
-            beforeHide,
-        },
-        state: {
-            command: 'hide',
-            index: 1,
-        },
-        key: 'Escape',
-    });
+    const to = montag`
+        -Hello
+        -World
+    `;
     
-    t.calledWith(beforeHide, [state]);
+    const state = parseState(from);
+    const result = listener({state});
+    
+    t.equal(printState(result), to);
     t.end();
-}, {
-    checkAssertionsCount: false,
+});
+
+test('nemo: addons: escape: submenu', (t) => {
+    const from = montag`
+        -Hello
+        +ABC*
+            +A
+            -B
+    `;
+    
+    const to = montag`
+        -Hello
+        -ABC*
+    `;
+    
+    const state = parseState(from);
+    const result = listener({state});
+    
+    t.equal(printState(result), to);
+    t.end();
+});
+
+test('nemo: addons: escape: show false', (t) => {
+    const from = montag`
+        -Hello
+        +World
+    `;
+    
+    const state = parseState(from);
+    const result = listener({state});
+    
+    t.equal(result.show, false);
+    t.end();
+});
+
+test('nemo: addons: escape: command hide', (t) => {
+    const from = montag`
+        -Hello
+        +World
+    `;
+    
+    const state = parseState(from);
+    const result = listener({state});
+    
+    t.equal(result.command, 'hide');
+    t.end();
 });

@@ -23,10 +23,14 @@ export const createMenuHelper = (page) => {
         isVisible: () => page
             .locator('ul.menu:not(.menu-hidden)')
             .isVisible(),
-        selectedText: () => page
-            .locator('.menu-item-selected label')
-            .first()
-            .textContent(),
+        selectedText: async () => {
+            const text = await page
+                .locator('.menu-item-selected label')
+                .first()
+                .textContent();
+            
+            return text?.trim();
+        },
         selectedPath: () => page
             .locator('.menu-item-selected')
             .first()

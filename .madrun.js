@@ -11,7 +11,8 @@ export default {
    'nemo/addons/gg/gg.spec.js' \
    'nemo/addons/shift-g/shift-g.spec.js' \
    'nemo/addons/j/j.spec.js' \
-   'nemo/addons/k/k.spec.js'`,
+   'nemo/addons/k/k.spec.js' \
+   'nemo/addons/escape/escape.spec.js'`,
     'watch:test': async () => `nodemon -w lib -w test -x "${await run('test')}"`,
     'lint': () => `putout .`,
     'fresh:lint': () => run('lint', '--fresh'),
