@@ -170,8 +170,8 @@ test('state: updateState: down: more', (t) => {
     `;
     
     const to = montag`
-        +Hello
-        -World
+        -Hello
+        +World
         -ABC
     `;
     
@@ -197,6 +197,76 @@ test('state: updateState: up: couple', (t) => {
     
     t.updateState('up', from, to, {
         count: 4,
+    });
+    t.end();
+});
+
+test('state: updateState: down: infiniteScroll: selects last', (t) => {
+    const from = montag`
+        +Hello
+        -World
+    `;
+    
+    const to = montag`
+        -Hello
+        +World
+    `;
+    
+    t.updateState('down', from, to, {
+        infiniteScroll: true,
+    });
+    t.end();
+});
+
+test('state: updateState: down: infiniteScroll: wraps to first', (t) => {
+    const from = montag`
+        -Hello
+        +World
+    `;
+    
+    const to = montag`
+        +Hello
+        -World
+    `;
+    
+    t.updateState('down', from, to, {
+        infiniteScroll: true,
+    });
+    t.end();
+});
+
+test('state: updateState: down: infiniteScroll: reaches last of three', (t) => {
+    const from = montag`
+        -Hello
+        +World
+        -ABC
+    `;
+    
+    const to = montag`
+        -Hello
+        -World
+        +ABC
+    `;
+    
+    t.updateState('down', from, to, {
+        infiniteScroll: true,
+    });
+    t.end();
+});
+
+test('state: updateState: up: infiniteScroll: wraps to last', (t) => {
+    const from = montag`
+        +Hello
+        -World
+    `;
+    
+    const to = montag`
+        -Hello
+        +World
+    `;
+    
+    t.updateState('up', from, to, {
+        infiniteScroll: true,
     });
     t.end();
 });
