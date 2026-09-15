@@ -288,3 +288,101 @@ test('state: updateState: esc: submenu', (t) => {
     t.updateState('esc', from, to);
     t.end();
 });
+
+test('state: updateState: gg', (t) => {
+    const from = montag`
+        -Hello
+        +World
+        -ABC
+    `;
+    
+    const to = montag`
+        +Hello
+        -World
+        -ABC
+    `;
+    
+    t.updateState('gg', from, to);
+    t.end();
+});
+
+test('state: updateState: gg: no selection', (t) => {
+    const from = montag`
+        -Hello
+        -World
+    `;
+    
+    const to = montag`
+        +Hello
+        -World
+    `;
+    
+    t.updateState('gg', from, to);
+    t.end();
+});
+
+test('state: updateState: gg: submenu', (t) => {
+    const from = montag`
+        -Hello
+        +ABC>
+            -A
+            -B
+    `;
+    
+    const to = montag`
+        +Hello
+        -ABC*
+    `;
+    
+    t.updateState('gg', from, to);
+    t.end();
+});
+
+test('state: updateState: shift-g', (t) => {
+    const from = montag`
+        +Hello
+        -World
+        -ABC
+    `;
+    
+    const to = montag`
+        -Hello
+        -World
+        +ABC
+    `;
+    
+    t.updateState('shift-g', from, to);
+    t.end();
+});
+
+test('state: updateState: shift-g: no selection', (t) => {
+    const from = montag`
+        -Hello
+        -World
+    `;
+    
+    const to = montag`
+        -Hello
+        +World
+    `;
+    
+    t.updateState('shift-g', from, to);
+    t.end();
+});
+
+test('state: updateState: shift-g: submenu', (t) => {
+    const from = montag`
+        -Hello
+        +ABC>
+            -A
+            -B
+    `;
+    
+    const to = montag`
+        -Hello
+        +ABC*
+    `;
+    
+    t.updateState('shift-g', from, to);
+    t.end();
+});

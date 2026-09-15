@@ -22,6 +22,8 @@ globalThis.window.__menu = {
     ready: menuReady,
 };
 
-const menuInstance = await createMenu(document.body, {}, menuData);
+const menuInstance = await createMenu(document.body, {
+    infiniteScroll: true,
+}, menuData);
 
 resolveMenu(menuInstance);

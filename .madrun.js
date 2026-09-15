@@ -7,7 +7,11 @@ export default {
    'nemo/addons/right.spec.js' \
    'nemo/addons/set-position/calculate.spec.js' \
    'nemo/rules/build-menu/index.spec.js' \
-   'nemo/state/state.spec.js'`,
+   'nemo/state/state.spec.js' \
+   'nemo/addons/gg/gg.spec.js' \
+   'nemo/addons/shift-g/shift-g.spec.js' \
+   'nemo/addons/j/j.spec.js' \
+   'nemo/addons/k/k.spec.js'`,
     'watch:test': async () => `nodemon -w lib -w test -x "${await run('test')}"`,
     'lint': () => `putout .`,
     'fresh:lint': () => run('lint', '--fresh'),

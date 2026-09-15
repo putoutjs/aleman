@@ -67,6 +67,16 @@ export const updateState = (command, state, options = {}) => {
             esc(state);
             continue;
         }
+        
+        if (command === 'gg') {
+            gg(state);
+            continue;
+        }
+        
+        if (command === 'shift-g') {
+            shiftG(state);
+            continue;
+        }
     }
     
     return state;
@@ -75,15 +85,51 @@ export const updateState = (command, state, options = {}) => {
 function esc(state) {
     for (const item of state.items) {
         item.selected = false;
-        if (item.submenu) {
+        
+        if (item.submenu)
             item.submenu.show = false;
-        }
     }
+    
     state.index = -1;
     state.submenuIndex = -1;
     state.insideSubmenu = false;
     state.command = 'hide';
     state.show = false;
+    
+    return state;
+}
+
+function closeSubmenus(items) {
+    for (const item of items) {
+        item.selected = false;
+        
+        if (!item.submenu)
+            continue;
+        
+        item.submenu.show = false;
+        closeSubmenus(item.submenu.items);
+    }
+}
+
+const gg = (state) => edge(state, 0);
+
+function shiftG(state) {
+    return edge(state, state.items.length - 1);
+}
+
+function edge(state, index) {
+    const {items} = state;
+    
+    closeSubmenus(items);
+    
+    state.index = index;
+    state.submenuIndex = -1;
+    state.insideSubmenu = false;
+    
+    const current = items[index];
+    
+    if (current)
+        current.selected = true;
     
     return state;
 }

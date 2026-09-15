@@ -1,100 +1,114 @@
-import {createTest} from '#test';
-import * as addon from './j.js';
-import {rules} from '../../rules/index.js';
-import {createState} from '../../state/state.js';
+import {test} from 'supertape';
+import {montag} from 'montag';
+import {listener, filter} from './j.js';
+import {printState} from '../../state/print-state.js';
+import {parseState} from '../../state/parse-state.js';
 
-const noop = () => {};
-const test = createTest(import.meta.url, addon, {
-    rules,
-    options: {
-        menu: {
-            View: noop,
-            Edit: noop,
-        },
-    },
-    state: createState({
-        name: 'menu',
-    }),
-});
-
-test('aleman: menu: addons: m: no key j', (t) => {
-    t.noReportOnRender('m', {
-        command: 'm',
-    });
+test('nemo: addons: j', (t) => {
+    const from = montag`
+        +Hello
+        -World
+    `;
+    
+    const to = montag`
+        -Hello
+        +World
+    `;
+    
+    const state = parseState(from);
+    const result = listener({count: 1, state});
+    
+    t.equal(printState(result), to);
     t.end();
 });
 
-test('aleman: menu: addons: j', (t) => {
-    t.render('j', {
-        state: {
-            command: 'show',
-            index: 1,
-        },
-        command: 'j',
-    });
+test('nemo: addons: j: no selection', (t) => {
+    const from = montag`
+        -Hello
+        -World
+    `;
+    
+    const to = montag`
+        +Hello
+        -World
+    `;
+    
+    const state = parseState(from);
+    const result = listener({count: 1, state});
+    
+    t.equal(printState(result), to);
     t.end();
 });
 
-test('aleman: menu: addons: j: -1', (t) => {
-    t.render('submenu', {
-        state: {
-            command: 'show',
-            index: -1,
-            insideSubmenu: false,
-        },
-        command: '3j',
-    });
+test('nemo: addons: j: count', (t) => {
+    const from = montag`
+        +Hello
+        -World
+        -ABC
+    `;
+    
+    const to = montag`
+        -Hello
+        -World
+        +ABC
+    `;
+    
+    const state = parseState(from);
+    const result = listener({count: 2, state});
+    
+    t.equal(printState(result), to);
     t.end();
 });
 
-test('aleman: menu: addons: j: insideSubmenu', (t) => {
-    t.render('submenu', {
-        state: {
-            command: 'show',
-            index: 2,
-            submenuIndex: -1,
-            insideSubmenu: true,
-        },
-        command: '3j',
-    });
+test('nemo: addons: j: last', (t) => {
+    const from = montag`
+        -Hello
+        +World
+    `;
+    
+    const to = montag`
+        -Hello
+        +World
+    `;
+    
+    const state = parseState(from);
+    const result = listener({count: 1, state});
+    
+    t.equal(printState(result), to);
     t.end();
 });
 
-test('aleman: menu: addons: j: infiniteScroll', (t) => {
-    t.render('infinite-scroll', {
-        state: {
-            command: 'show',
-            index: 1,
-            submenuIndex: -1,
-        },
-        options: {
-            infiniteScroll: true,
-        },
-        command: 'j',
-    });
+test('nemo: addons: j: infiniteScroll', (t) => {
+    const from = montag`
+        -Hello
+        +World
+    `;
+    
+    const to = montag`
+        +Hello
+        -World
+    `;
+    
+    const state = {
+        ...parseState(from),
+        infiniteScroll: true,
+    };
+    const result = listener({count: 1, state});
+    
+    t.equal(printState(result), to);
     t.end();
 });
 
-test('aleman: menu: addons: j: submenu: infiniteScroll', (t) => {
-    t.render('submenu-infinite-scroll', {
-        state: {
-            command: 'show',
-            index: 1,
-            submenuIndex: 1,
-            insideSubmenu: true,
-            showSubmenu: true,
-        },
-        options: {
-            infiniteScroll: true,
-            menu: {
-                A: noop,
-                New: {
-                    File: noop,
-                    Directory: noop,
-                },
-            },
-        },
-        command: 'j',
-    });
+test('nemo: addons: j: filter: show', (t) => {
+    const result = filter({state: {show: true}});
+    
+    t.ok(result);
+    t.end();
+});
+
+test('nemo: addons: j: filter: hidden', (t) => {
+    const result = filter({state: {show: false}});
+    
+    t.notOk(result);
     t.end();
 });

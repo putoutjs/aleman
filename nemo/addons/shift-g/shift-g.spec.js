@@ -1,66 +1,75 @@
-import {createTest} from '#test';
-import * as addon from './shift-g.js';
-import {rules} from '../../rules/index.js';
-import {createState} from '../../state/state.js';
+import {test} from 'supertape';
+import {montag} from 'montag';
+import {listener, filter} from './shift-g.js';
+import {printState} from '../../state/print-state.js';
+import {parseState} from '../../state/parse-state.js';
 
-const noop = () => {};
-const menu = {
-    View: noop,
-    Edit: noop,
-};
-
-const test = createTest(import.meta.url, addon, {
-    rules,
-    options: {
-        menu,
-    },
-    state: createState({
-        name: 'menu',
-        menu,
-    }),
-});
-
-test('aleman: menu: addons: shift+g: command: hide', (t) => {
-    t.noReportOnRender('hide', {
-        state: {
-            command: 'hide',
-        },
-        command: 'G',
-    });
+test('nemo: addons: shift-g', (t) => {
+    const from = montag`
+        +Hello
+        -World
+    `;
+    
+    const to = montag`
+        -Hello
+        +World
+    `;
+    
+    const state = parseState(from);
+    const result = listener({state});
+    
+    t.equal(printState(result), to);
     t.end();
 });
 
-test('aleman: menu: addons: shift+g: command: show', (t) => {
-    t.render('shift-g', {
-        state: {
-            command: 'show',
-            index: 1,
-        },
-        command: 'G',
-    });
+test('nemo: addons: shift-g: no selection', (t) => {
+    const from = montag`
+        -Hello
+        -World
+    `;
+    
+    const to = montag`
+        -Hello
+        +World
+    `;
+    
+    const state = parseState(from);
+    const result = listener({state});
+    
+    t.equal(printState(result), to);
     t.end();
 });
 
-test('aleman: menu: addons: shift+g: command: insideSubmenu', (t) => {
-    t.render('shift-g', {
-        state: {
-            command: 'show',
-            index: 1,
-            insideSubmenu: true,
-        },
-        command: 'G',
-    });
+test('nemo: addons: shift-g: submenu', (t) => {
+    const from = montag`
+        -Hello
+        +ABC>
+            -A
+            -B
+    `;
+    
+    const to = montag`
+        -Hello
+        +ABC*
+    `;
+    
+    const state = parseState(from);
+    const result = listener({state});
+    
+    t.equal(printState(result), to);
     t.end();
 });
 
-test('aleman: menu: addons: shift+g: command: $', (t) => {
-    t.render('shift-g', {
-        state: {
-            command: 'show',
-            index: 0,
-            insideSubmenu: false,
-        },
-        command: '$',
-    });
+test('nemo: addons: shift-g: filter: show', (t) => {
+    const result = filter({state: {command: 'show'}});
+    
+    t.ok(result);
+    t.end();
+});
+
+test('nemo: addons: shift-g: filter: hide', (t) => {
+    const result = filter({state: {command: 'hide'}});
+    
+    t.notOk(result);
     t.end();
 });

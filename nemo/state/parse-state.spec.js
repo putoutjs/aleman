@@ -10,6 +10,10 @@ test('state: parseState: submenu round-trip', (t) => {
             +File
             -Dir
     `;
-    t.equal(printState(parseState(source)), source);
+    
+    const result = printState(parseState(source));
+    const expected = source;
+    
+    t.equal(result, expected);
     t.end();
 });

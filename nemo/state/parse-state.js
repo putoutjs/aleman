@@ -44,7 +44,7 @@ export const parseState = (source) => {
                 },
             });
             
-            while (index + 1 < lines.length) {
+            while (lines.length > index + 1) {
                 const nextLine = lines[index + 1];
                 
                 if (!nextLine.startsWith('    '))

@@ -1,79 +1,79 @@
-import {createTest} from '#test';
-import * as addon from './k.js';
-import {rules} from '../../rules/index.js';
-import {createState} from '../../state/state.js';
+import {test} from 'supertape';
+import {montag} from 'montag';
+import {listener} from './k.js';
+import {printState} from '../../state/print-state.js';
+import {parseState} from '../../state/parse-state.js';
 
-const noop = () => {};
-const menu = {
-    View: noop,
-    Edit: noop,
-};
-
-const test = createTest(import.meta.url, addon, {
-    rules,
-    options: {
-        menu,
-    },
-    state: createState({
-        name: 'menu',
-        menu,
-    }),
-});
-
-test('aleman: menu: addons: k: no key k', (t) => {
-    t.noReportOnRender('m', {
-        command: 'm',
-    });
+test('nemo: addons: k', (t) => {
+    const from = montag`
+        -Hello
+        +World
+    `;
+    
+    const to = montag`
+        +Hello
+        -World
+    `;
+    
+    const state = parseState(from);
+    const result = listener({count: 1, state});
+    
+    t.equal(printState(result), to);
     t.end();
 });
 
-test('aleman: menu: addons: k', (t) => {
-    t.render('k', {
-        state: {
-            command: 'show',
-            index: 1,
-        },
-        command: 'k',
-    });
+test('nemo: addons: k: count', (t) => {
+    const from = montag`
+        -Hello
+        -World
+        +ABC
+    `;
+    
+    const to = montag`
+        +Hello
+        -World
+        -ABC
+    `;
+    
+    const state = parseState(from);
+    const result = listener({count: 2, state});
+    
+    t.equal(printState(result), to);
     t.end();
 });
 
-test('aleman: menu: addons: k: -1', (t) => {
-    t.noReportOnRender('submenu', {
-        state: {
-            command: 'show',
-            index: -1,
-            insideSubmenu: false,
-        },
-        command: '3k',
-    });
+test('nemo: addons: k: first', (t) => {
+    const from = montag`
+        +Hello
+        -World
+    `;
+    
+    const to = montag`
+        +Hello
+        -World
+    `;
+    
+    const state = parseState(from);
+    const result = listener({count: 1, state});
+    
+    t.equal(printState(result), to);
     t.end();
 });
 
-test('aleman: menu: addons: k: infiniteScroll', (t) => {
-    t.render('infinite-scroll', {
-        options: {
-            infiniteScroll: true,
-        },
-        state: {
-            command: 'show',
-            index: -1,
-            insideSubmenu: false,
-        },
-        command: '3k',
-    });
-    t.end();
-});
-
-test('aleman: menu: addons: k: insideSubmenu', (t) => {
-    t.render('submenu', {
-        state: {
-            command: 'show',
-            index: 1,
-            submenuIndex: -1,
-            insideSubmenu: true,
-        },
-        command: '3k',
-    });
+test('nemo: addons: k: infiniteScroll', (t) => {
+    const from = montag`
+        +Hello
+        -World
+    `;
+    
+    const to = montag`
+        -Hello
+        +World
+    `;
+    
+    const state = parseState(from);
+    const result = listener({count: 1, state, options: {infiniteScroll: true}});
+    
+    t.equal(printState(result), to);
     t.end();
 });

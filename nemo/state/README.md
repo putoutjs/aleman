@@ -10,14 +10,14 @@ Each line is one item: `{mark}{name}{suffix?}`
 ### Marks
 
 | Mark | Meaning      |
-|:-----|:-------------|
+|:------|:--------------|
 | `+`  | selected     |
 | `-`  | not selected |
 
 ### Suffixes
 
 | Suffix | Meaning                 |
-|:-------|:------------------------|
+|:--------|:-------------------------|
 | `*`    | has submenu (collapsed) |
 | `>`    | has submenu (expanded)  |
 | none   | leaf item               |
@@ -51,6 +51,7 @@ const test = extend({
     command: (operator) => (cmd, from, to, options) => {
         const state = parseState(from);
         const updated = updateState(cmd, state, options);
+        
         return operator.equal(printState(updated), to);
     },
 });
