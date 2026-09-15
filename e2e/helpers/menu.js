@@ -1,15 +1,23 @@
-export const createMenuHelper = (page) => ({
-    async show(x = 100, y = 100) {
-        await page.evaluate(({x, y}) => window.__menu.show(x, y), {x, y});
-    },
-    async hide() { await page.evaluate(() => window.__menu.hide()); },
-    async pressKey(key) { await page.keyboard.press(key); },
-    async pressKeys(...keys) {
-        for (const key of keys) await page.keyboard.press(key);
-    },
-    isVisible: () => page.locator('ul.menu:not(.menu-hidden)').isVisible(),
-    selectedText: () => page.locator('.menu-item-selected label').first().textContent(),
-    selectedPath: () => page.locator('.menu-item-selected').first().getAttribute('data-menu-path'),
-    firedCallbacks: () => page.evaluate(() => [...window.__fired]),
-    async clearFired() { await page.evaluate(() => { window.__fired.length = 0; }); },
-});
+export const createMenuHelper = (page) => {
+    const waitForMenu = () => page.waitForFunction(() => Boolean(window.__menu?.show));
+    
+    return {
+        async show(x = 100, y = 100) {
+            await waitForMenu();
+            await page.evaluate(({x, y}) => window.__menu.show(x, y), {x, y});
+        },
+        async hide() {
+            await waitForMenu();
+            await page.evaluate(() => window.__menu.hide());
+        },
+        async pressKey(key) { await page.keyboard.press(key); },
+        async pressKeys(...keys) {
+            for (const key of keys) await page.keyboard.press(key);
+        },
+        isVisible: () => page.locator('ul.menu:not(.menu-hidden)').isVisible(),
+        selectedText: () => page.locator('.menu-item-selected label').first().textContent(),
+        selectedPath: () => page.locator('.menu-item-selected').first().getAttribute('data-menu-path'),
+        firedCallbacks: () => page.evaluate(() => [...window.__fired]),
+        async clearFired() { await page.evaluate(() => { window.__fired.length = 0; }); },
+    };
+};
