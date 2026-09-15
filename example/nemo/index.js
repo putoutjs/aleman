@@ -22,7 +22,9 @@ globalThis.window.__menu = {
     ready: menuReady,
 };
 
-const menuInstance = await createMenu(document.body, {
+const {name} = document.body.dataset;
+
+const menuInstance = await createMenu(name, {
     infiniteScroll: true,
 }, menuData);
 
