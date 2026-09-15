@@ -137,21 +137,21 @@ function edge(state, index) {
 function down(state, {infiniteScroll}) {
     let {index, items} = state;
     const current = items[index];
+    const lastIndex = items.length - 1;
     
     if (index === -1) {
         const [first] = items;
         ++index;
         first.selected = true;
-    } else if (index < items.length - 1) {
+    } else if (index < lastIndex) {
         current.selected = false;
         ++index;
         const next = items[index];
         
         next.selected = true;
-    }
-    
-    if (infiniteScroll && index === items.length - 1) {
-        items[index].selected = false;
+    } else if (infiniteScroll) {
+        // already at last item -> wrap to first
+        current.selected = false;
         index = 0;
         items[index].selected = true;
     }
