@@ -2,7 +2,8 @@ import {run} from 'madrun';
 
 export default {
     'test': () => `tape '**/test/*.js' \
-   '**/{menu,aleman,lunes,nemo}/**/*.spec.js'`,
+   '**/{menu,aleman,lunes,nemo}/**/*.spec.js' \
+   'v2/**/*.spec.js'`,
     'watch:test': async () => `nodemon -w lib -w test -x "${await run('test')}"`,
     'lint': () => `putout .`,
     'fresh:lint': () => run('lint', '--fresh'),

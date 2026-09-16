@@ -11,7 +11,8 @@
     "url": "git+https://github.com/putoutjs/aleman.git"
   },
   "exports": {
-    "./menu": "./menu/menu.js"
+    "./menu": "./menu/menu.js",
+    "./v2": "./v2/index.js"
   },
   "scripts": {
     "test": "madrun test",
