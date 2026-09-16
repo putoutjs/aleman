@@ -55,3 +55,16 @@ jobs:
         continue-on-error: true
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun i --no-save
+      - run: bunx playwright install chromium --with-deps
+      - name: E2E — menu
+        run: bunx playwright test --project=menu
+      - name: E2E — nemo
+        run: bunx playwright test --project=nemo
