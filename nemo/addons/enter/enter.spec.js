@@ -1,118 +1,121 @@
 import {setTimeout} from 'node:timers/promises';
-import {stub} from 'supertape';
-import {createTest} from '#test';
+import {test, stub} from 'supertape';
 import {filter, listener} from './enter.js';
-import * as addon from '../escape/escape.js';
-import {rules} from '../../rules/index.js';
-import {createState} from '../../state/state.js';
+import {createState, updateState} from '../../state/state.js';
 
 const noop = () => {};
-
-const test = createTest(import.meta.url, addon, {
-    rules,
-    options: {
-        menu: {
-            Upload: noop,
-            New: {
-                File: noop,
-                Directory: noop,
-            },
-        },
+const menu = {
+    Upload: noop,
+    New: {
+        File: noop,
     },
-    state: createState({
-        name: 'menu',
-    }),
-});
+};
 
-test('aleman: nemo: enter: run', (t) => {
-    t.render('enter', {
-        state: {
-            index: 1,
-        },
-    });
-    t.end();
-});
+for (const command of ['hide', 'show']) {
+    for (const count of [1, 2]) {
+        test(`nemo: enter: filter: ${command}: item ${count}`, (t) => {
+            const state = createState({menu});
+            updateState('down', state, {count});
+            state.command = command;
+            state.show = command === 'show';
+            
+            const result = filter({state});
+            
+            t.equal(result, command === 'show');
+            t.end();
+        });
+    }
+}
 
-test('aleman: nemo: enter: filter: no', (t) => {
-    const result = filter({
-        state: {
-            command: 'hide',
-        },
-    });
+test('nemo: enter: submenu name opens submenu and returns full state', (t) => {
+    const state = createState({menu});
+    state.command = 'show';
+    updateState('down', state, {count: 2});
     
-    t.notOk(result);
-    t.end();
-});
-
-test('aleman: nemo: enter: listener: submenu name', (t) => {
-    const state = {
-        index: 0,
-        submenuIndex: -1,
-    };
+    const expected = structuredClone(state);
     
-    const result = listener({
-        state,
-        options: {
-            menu: {
-                hello: {
-                    world: noop,
-                },
-            },
-        },
-    });
+    expected.items[1].submenu.show = true;
+    expected.insideSubmenu = true;
+    expected.submenuIndex = 0;
     
-    const expected = {
-        insideSubmenu: true,
-        showSubmenu: true,
-        submenuIndex: 0,
-    };
+    const result = listener({state, options: {menu}});
     
     t.deepEqual(result, expected);
     t.end();
 });
 
-test('aleman: nemo: enter: listener: run', async (t) => {
-    const state = {
-        index: 0,
-        submenuIndex: 0,
-    };
+test('nemo: enter: opening submenu does not call beforeHide', (t) => {
+    const state = createState({menu});
+    updateState('down', state, {count: 2});
+    const beforeHide = stub();
     
-    const fn = stub();
+    listener({state, options: {menu, beforeHide}});
     
-    listener({
-        state,
-        options: {
-            menu: {
-                hello: fn,
-            },
-        },
-    });
-    
-    await setTimeout(0);
-    
-    t.calledWithNoArgs(fn);
+    t.notCalled(beforeHide);
     t.end();
 });
 
-test('aleman: nemo: enter: listener: options: beforeHide', (t) => {
-    const beforeHide = stub();
-    const state = {
-        index: 0,
-        submenuIndex: 0,
-    };
-    
-    const fn = stub();
-    
-    listener({
-        state,
-        options: {
-            beforeHide,
-            menu: {
-                hello: fn,
-            },
-        },
+for (const submenu of [false, true]) {
+    test(`nemo: enter: callback once with no arguments: submenu ${submenu}`, async (t) => {
+        const fn = stub();
+        const menu = submenu ? {New: {File: fn}} : {Upload: fn};
+        const state = createState({menu});
+        
+        updateState('down', state);
+        
+        if (submenu)
+            updateState('right', state);
+        
+        listener({state, options: {menu}});
+        await setTimeout(0);
+        
+        t.deepEqual(fn.args, [[]]);
+        t.end();
     });
     
-    t.calledWith(beforeHide, [state]);
+    test(`nemo: enter: clears selection and hides: submenu ${submenu}`, async (t) => {
+        const state = createState({menu});
+        state.command = 'show';
+        updateState('down', state, {count: submenu ? 2 : 1});
+        
+        if (submenu)
+            updateState('right', state);
+        
+        const result = listener({state, options: {menu}});
+        const expected = {
+            ...createState({menu}),
+            command: 'hide',
+            show: false,
+        };
+        await setTimeout(0);
+        
+        t.deepEqual(result, expected);
+        t.end();
+    });
+}
+
+test('nemo: enter: beforeHide receives existing state before clearing', async (t) => {
+    const state = createState({menu});
+    state.command = 'show';
+    updateState('down', state, {count: 2});
+    updateState('right', state);
+    
+    const expected = structuredClone(state);
+    const calls = [];
+    const beforeHide = stub((current) => {
+        calls.push({
+            sameState: current === state,
+            state: structuredClone(current),
+        });
+    });
+    
+    listener({state, options: {menu, beforeHide}});
+    await setTimeout(0);
+    
+    t.deepEqual(calls, [{
+        sameState: true,
+        state: expected,
+    }]);
     t.end();
 });
+

@@ -63,6 +63,11 @@ export const updateState = (command, state, options = {}) => {
             continue;
         }
         
+        if (command === 'reset') {
+            reset(state);
+            continue;
+        }
+        
         if (command === 'esc') {
             esc(state);
             continue;
@@ -113,6 +118,15 @@ function left(state) {
     if (current?.submenu)
         current.submenu.show = false;
     
+    state.submenuIndex = -1;
+    state.insideSubmenu = false;
+    
+    return state;
+}
+
+function reset(state) {
+    closeSubmenus(state.items);
+    state.index = -1;
     state.submenuIndex = -1;
     state.insideSubmenu = false;
     
@@ -171,7 +185,31 @@ function edge(state, index) {
     return state;
 }
 
+function moveSubmenu(state, step, {infiniteScroll}) {
+    const submenu = state.items[state.index]?.submenu;
+    if (!submenu?.items.length)
+        return state;
+    
+    const {items} = submenu;
+    const last = items.length - 1;
+    let index = state.submenuIndex + step;
+    
+    if (index > last)
+        index = infiniteScroll ? 0 : last;
+    else if (index < 0)
+        index = infiniteScroll ? last : 0;
+    
+    for (const [i, item] of items.entries())
+        item.selected = i === index;
+    
+    state.submenuIndex = index;
+    return state;
+}
+
 function down(state, {infiniteScroll}) {
+    if (state.insideSubmenu)
+        return moveSubmenu(state, 1, {infiniteScroll});
+    
     let {index, items} = state;
     const current = items[index];
     const lastIndex = items.length - 1;

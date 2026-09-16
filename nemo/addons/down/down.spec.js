@@ -1,51 +1,34 @@
-import {createTest} from '#test';
-import * as addon from './down.js';
-import {rules} from '../../rules/index.js';
-import {createState} from '../../state/state.js';
+import {test} from 'supertape';
+import {listener} from './down.js';
+import {createState, updateState} from '../../state/state.js';
 
 const noop = () => {};
+const menu = {New: {File: noop, Directory: noop}};
 
-const test = createTest(import.meta.url, addon, {
-    rules,
-    options: {
-        menu: {
-            Upload: noop,
-            New: {
-                File: noop,
-                Directory: noop,
-            },
-        },
-    },
-    state: createState({
-        name: 'menu',
-    }),
-});
-
-test('aleman: menu: down: infiniteScroll', (t) => {
-    t.render('infinite-scroll', {
-        state: {
-            command: 'show',
-            index: 1,
-            submenuIndex: 1,
-            insideSubmenu: true,
-        },
-        key: 'ArrowDown',
-        options: {
-            infiniteScroll: true,
-        },
+for (const infiniteScroll of [false, true]) {
+    test(`nemo: down: submenu: infiniteScroll ${infiniteScroll}`, (t) => {
+        const state = createState({menu});
+        updateState('down', state);
+        updateState('right', state);
+        const result = listener({state, options: {infiniteScroll}});
+        
+        t.deepEqual({
+            index: result.index,
+            submenuIndex: result.submenuIndex,
+            selected: result.items[0].submenu.items.map(({selected}) => selected),
+        }, {index: 0, submenuIndex: 1, selected: [false, true]});
+        t.end();
     });
-    t.end();
-});
-
-test('aleman: menu: down', (t) => {
-    t.render('down', {
-        state: {
-            command: 'show',
-            index: 1,
-            submenuIndex: 0,
-            insideSubmenu: true,
-        },
-        key: 'ArrowDown',
+    
+    test(`nemo: down: submenu end: infiniteScroll ${infiniteScroll}`, (t) => {
+        const state = createState({menu});
+        updateState('down', state);
+        updateState('right', state);
+        listener({state, options: {}});
+        const result = listener({state, options: {infiniteScroll}});
+        
+        t.equal(result.submenuIndex, infiniteScroll ? 0 : 1);
+        t.end();
     });
-    t.end();
-});
+}
+

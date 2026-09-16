@@ -1,3 +1,4 @@
+import {updateState} from '../../state/state.js';
 import {run} from '../run/index.js';
 import * as right from '../right.js';
 
@@ -22,9 +23,5 @@ export const listener = ({options, state}) => {
     
     options.beforeHide?.(state);
     
-    return {
-        command: 'hide',
-        index: -1,
-        insideSubmenu: false,
-    };
+    return updateState('esc', state);
 };

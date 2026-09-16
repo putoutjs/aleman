@@ -12,7 +12,14 @@ export default {
    'nemo/addons/shift-g/shift-g.spec.js' \
    'nemo/addons/j/j.spec.js' \
    'nemo/addons/k/k.spec.js' \
-   'nemo/addons/escape/escape.spec.js'`,
+   'nemo/addons/escape/escape.spec.js' \
+   'nemo/addons/click/click.spec.js' \
+   'nemo/addons/enter/enter.spec.js' \
+   'nemo/addons/item-click/item-click.spec.js' \
+   'nemo/addons/item-click/state.spec.js' \
+   'nemo/addons/mouse-leave/index.spec.js' \
+   'nemo/addons/down/down.spec.js' \
+   'nemo/state/parse-state.spec.js'`,
     'watch:test': async () => `nodemon -w lib -w test -x "${await run('test')}"`,
     'lint': () => `putout .`,
     'fresh:lint': () => run('lint', '--fresh'),

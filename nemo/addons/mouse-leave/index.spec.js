@@ -1,49 +1,27 @@
-import {createTest} from '#test';
+import {test} from 'supertape';
 import {createMouseEnter} from './index.js';
-import {rules} from '../../rules/index.js';
-import {createState} from '../../state/state.js';
+import {createState, updateState} from '../../state/state.js';
+import {emit} from '../../../aleman/emit.js';
+import {createVimParser} from '../../../aleman/vim.js';
 
 const noop = () => {};
+const menu = {View: noop, New: {File: noop}};
 const addon = createMouseEnter('menu');
 
-const menu = {
-    View: noop,
-    Edit: noop,
-};
-
-const test = createTest(import.meta.url, addon, {
-    rules,
-    options: {
-        menu,
-    },
-    state: createState({
-        name: 'menu',
-        menu,
-    }),
-});
-
-test('aleman: menu: addons: mouseenter: wrong event', (t) => {
-    t.noReportOnRender('unselect-all', {
-        state: {
-            index: 0,
-            command: 'show',
-        },
-        event: {
-            type: 'keydown',
-        },
+for (const type of ['keydown', 'mouseleave']) {
+    test(`nemo: mouse-leave: ${type}`, (t) => {
+        const state = createState({menu});
+        updateState('down', state, {count: 2});
+        updateState('right', state);
+        const expected = type === 'mouseleave' ? createState({menu}) : structuredClone(state);
+        const result = emit(addon, {
+            state,
+            options: {},
+            event: {type},
+            parseVim: createVimParser(),
+        });
+        
+        t.deepEqual(result, expected);
+        t.end();
     });
-    t.end();
-});
-
-test('aleman: menu: addons: mouseenter: command: hide', (t) => {
-    t.render('mouse-enter', {
-        state: {
-            index: 0,
-            command: 'show',
-        },
-        event: {
-            type: 'mouseleave',
-        },
-    });
-    t.end();
-});
+}

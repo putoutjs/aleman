@@ -1,143 +1,148 @@
 import {setTimeout} from 'node:timers/promises';
-import {stub} from 'supertape';
-import {createTest} from '#test';
+import {test, stub} from 'supertape';
 import {createItemClick} from './item-click.js';
-import {rules} from '../../rules/index.js';
-import {createState} from '../../state/state.js';
+import {createState, updateState} from '../../state/state.js';
+import {emit} from '../../../aleman/emit.js';
+import {createVimParser} from '../../../aleman/vim.js';
 
 const noop = () => {};
 const addon = createItemClick('menu');
-
-const test = createTest(import.meta.url, addon, {
-    rules,
-    options: {
-        menu: {
-            View: noop,
-            Edit: noop,
-            Upload: {
-                drive: noop,
-            },
-        },
+const {filter, listener} = addon;
+const menu = {
+    View: noop,
+    Upload: {
+        drive: noop,
     },
-    state: createState({
-        name: 'menu',
-    }),
-});
+};
 
-test('aleman: menu: addons: item-click: no click', (t) => {
-    const getMenuPath = stub().returns('Upload');
-    
-    t.noReportOnRender('no-click', {
-        event: 'keydown',
-        options: {
-            getMenuPath,
-        },
-    });
-    t.end();
-});
-
-test('aleman: menu: addons: item-click: not-fn', (t) => {
-    const getMenuPath = stub().returns('Upload');
-    
-    t.noReportOnRender('not-fn', {
-        event: 'click',
-        options: {
-            getMenuPath,
-        },
-        state: {
-            index: 2,
-        },
-    });
-    t.end();
-});
-
-test('aleman: menu: addons: item-click: hide', (t) => {
-    const getMenuPath = stub().returns('Edit');
-    
-    t.render('item-click', {
-        event: 'click',
-        options: {
-            getMenuPath,
-        },
-        state: {
-            index: 1,
-        },
-    });
-    t.end();
-});
-
-test('aleman: menu: addons: item-click: beforeHide', (t) => {
-    const getMenuPath = stub().returns('Edit');
-    const beforeHide = stub();
-    
-    const args = [{
-        command: 'hide',
-        index: 1,
-        insideSubmenu: false,
-        name: 'menu',
-        position: {
-            x: 0,
-            y: 20,
-        },
-        showSubmenu: false,
-        submenuIndex: 0,
-    }];
-    
-    t.render('item-click', {
-        event: 'click',
-        options: {
-            beforeHide,
-            getMenuPath,
-        },
-        state: {
-            index: 1,
-        },
-    });
-    
-    t.calledWith(beforeHide, args);
-    t.end();
-}, {
-    checkAssertionsCount: false,
-});
-
-test('aleman: menu: addons: item-click: run', async (t) => {
-    const getMenuPath = stub().returns('View');
-    const View = stub();
-    
-    t.render('run', {
-        event: 'click',
-        options: {
-            getMenuPath,
-            menu: {
-                View,
-            },
-        },
-        state: {
-            index: 0,
-        },
-    });
-    await setTimeout(1000);
-    t.calledWithNoArgs(View);
-    t.end();
-}, {
-    checkAssertionsCount: false,
-});
-
-test('aleman: menu: item-click: listener', (t) => {
-    const {filter} = createItemClick('hi');
-    const getMenuPath = stub().returns('hello');
-    
-    const result = filter({
-        options: {
-            getMenuPath,
-            menu: {
-                hello: {
-                    world: 'world',
+for (const command of ['hide', 'show']) {
+    for (const [path, expected] of [
+        ['View', true],
+        ['Upload.drive', true],
+        ['Upload', false],
+    ]) {
+        test(`nemo: item-click: filter: ${command}: ${path}`, (t) => {
+            const state = createState({menu});
+            state.command = command;
+            state.show = command === 'show';
+            const getMenuPath = stub().returns(path);
+            const result = filter({
+                event: {},
+                state,
+                options: {
+                    menu,
+                    getMenuPath,
                 },
-            },
+            });
+            
+            t.equal(result, expected);
+            t.end();
+        });
+    }
+}
+
+test('nemo: item-click: keydown leaves state unchanged', (t) => {
+    const state = createState({menu});
+    updateState('down', state);
+    
+    const expected = structuredClone(state);
+    const result = emit(addon, {
+        event: {type: 'keydown'},
+        parseVim: createVimParser(),
+        state,
+        options: {
+            menu,
+            getMenuPath: stub().returns('View'),
         },
     });
     
-    t.notOk(result);
+    t.deepEqual(result, expected);
     t.end();
 });
+
+for (const path of ['View', 'Upload.drive']) {
+    test(`nemo: item-click: callback once with no arguments: ${path}`, async (t) => {
+        const fn = stub();
+        const menu = {
+            View: path === 'View' ? fn : noop,
+            Upload: {
+                drive: path === 'Upload.drive' ? fn : noop,
+            },
+        };
+        const state = createState({menu});
+        
+        updateState('down', state);
+        
+        listener({
+            event: {},
+            state,
+            options: {
+                menu,
+                getMenuPath: stub().returns(path),
+            },
+        });
+        await setTimeout(0);
+        
+        t.deepEqual(fn.args, [[]]);
+        t.end();
+    });
+}
+
+test('nemo: item-click: clears selection and hides open submenu', async (t) => {
+    const state = createState({menu});
+    state.command = 'show';
+    updateState('down', state, {count: 2});
+    updateState('right', state);
+    
+    const result = listener({
+        event: {},
+        state,
+        options: {
+            menu,
+            getMenuPath: stub().returns('Upload.drive'),
+        },
+    });
+    const expected = {
+        ...createState({menu}),
+        command: 'hide',
+        show: false,
+    };
+    await setTimeout(0);
+    
+    t.deepEqual(result, expected);
+    t.end();
+});
+
+test('nemo: item-click: beforeHide receives existing state before clearing', async (t) => {
+    const state = createState({menu});
+    state.command = 'show';
+    updateState('down', state, {count: 2});
+    updateState('right', state);
+    
+    const expected = structuredClone(state);
+    const calls = [];
+    const beforeHide = stub((current) => {
+        calls.push({
+            sameState: current === state,
+            state: structuredClone(current),
+        });
+    });
+    
+    listener({
+        event: {},
+        state,
+        options: {
+            menu,
+            beforeHide,
+            getMenuPath: stub().returns('Upload.drive'),
+        },
+    });
+    await setTimeout(0);
+    
+    t.deepEqual(calls, [{
+        sameState: true,
+        state: expected,
+    }]);
+    t.end();
+});
+

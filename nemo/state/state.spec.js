@@ -531,3 +531,30 @@ test('state: updateState: shift-g: submenu', (t) => {
     t.updateState('shift-g', from, to);
     t.end();
 });
+
+test('state: updateState: reset clears selection and submenus', (t) => {
+    const state = parseState('+New>\n    +File');
+    state.insideSubmenu = true;
+    const result = updateState('reset', state);
+    
+    t.deepEqual({
+        index: result.index,
+        submenuIndex: result.submenuIndex,
+        insideSubmenu: result.insideSubmenu,
+        show: result.show,
+        selected: result.items[0].selected,
+        submenu: result.items[0].submenu,
+    }, {
+        index: -1,
+        submenuIndex: -1,
+        insideSubmenu: false,
+        show: true,
+        selected: false,
+        submenu: {
+            show: false,
+            items: [{name: 'File', path: 'New.File', selected: false}],
+        },
+    });
+    t.end();
+});
+

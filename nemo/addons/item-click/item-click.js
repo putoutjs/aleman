@@ -1,4 +1,5 @@
 import {jessy} from 'jessy';
+import {updateState} from '../../state/state.js';
 import {getMenuPath as _getMenuPath} from '../menu/get-menu-path.js';
 
 const isFn = (a) => typeof a === 'function';
@@ -35,9 +36,5 @@ const listener = ({event, state, options}) => {
     
     options.beforeHide?.(state);
     
-    return {
-        index: -1,
-        command: 'hide',
-        showSubmenu: false,
-    };
+    return updateState('esc', state);
 };
