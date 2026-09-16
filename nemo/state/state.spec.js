@@ -327,6 +327,81 @@ test('state: updateState: down: submenu', (t) => {
     t.end();
 });
 
+test('state: updateState: right: opens submenu', (t) => {
+    const from = montag`
+        -Hello
+        +World*
+    `;
+    
+    const to = montag`
+        -Hello
+        +World>
+    `;
+    
+    t.updateState('right', from, to);
+    t.end();
+});
+
+test('state: updateState: right: leaf: noop', (t) => {
+    const from = montag`
+        -Hello
+        +World
+    `;
+    
+    const to = montag`
+        -Hello
+        +World
+    `;
+    
+    t.updateState('right', from, to);
+    t.end();
+});
+
+test('state: updateState: right: no selection: noop', (t) => {
+    const from = montag`
+        -Hello
+        -World*
+    `;
+    
+    const to = montag`
+        -Hello
+        -World*
+    `;
+    
+    t.updateState('right', from, to);
+    t.end();
+});
+
+test('state: updateState: left: closes submenu', (t) => {
+    const from = montag`
+        -Hello
+        +World>
+    `;
+    
+    const to = montag`
+        -Hello
+        +World*
+    `;
+    
+    t.updateState('left', from, to);
+    t.end();
+});
+
+test('state: updateState: left: leaf: noop', (t) => {
+    const from = montag`
+        -Hello
+        +World
+    `;
+    
+    const to = montag`
+        -Hello
+        +World
+    `;
+    
+    t.updateState('left', from, to);
+    t.end();
+});
+
 test('state: updateState: esc', (t) => {
     const from = montag`
         +Hello

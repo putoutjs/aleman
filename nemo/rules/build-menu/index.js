@@ -33,8 +33,12 @@ const createMenuItem = ({name, path, index, selected, submenu}) => {
     
     labelNode.children[0].value = name;
     
-    if (submenu)
-        node.children.push(submenu);
+    if (submenu) {
+        addClassName(node, 'menu-submenu');
+        
+        if (submenu.show)
+            addClassName(node, 'menu-submenu-show');
+    }
     
     return node;
 };
@@ -59,6 +63,7 @@ function createMenu(menu) {
             path,
             index,
             selected,
+            submenu,
         });
         
         if (submenu) {

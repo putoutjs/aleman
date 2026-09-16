@@ -14,6 +14,14 @@ const menuData = {
     world: () => {
         globalThis.window.__fired.push('world');
     },
+    new: {
+        file: () => {
+            globalThis.window.__fired.push('file');
+        },
+        directory: () => {
+            globalThis.window.__fired.push('directory');
+        },
+    },
 };
 
 globalThis.window.__menu = {

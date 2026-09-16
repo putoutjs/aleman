@@ -85,6 +85,10 @@ function addShowSubmenu(path, {showSubmenu}) {
     if (menuPath.includes('.'))
         return;
     
+    // only submenu items can show a submenu
+    if (!containsClassName(path, 'menu-submenu'))
+        return;
+    
     if (showSubmenu)
         return addClassName(path, SHOW);
 }

@@ -33,7 +33,7 @@ test.describe('navigation', () => {
         await expect(menu.selectedText()).resolves.toBe('hello');
         
         await menu.pressKey('ArrowUp');
-        await expect(menu.selectedText()).resolves.toBe('world');
+        await expect(menu.selectedText()).resolves.toBe('new');
     });
     
     test('shift-g goes to last, gg goes to first', async ({page}) => {
@@ -44,7 +44,7 @@ test.describe('navigation', () => {
         await page.waitForSelector('ul.menu:not(.menu-hidden)');
         
         await menu.pressKey('G');
-        await expect(menu.selectedText()).resolves.toBe('world');
+        await expect(menu.selectedText()).resolves.toBe('new');
         
         await menu.pressKey('g');
         await menu.pressKey('g');

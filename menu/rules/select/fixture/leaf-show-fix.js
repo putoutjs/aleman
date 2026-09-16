@@ -1,4 +1,4 @@
-<ul data-name="menu" className="menu" style="left: 0px; top: 20px;">
+<ul data-name="menu" class="menu menu-hidden">
     <li data-name="menu-item" data-menu-index="0" className="menu-item icon icon-view">
         <label data-menu-path="View">View</label>
     </li>

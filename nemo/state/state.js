@@ -77,10 +77,47 @@ export const updateState = (command, state, options = {}) => {
             shiftG(state);
             continue;
         }
+        
+        if (command === 'right') {
+            right(state);
+            continue;
+        }
+        
+        if (command === 'left') {
+            left(state);
+            continue;
+        }
     }
     
     return state;
 };
+
+function right(state) {
+    const {items, index} = state;
+    const current = items[index];
+    
+    if (!current?.submenu)
+        return state;
+    
+    current.submenu.show = true;
+    state.submenuIndex = 0;
+    state.insideSubmenu = true;
+    
+    return state;
+}
+
+function left(state) {
+    const {items, index} = state;
+    const current = items[index];
+    
+    if (current?.submenu)
+        current.submenu.show = false;
+    
+    state.submenuIndex = -1;
+    state.insideSubmenu = false;
+    
+    return state;
+}
 
 function esc(state) {
     for (const item of state.items) {

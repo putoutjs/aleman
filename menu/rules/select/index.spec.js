@@ -27,6 +27,13 @@ test('menu: select: transform with options: submenu', (t) => {
     t.end();
 });
 
+test('menu: select: transform with options: leaf: leaf-show', (t) => {
+    t.transformWithOptions('leaf-show', {
+        showSubmenu: true,
+    });
+    t.end();
+});
+
 test('menu: select: no report: no-parent', (t) => {
     t.noReport('no-parent');
     t.end();

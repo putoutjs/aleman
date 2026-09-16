@@ -7,10 +7,11 @@ test.describe('show-hide', () => {
         const menu = createMenuHelper(page);
         
         await menu.show();
-        await expect(page.locator('ul.menu:not(.menu-hidden)')).toBeVisible();
+        await expect(menu.topMenu()).toBeVisible();
         
         await menu.pressKey('Escape');
         
-        await expect(page.locator('ul.menu')).toHaveClass(/menu-hidden/);
+        await expect(menu.topMenu()).toHaveClass(/menu-hidden/);
+        await expect(menu.topMenu()).toBeHidden();
     });
 });

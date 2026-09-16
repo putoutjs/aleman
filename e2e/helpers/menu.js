@@ -2,6 +2,7 @@ export const createMenuHelper = (page) => {
     const waitForMenu = () => page.waitForFunction(() => Boolean(globalThis.__menu?.show));
     
     return {
+        topMenu: () => page.locator('section[data-name^="aleman-hydrate-"] > ul.menu'),
         async show(x = 100, y = 100) {
             await waitForMenu();
             await page.evaluate(({x, y}) => globalThis.__menu.show(x, y), {

@@ -1,11 +1,10 @@
+import {updateState} from '../state/state.js';
+
 export const keys = [
     'ArrowLeft',
     'h',
 ];
+
 export const preventDefault = true;
 
-export const listener = () => ({
-    submenuIndex: -1,
-    insideSubmenu: false,
-    showSubmenu: false,
-});
+export const listener = ({state, options}) => updateState('left', state, options);
