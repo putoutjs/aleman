@@ -1,5 +1,8 @@
 // pure functions only — no framework imports, no DOM, no side effects
 // every command takes state, returns the next state (state in -> state out)
+import {run, runByIndex} from './item-click.js';
+import {contextMenu} from './context-menu.js';
+
 export const commands = {
     down,
     up,
@@ -11,6 +14,9 @@ export const commands = {
     esc,
     show,
     hide,
+    run,
+    'enter': runByIndex,
+    'context-menu': contextMenu,
 };
 
 function edge(state, index) {
