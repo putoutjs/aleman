@@ -12,6 +12,7 @@
   },
   "exports": {
     "./menu": "./menu/menu.js",
+    "./menu/bundle": "./menu/bundle.js",
     "./v2": "./v2/index.js"
   },
   "scripts": {

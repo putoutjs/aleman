@@ -28,7 +28,7 @@ const createConfig = (filename, entry, external = false) => ({
 });
 
 export default [
-    createConfig('menu.bundle.js', './bundle/menu.js'),
+    createConfig('menu.bundle.js', './menu/bundle.js'),
     createConfig('menos.bundle.js', './menos/bundle.js'),
     createConfig('menos.js', './menos/bundle.js', true),
 ];
