@@ -18,5 +18,10 @@ export default defineConfig({
         use: {
             baseURL: 'http://localhost:3000/example/nemo/',
         },
+    }, {
+        name: 'menos',
+        use: {
+            baseURL: 'http://localhost:3000/example/menos/',
+        },
     }],
 });
