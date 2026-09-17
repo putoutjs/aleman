@@ -269,6 +269,7 @@ test('v2: createComponent: subscribe preserves rendering', (t) => {
     const {component, element} = createComponentWith({
         show: false,
     });
+    
     const states = [];
     
     component.subscribe((state) => {
@@ -330,11 +331,34 @@ test('v2: createComponent: named addons survive replacement', (t) => {
         show: component.getState().show,
         hidden: html.includes('menu-hidden'),
     };
+    
     const expected = {
         show: false,
         hidden: true,
     };
     
     t.deepEqual(result, expected);
+    t.end();
+});
+
+test('v2: createComponent: run invokes a known command', (t) => {
+    const {component} = createComponentWith({
+        show: false,
+    });
+    component.run({}, 'show');
+    const {show} = component.getState();
+    
+    t.ok(show);
+    t.end();
+});
+
+test('v2: createComponent: run ignores an unknown command', (t) => {
+    const {component} = createComponentWith({
+        show: false,
+    });
+    component.run({}, 'missing');
+    const {show} = component.getState();
+    
+    t.notOk(show);
     t.end();
 });

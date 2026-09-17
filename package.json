@@ -15,6 +15,7 @@
     "./v2": "./v2/index.js"
   },
   "scripts": {
+    "build": "madrun build",
     "test": "madrun test",
     "watch:test": "madrun watch:test",
     "lint": "madrun lint",
@@ -46,7 +47,10 @@
   ],
   "devDependencies": {
     "@playwright/test": "^1.63.0",
+    "@putout/bundle": "5.5.1",
     "@putout/test": "^15.1.0",
+    "@rspack/cli": "2.2.6",
+    "@rspack/core": "2.2.6",
     "eslint": "^10.2.0",
     "eslint-plugin-putout": "^31.1.2",
     "just-kebab-case": "^4.2.0",

@@ -3,6 +3,9 @@
         "putout": "on"
     },
     "match": {
+        "e2e/bundles.spec.js": {
+            "tape/jest": "off"
+        },
         "aleman": {
             "nodejs": "off"
         },

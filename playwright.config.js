@@ -10,18 +10,27 @@ export default defineConfig({
     },
     projects: [{
         name: 'menu',
+        testIgnore: '**/bundles.spec.js',
         use: {
             baseURL: 'http://localhost:3000/example/menu/',
         },
     }, {
         name: 'nemo',
+        testIgnore: '**/bundles.spec.js',
         use: {
             baseURL: 'http://localhost:3000/example/nemo/',
         },
     }, {
         name: 'menos',
+        testIgnore: '**/bundles.spec.js',
         use: {
             baseURL: 'http://localhost:3000/example/menos/',
+        },
+    }, {
+        name: 'bundle',
+        testMatch: '**/bundles.spec.js',
+        use: {
+            baseURL: 'http://localhost:3000',
         },
     }],
 });

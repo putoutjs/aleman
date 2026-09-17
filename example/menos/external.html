@@ -1,0 +1,13 @@
+<script type="importmap">
+{"imports":{"putout":"/node_modules/@putout/bundle/bundle/putout.js","@putout/processor-html":"/node_modules/@putout/processor-html/lib/html.js","node-html-to-jsx":"/node_modules/node-html-to-jsx/index.js"}}
+</script>
+<script type="module">
+import {createMenu} from '/dist/menos.js';
+
+window.__fired = [];
+const menu = createMenu('menu', {}, {
+    hello: () => window.__fired.push('hello'),
+});
+window.__menu = {...menu, ready: Promise.resolve(menu)};
+</script>
+<body data-name="menu"></body>
