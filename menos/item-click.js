@@ -11,7 +11,7 @@ export const createItemClick = (name) => ({
     filter: ({event, options}) => isFn(getFn(event, options)),
 });
 
-export const run = ({event, state, options}) => {
+export const run = (state, options, event) => {
     const fn = getFn(event, options);
     
     setTimeout(fn);
@@ -24,7 +24,7 @@ export const run = ({event, state, options}) => {
 };
 
 // keyboard "click": found by index, not by screen coordinates
-export const runByIndex = ({state, options}) => {
+export const runByIndex = (state, options) => {
     const {
         index,
         submenuIndex,

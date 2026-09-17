@@ -102,6 +102,7 @@ test('v2: createComponent: initial render: hidden', (t) => {
     const {element} = createComponentWith({
         show: false,
     });
+    
     const result = element.innerHTML.includes('menu-hidden');
     
     t.ok(result);
@@ -112,6 +113,7 @@ test('v2: createComponent: initial render: visible', (t) => {
     const {element} = createComponentWith({
         show: true,
     });
+    
     const result = element.innerHTML.includes('menu-hidden');
     
     t.notOk(result);
@@ -208,6 +210,7 @@ test('v2: createComponent: subscribe', (t) => {
     const {component} = createComponentWith({
         show: false,
     });
+    
     const states = [];
     
     component.subscribe((state) => {
@@ -259,5 +262,79 @@ test('v2: createComponent: addons: other key ignored', (t) => {
     const state = component.getState();
     
     t.notOk(state.show);
+    t.end();
+});
+
+test('v2: createComponent: subscribe preserves rendering', (t) => {
+    const {component, element} = createComponentWith({
+        show: false,
+    });
+    const states = [];
+    
+    component.subscribe((state) => {
+        states.push(state.show);
+    });
+    component.setState({
+        show: true,
+    });
+    
+    const result = {
+        hidden: element.innerHTML.includes('menu-hidden'),
+        states,
+    };
+    
+    const expected = {
+        hidden: false,
+        states: [true],
+    };
+    
+    t.deepEqual(result, expected);
+    t.end();
+});
+
+test('v2: createComponent: named addons survive replacement', (t) => {
+    let target;
+    let html = '';
+    const document = createTarget();
+    
+    const element = {
+        querySelector: () => target,
+        get innerHTML() {
+            return html;
+        },
+        set innerHTML(value) {
+            html = value;
+            target = createTarget();
+        },
+    };
+    
+    const component = createComponent(element, {
+        ...config,
+        state: {
+            show: false,
+        },
+        document,
+        addons: [{
+            name: 'menu',
+            event: 'click',
+            command: 'hide',
+        }],
+    });
+    
+    component.show();
+    target.dispatch({}, 'click');
+    component.show();
+    target.dispatch({}, 'click');
+    
+    const result = {
+        show: component.getState().show,
+        hidden: html.includes('menu-hidden'),
+    };
+    const expected = {
+        show: false,
+        hidden: true,
+    };
+    
+    t.deepEqual(result, expected);
     t.end();
 });

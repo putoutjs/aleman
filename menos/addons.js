@@ -12,6 +12,11 @@ import * as gg from './gg.js';
 import * as shiftG from './shift-g.js';
 
 export const createAddons = (name) => [
+    {
+        event: 'click',
+        command: 'hide',
+        filter: ({event, state}) => state.show && !event.target.closest(`[data-name="${name}"]`),
+    },
     createContextMenu(name),
     createMouseLeave(name),
     createItemClick(name),

@@ -16,6 +16,9 @@ export const createComponent = (element, {template, rules, commands, addons = []
     });
     
     const vim = createVimParser();
+    const namedAddons = addons.filter(({name}) => name);
+    const globalAddons = addons.filter(({name}) => !name);
+    let listener;
     
     store.subscribe((current) => {
         const [changed, html] = render({
@@ -23,13 +26,15 @@ export const createComponent = (element, {template, rules, commands, addons = []
             ...options,
         });
         
-        if (!changed)
-            return;
+        if (changed) {
+            element.innerHTML = html;
+            wireAddons(namedAddons, {store, commands, options, vim, element, document});
+        }
         
-        element.innerHTML = html;
+        listener?.(current);
     });
     
-    wireAddons(addons, {
+    wireAddons(globalAddons, {
         store,
         commands,
         options,
@@ -44,7 +49,9 @@ export const createComponent = (element, {template, rules, commands, addons = []
     return {
         getState: () => store.getState(),
         setState: (patch) => store.setState(patch),
-        subscribe: (fn) => store.subscribe(fn),
+        subscribe: (fn) => {
+            listener = fn;
+        },
         run: (event, addon) => {
             const command = commands[addon];
             const current = store.getState();

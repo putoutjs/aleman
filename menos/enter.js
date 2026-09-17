@@ -14,7 +14,4 @@ export const filter = ({state}) => {
 export const command = 'enter';
 
 // Enter = "click" the selected item via the keyboard
-export const enter = ({state, options}) => runByIndex({
-    state,
-    options,
-});
+export const enter = ({state, options}) => runByIndex(state, options);

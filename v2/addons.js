@@ -35,7 +35,7 @@ const createHandler = (addon, {store, commands, options, vim}) => (event) => {
             return;
     }
     
-    if (addon.filter && !addon.filter({state: store.getState(), event, options}))
+    if (addon.filter && !addon.filter({state: store.getState(), event, options, vim}))
         return;
     
     const state = store.getState();
@@ -44,5 +44,5 @@ const createHandler = (addon, {store, commands, options, vim}) => (event) => {
     if (!command)
         return;
     
-    store.setState(command(state, options));
+    store.setState(command(state, options, event));
 };
