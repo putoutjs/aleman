@@ -1,7 +1,6 @@
-import {test} from 'supertape';
-import {createStore} from './state.js';
-import {createVimParser} from '../aleman/vim.js';
+import {test, stub} from 'supertape';
 import {wireAddons} from './addons.js';
+import {createStore} from './state.js';
 
 const createTarget = () => {
     const listeners = {};
@@ -18,287 +17,472 @@ const createTarget = () => {
     };
 };
 
-const down = (state) => ({
-    ...state,
-    index: state.index + 1,
+const createElement = (children = {}) => ({
+    querySelector: (selector) => children[selector],
 });
 
-const commands = {
-    down,
-};
-
-const wire = (addons, overrides = {}) => {
-    const store = createStore({
-        index: -1,
-    });
-    const document = createTarget();
-    const element = createTarget();
+const start = ({addons, commands = {}, state = {}, options = {}, vim, element, document}) => {
+    const store = createStore(state);
     
     wireAddons(addons, {
         store,
         commands,
-        options: {},
-        vim: createVimParser(),
-        document,
+        options,
+        vim,
         element,
-        ...overrides,
+        document,
     });
     
-    return {
-        store,
-        document,
-        element,
-    };
+    return store;
 };
 
-test('v2: addons: key triggers command', (t) => {
-    const {store, document} = wire([{
-        keys: ['ArrowDown'],
-        command: 'down',
-    }]);
-    
-    document.dispatch({
-        key: 'ArrowDown',
+test('v2: addons: key: runs command', (t) => {
+    const document = createTarget();
+    const store = start({
+        addons: [{
+            keys: ['j'],
+            command: 'down',
+        }],
+        commands: {
+            down: (state) => ({
+                ...state,
+                index: state.index + 1,
+            }),
+        },
+        state: {
+            index: 0,
+        },
+        element: createElement(),
+        document,
     });
     
-    t.equal(store.getState().index, 0);
+    document.dispatch({
+        key: 'j',
+    });
+    
+    const result = store.getState().index;
+    
+    t.equal(result, 1);
     t.end();
 });
 
-test('v2: addons: key not listed: ignored', (t) => {
-    const {store, document} = wire([{
-        keys: ['ArrowDown'],
-        command: 'down',
-    }]);
-    
-    document.dispatch({
-        key: 'ArrowUp',
+test('v2: addons: key: other key ignored', (t) => {
+    const document = createTarget();
+    const store = start({
+        addons: [{
+            keys: ['j'],
+            command: 'down',
+        }],
+        commands: {
+            down: (state) => ({
+                ...state,
+                index: state.index + 1,
+            }),
+        },
+        state: {
+            index: 0,
+        },
+        element: createElement(),
+        document,
     });
     
-    t.equal(store.getState().index, -1);
+    document.dispatch({
+        key: 'k',
+    });
+    
+    const result = store.getState().index;
+    
+    t.equal(result, 0);
     t.end();
 });
 
-test('v2: addons: no keys: any key triggers', (t) => {
-    const {store, document} = wire([{
-        command: 'down',
-    }]);
+test('v2: addons: no keys: runs on any key', (t) => {
+    const document = createTarget();
+    const store = start({
+        addons: [{
+            command: 'down',
+        }],
+        commands: {
+            down: (state) => ({
+                ...state,
+                index: state.index + 1,
+            }),
+        },
+        state: {
+            index: 0,
+        },
+        element: createElement(),
+        document,
+    });
     
     document.dispatch({
         key: 'x',
     });
     
-    t.equal(store.getState().index, 0);
+    const result = store.getState().index;
+    
+    t.equal(result, 1);
     t.end();
 });
 
-test('v2: addons: vim: match runs command', (t) => {
-    const {store, document} = wire([{
-        keys: ['g'],
-        vim: 'gg',
-        command: 'down',
-    }]);
-    
-    document.dispatch({
-        key: 'g',
-    });
-    document.dispatch({
-        key: 'g',
-    });
-    
-    t.equal(store.getState().index, 0);
-    t.end();
-});
-
-test('v2: addons: vim: mismatch ignored', (t) => {
-    const {store, document} = wire([{
-        keys: ['g'],
-        vim: 'gg',
-        command: 'down',
-    }]);
-    
-    document.dispatch({
-        key: 'g',
-    });
-    
-    t.equal(store.getState().index, -1);
-    t.end();
-});
-
-test('v2: addons: filter: false ignored', (t) => {
-    const {store, document} = wire([{
-        command: 'down',
-        filter: () => false,
-    }]);
-    
-    document.dispatch({
-        key: 'ArrowDown',
-    });
-    
-    t.equal(store.getState().index, -1);
-    t.end();
-});
-
-test('v2: addons: filter: true runs', (t) => {
-    const {store, document} = wire([{
-        command: 'down',
-        filter: () => true,
-    }]);
-    
-    document.dispatch({
-        key: 'ArrowDown',
-    });
-    
-    t.equal(store.getState().index, 0);
-    t.end();
-});
-
-test('v2: addons: unknown command: ignored', (t) => {
-    const {store, document} = wire([{
-        command: 'nope',
-    }]);
-    
-    document.dispatch({
-        key: 'ArrowDown',
-    });
-    
-    t.equal(store.getState().index, -1);
-    t.end();
-});
-
-test('v2: addons: command receives state and options', (t) => {
-    const calls = [];
-    const {document} = wire([{
-        command: 'down',
-    }], {
+test('v2: addons: vim: matching command runs', (t) => {
+    const document = createTarget();
+    const store = start({
+        addons: [{
+            vim: 'gg',
+            command: 'gg',
+        }],
         commands: {
-            down: (state, options) => {
-                calls.push({
-                    state,
-                    options,
-                });
-                
-                return state;
-            },
+            gg: (state) => ({
+                ...state,
+                index: 0,
+            }),
         },
-        options: {
-            name: 'menu',
+        state: {
+            index: 3,
         },
+        vim: stub().returns(['gg']),
+        element: createElement(),
+        document,
     });
     
     document.dispatch({
-        key: 'ArrowDown',
+        key: 'g',
     });
-    const result = calls;
-    const expected = [{
+    
+    const result = store.getState().index;
+    
+    t.equal(result, 0);
+    t.end();
+});
+
+test('v2: addons: vim: other command ignored', (t) => {
+    const document = createTarget();
+    const vim = stub().returns(['']);
+    
+    const store = start({
+        addons: [{
+            vim: 'gg',
+            command: 'gg',
+        }],
+        commands: {
+            gg: (state) => ({
+                ...state,
+                index: 0,
+            }),
+        },
         state: {
-            index: -1,
+            index: 3,
         },
-        options: {
-            name: 'menu',
-        },
-    }];
+        vim,
+        element: createElement(),
+        document,
+    });
+    
+    document.dispatch({
+        key: 'g',
+    });
+    
+    const result = [vim.callCount, store.getState().index];
+    const expected = [1, 3];
     
     t.deepEqual(result, expected);
     t.end();
 });
 
-test('v2: addons: named: child runs command', (t) => {
-    const child = createTarget();
-    const element = {
-        querySelector: (selector) => selector === '[data-name="menu"]' ? child : null,
-    };
-    
-    const {store, document} = wire([{
-        name: 'menu',
-        command: 'down',
-    }], {
-        element,
+test('v2: addons: filter: true runs command', (t) => {
+    const document = createTarget();
+    const store = start({
+        addons: [{
+            filter: () => true,
+            command: 'esc',
+        }],
+        commands: {
+            esc: (state) => ({
+                ...state,
+                show: false,
+            }),
+        },
+        state: {
+            show: true,
+        },
+        element: createElement(),
+        document,
     });
     
     document.dispatch({
-        key: 'ArrowDown',
+        key: 'Escape',
     });
     
-    t.equal(store.getState().index, -1);
+    const result = store.getState().show;
+    
+    t.notOk(result);
     t.end();
 });
 
-test('v2: addons: named: child dispatch runs', (t) => {
-    const child = createTarget();
-    const element = {
-        querySelector: (selector) => selector === '[data-name="menu"]' ? child : null,
+test('v2: addons: filter: false skips command', (t) => {
+    const document = createTarget();
+    const store = start({
+        addons: [{
+            filter: () => false,
+            command: 'esc',
+        }],
+        commands: {
+            esc: (state) => ({
+                ...state,
+                show: false,
+            }),
+        },
+        state: {
+            show: true,
+        },
+        element: createElement(),
+        document,
+    });
+    
+    document.dispatch({
+        key: 'Escape',
+    });
+    
+    const result = store.getState().show;
+    
+    t.ok(result);
+    t.end();
+});
+
+test('v2: addons: unknown command: ignored', (t) => {
+    const document = createTarget();
+    const store = start({
+        addons: [{
+            keys: ['j'],
+            command: 'unknown',
+        }],
+        commands: {},
+        state: {
+            index: 0,
+        },
+        element: createElement(),
+        document,
+    });
+    
+    document.dispatch({
+        key: 'j',
+    });
+    
+    const result = store.getState().index;
+    
+    t.equal(result, 0);
+    t.end();
+});
+
+test('v2: addons: command: gets state', (t) => {
+    const document = createTarget();
+    const command = stub((state) => ({
+        ...state,
+        index: 1,
+    }));
+    
+    start({
+        addons: [{
+            keys: ['j'],
+            command: 'down',
+        }],
+        commands: {
+            down: command,
+        },
+        state: {
+            index: 0,
+        },
+        element: createElement(),
+        document,
+    });
+    
+    document.dispatch({
+        key: 'j',
+    });
+    
+    const expected = {
+        index: 0,
     };
     
-    const {store} = wire([{
+    const [result] = command.args[0];
+    
+    t.deepEqual(result, expected);
+    t.end();
+});
+
+test('v2: addons: command: gets options', (t) => {
+    const document = createTarget();
+    const command = stub((state) => state);
+    
+    const options = {
+        infiniteScroll: true,
+    };
+    
+    start({
+        addons: [{
+            keys: ['j'],
+            command: 'down',
+        }],
+        commands: {
+            down: command,
+        },
+        options,
+        state: {},
+        element: createElement(),
+        document,
+    });
+    
+    document.dispatch({
+        key: 'j',
+    });
+    
+    const [, result] = command.args[0];
+    
+    t.deepEqual(result, options);
+    t.end();
+});
+
+test('v2: addons: named: dispatches to element', (t) => {
+    const document = createTarget();
+    const target = createTarget();
+    
+    const element = createElement({
+        '[data-name="menu"]': target,
+    });
+    
+    const store = start({
+        addons: [{
+            name: 'menu',
+            event: 'click',
+            command: 'hide',
+        }],
+        commands: {
+            hide: (state) => ({
+                ...state,
+                show: false,
+            }),
+        },
+        state: {
+            show: true,
+        },
+        element,
+        document,
+    });
+    
+    target.dispatch({}, 'click');
+    
+    const result = store.getState().show;
+    
+    t.notOk(result);
+    t.end();
+});
+
+test('v2: addons: named: missing element: no crash', (t) => {
+    const document = createTarget();
+    const element = createElement();
+    
+    const addons = [{
         name: 'menu',
-        command: 'down',
-    }], {
+        command: 'hide',
+    }];
+    
+    const result = () => start({
+        addons,
+        commands: {
+            hide: (state) => state,
+        },
+        state: {},
         element,
+        document,
     });
     
-    child.dispatch({
-        key: 'ArrowDown',
-    });
-    
-    t.equal(store.getState().index, 0);
+    t.notOk(result().called);
     t.end();
 });
 
-test('v2: addons: named: missing child: no crash', (t) => {
-    const element = {
-        querySelector: () => null,
-    };
-    
-    const {store} = wire([{
-        name: 'nope',
-        command: 'down',
-    }], {
-        element,
+test('v2: addons: custom event', (t) => {
+    const document = createTarget();
+    const store = start({
+        addons: [{
+            event: 'contextmenu',
+            command: 'show',
+        }],
+        commands: {
+            show: (state) => ({
+                ...state,
+                show: true,
+            }),
+        },
+        state: {
+            show: false,
+        },
+        element: createElement(),
+        document,
     });
     
-    t.equal(store.getState().index, -1);
+    document.dispatch({}, 'contextmenu');
+    
+    const result = store.getState().show;
+    
+    t.ok(result);
     t.end();
 });
 
-test('v2: addons: custom event: runs on click', (t) => {
-    const child = createTarget();
-    const element = {
-        querySelector: () => child,
-    };
-    
-    const {store} = wire([{
-        name: 'menu',
-        event: 'click',
-        command: 'down',
-    }], {
-        element,
+test('v2: addons: keydown does not fire custom event addon', (t) => {
+    const document = createTarget();
+    const store = start({
+        addons: [{
+            event: 'contextmenu',
+            command: 'show',
+        }],
+        commands: {
+            show: (state) => ({
+                ...state,
+                show: true,
+            }),
+        },
+        state: {
+            show: false,
+        },
+        element: createElement(),
+        document,
     });
     
-    child.dispatch({}, 'click');
+    document.dispatch({
+        key: 'j',
+    });
     
-    t.equal(store.getState().index, 0);
+    const result = store.getState().show;
+    
+    t.notOk(result);
     t.end();
 });
 
-test('v2: addons: custom event: keydown ignored', (t) => {
-    const child = createTarget();
-    const element = {
-        querySelector: () => child,
-    };
-    
-    const {store} = wire([{
-        name: 'menu',
-        event: 'click',
-        command: 'down',
-    }], {
-        element,
+test('v2: addons: events: attaches every event', (t) => {
+    const document = createTarget();
+    const store = start({
+        addons: [{
+            events: ['keydown', 'click'],
+            command: 'down',
+        }],
+        commands: {
+            down: (state) => ({
+                ...state,
+                index: state.index + 1,
+            }),
+        },
+        state: {
+            index: 0,
+        },
+        element: createElement(),
+        document,
     });
     
-    child.dispatch({
-        key: 'ArrowDown',
-    });
+    document.dispatch({}, 'click');
     
-    t.equal(store.getState().index, -1);
+    const result = store.getState().index;
+    
+    t.equal(result, 1);
     t.end();
 });

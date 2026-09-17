@@ -1,189 +1,225 @@
 import {test} from 'supertape';
 import {createStore} from './state.js';
 
-const noop = () => {};
-
-test('v2: state: getState: initial', (t) => {
+test('v2: store: getState: returns state', (t) => {
     const store = createStore({
-        a: 1,
+        index: 0,
     });
-    const state = store.getState();
     
-    t.equal(state.a, 1);
-    t.end();
-});
-
-test('v2: state: getState: stable reference', (t) => {
-    const store = createStore({
-        a: 1,
-    });
-    const first = store.getState();
-    const second = store.getState();
+    const result = store.getState();
     
-    t.equal(first, second);
-    t.end();
-});
-
-test('v2: state: createStore: copies initial', (t) => {
-    const initial = {
-        a: 1,
+    const expected = {
+        index: 0,
     };
+    
+    t.deepEqual(result, expected);
+    t.end();
+});
+
+test('v2: store: getState: does not return the initial object', (t) => {
+    const initial = {
+        index: 0,
+    };
+    
     const store = createStore(initial);
     
-    initial.a = 2;
-    const state = store.getState();
+    const result = store.getState() === initial;
     
-    t.equal(state.a, 1);
+    t.notOk(result);
     t.end();
 });
 
-test('v2: state: setState: merges', (t) => {
+test('v2: store: getState: keeps reference between reads', (t) => {
     const store = createStore({
-        a: 1,
+        index: 0,
+    });
+    
+    const first = store.getState();
+    const second = store.getState();
+    const result = first === second;
+    
+    t.ok(result);
+    t.end();
+});
+
+test('v2: store: setState: merges patch', (t) => {
+    const store = createStore({
+        index: 0,
+        show: true,
     });
     
     store.setState({
-        b: 2,
+        index: 1,
     });
+    
     const result = store.getState();
+    
     const expected = {
-        a: 1,
-        b: 2,
+        index: 1,
+        show: true,
     };
     
     t.deepEqual(result, expected);
     t.end();
 });
 
-test('v2: state: setState: overrides', (t) => {
+test('v2: store: setState: overrides value', (t) => {
     const store = createStore({
-        a: 1,
+        show: true,
     });
     
     store.setState({
-        a: 3,
+        show: false,
     });
-    const state = store.getState();
     
-    t.equal(state.a, 3);
+    const result = store.getState().show;
+    
+    t.notOk(result);
     t.end();
 });
 
-test('v2: state: setState: creates new reference', (t) => {
+test('v2: store: setState: returns new reference', (t) => {
     const store = createStore({
-        a: 1,
+        show: true,
     });
-    const before = store.getState();
+    
+    const previous = store.getState();
     
     store.setState({
-        b: 2,
+        show: false,
     });
-    const after = store.getState();
     
-    t.notEqual(after, before);
+    const result = store.getState() === previous;
+    
+    t.notOk(result);
     t.end();
 });
 
-test('v2: state: setState: no subscriber', (t) => {
+test('v2: store: setState: does not mutate previous state', (t) => {
     const store = createStore({
-        a: 1,
+        show: true,
     });
+    
+    const previous = store.getState();
     
     store.setState({
-        b: 2,
+        show: false,
     });
-    const result = store.getState();
-    const expected = {
-        a: 1,
-        b: 2,
-    };
     
-    t.deepEqual(result, expected);
+    const result = previous.show;
+    
+    t.ok(result);
     t.end();
 });
 
-test('v2: state: subscribe: called on setState', (t) => {
+test('v2: store: setState: no listener', (t) => {
     const store = createStore({
-        a: 1,
+        show: true,
     });
+    
+    const result = store.setState({
+        show: false,
+    });
+    
+    t.notOk(result);
+    t.end();
+});
+
+test('v2: store: setState: calls listener', (t) => {
+    const store = createStore({
+        show: true,
+    });
+    
     const states = [];
     
     store.subscribe((state) => {
-        states.push(state);
+        states.push(state.show);
     });
-    
     store.setState({
-        b: 2,
+        show: false,
     });
     
-    t.equal(states.length, 1);
-    t.end();
-});
-
-test('v2: state: subscribe: receives merged state', (t) => {
-    const store = createStore({
-        a: 1,
-    });
-    const states = [];
-    
-    store.subscribe((state) => {
-        states.push(state);
-    });
-    
-    store.setState({
-        b: 2,
-    });
     const result = states;
-    const expected = [{
-        a: 1,
-        b: 2,
-    }];
+    const expected = [false];
     
     t.deepEqual(result, expected);
     t.end();
 });
 
-test('v2: state: subscribe: latest listener wins', (t) => {
+test('v2: store: setState: listener gets merged state', (t) => {
     const store = createStore({
-        a: 1,
+        index: 0,
+        show: true,
     });
-    const first = [];
+    
+    const states = [];
     
     store.subscribe((state) => {
-        first.push(state);
+        states.push(state);
     });
-    
-    store.subscribe(noop);
-    
     store.setState({
-        b: 2,
+        index: 1,
     });
-    const result = first;
-    const expected = [];
+    
+    const [result] = states;
+    
+    const expected = {
+        index: 1,
+        show: true,
+    };
     
     t.deepEqual(result, expected);
     t.end();
 });
 
-test('v2: state: subscribe: replacement is called', (t) => {
+test('v2: store: subscribe: latest listener wins', (t) => {
     const store = createStore({
-        a: 1,
+        show: true,
     });
+    
+    const first = [];
     const second = [];
     
-    store.subscribe(noop);
     store.subscribe((state) => {
-        second.push(state);
+        first.push(state.show);
+    });
+    store.subscribe((state) => {
+        second.push(state.show);
+    });
+    store.setState({
+        show: false,
     });
     
-    store.setState({
-        b: 2,
+    const result = [first, second];
+    
+    const expected = [
+        [],
+        [false],
+    ];
+    
+    t.deepEqual(result, expected);
+    t.end();
+});
+
+test('v2: store: subscribe: replaces listener', (t) => {
+    const store = createStore({
+        show: true,
     });
-    const result = second;
-    const expected = [{
-        a: 1,
-        b: 2,
-    }];
+    
+    const states = [];
+    
+    const listener = (state) => {
+        states.push(state.show);
+    };
+    
+    store.subscribe(listener);
+    store.subscribe(listener);
+    store.setState({
+        show: false,
+    });
+    
+    const result = states;
+    const expected = [false];
     
     t.deepEqual(result, expected);
     t.end();

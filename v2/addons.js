@@ -7,14 +7,21 @@ export const wireAddons = (addons, {store, commands, options, vim, element, docu
             vim,
         });
         
-        if (addon.name) {
-            element.querySelector(`[data-name="${addon.name}"]`)?.addEventListener(addon.event || 'keydown', handler);
-            
-            continue;
-        }
-        
-        document.addEventListener(addon.event || 'keydown', handler);
+        for (const event of getEvents(addon))
+            getTarget(addon, {
+                element,
+                document,
+            })?.addEventListener(event, handler);
     }
+};
+
+const getEvents = (addon) => addon.events || addon.event && [addon.event] || ['keydown'];
+
+const getTarget = (addon, {element, document}) => {
+    if (!addon.name)
+        return document;
+    
+    return element.querySelector(`[data-name="${addon.name}"]`);
 };
 
 const createHandler = (addon, {store, commands, options, vim}) => (event) => {
