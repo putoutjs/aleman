@@ -37,8 +37,7 @@
     "jessy": "^5.0.0",
     "once": "^1.4.0",
     "putout": "^42.4.2",
-    "try-to-catch": "^4.0.3",
-    "@putout/bundle": "^5.5.1"
+    "try-to-catch": "^4.0.3"
   },
   "keywords": [
     "putout",
