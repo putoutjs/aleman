@@ -1,3 +1,35 @@
+2026.09.18, v2.1.0
+
+fix:
+- 969af2b nemo: context-menu: keep show flag in sync
+- 108a770 aleman: state: remove window.history pollution
+- 9f23430 lunes: render
+
+feature:
+- 8f33d27 menu: add bundle.js entry for rspack consumers
+- 4d77332 menos: add rspack bundle
+- c4780e5 menos: add createMenu
+- 06ccc34 menos: add build-menu rule
+- 5838157 menos: add commands
+- 05e4230 menos: scaffold directory
+- b197967 v2: add createComponent
+- 83f8761 v2: addons: add wireAddons
+- e2dda23 v2: dsl: add createDSL
+- 84e2723 v2: state: add createStore
+- 7fd07ee v2: scaffold directory and exports
+- 967b845 nemo: state: add right and left commands
+- 16b7929 nemo: state: fix infiniteScroll skipping last item
+- 73456b6 nemo: state: add esc command
+- 765fcf7 nemo: printState: print submenu children when open
+- 2be6799 linus: actions: simplify
+- 47c4947 linus: actions: click
+- 345a783 lunes: simplify
+- 9d09339 lunes: compiler: save position
+- 5f3dbfa lunes: getCursor
+- 773f0d7 lunes: transformer
+- a1bb838 lunes: listen
+- 4fd3e72 lunes: listen: map -> for-of
+
 2026.05.27, v2.0.4
 
 fix:
