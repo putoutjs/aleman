@@ -27,11 +27,11 @@ export const hydrateMenu = (elementName, {hydrateElement, options, menu}) => {
         if (!menuElement)
             return null;
         
-        const {height, width} = menuElement.getBoundingClientRect();
+        const {height, width} = getComputedStyle(menuElement);
         
         const {x, y} = calculate(event, {
-            heightMenu: height,
-            widthMenu: width,
+            heightMenu: parseInt(height, 10),
+            widthMenu: parseInt(width, 10),
             innerHeight: globalThis.innerHeight,
             innerWidth: globalThis.innerWidth,
         });
@@ -50,15 +50,17 @@ export const hydrateMenu = (elementName, {hydrateElement, options, menu}) => {
     });
     
     const showMenu = (showOptions) => {
-        const {event, position} = showOptions;
-        const params = event ? {
-            x: event.clientX,
-            y: event.clientY,
+        const {event} = showOptions;
+        const {clientX: x, clientY: y} = event;
+        
+        const params = {
+            x,
+            y,
             name,
-        } : {
-            x: position.left,
-            y: position.top,
-            name,
+            position: {
+                x,
+                y,
+            },
         };
         
         if (isCancel(hooks.beforeShow(params))) {
@@ -150,9 +152,9 @@ export const hydrateMenu = (elementName, {hydrateElement, options, menu}) => {
     return {
         show: (x = 0, y = 0) => {
             showMenu({
-                position: {
-                    top: y,
-                    left: x,
+                event: {
+                    clientX: x,
+                    clientY: y,
                 },
             });
         },

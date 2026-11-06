@@ -10,8 +10,8 @@ import {
 
 const noop = () => {};
 
-const create = async (options = {}, overrides = {}) => {
-    const win = installWindow();
+const create = async (options = {}, overrides = {}, windowOptions = {}) => {
+    const win = installWindow(windowOptions);
     const element = createFakeElement();
     const fired = [];
     
@@ -66,7 +66,7 @@ test('lunes: hydrate: show renders the menu at the position', async (t) => {
     
     ctx.win.uninstall();
     
-    t.match(innerHTML, 'left: 10px; top: 20px');
+    t.match(innerHTML, 'left: 10px; top: 6px');
     t.end();
 });
 
@@ -79,7 +79,7 @@ test('lunes: hydrate: show without coordinates', async (t) => {
     
     ctx.win.uninstall();
     
-    t.match(innerHTML, 'left: 0px; top: 0px');
+    t.match(innerHTML, 'left: 0px; top: -14px');
     t.end();
 });
 
@@ -371,6 +371,10 @@ test('lunes: hydrate: hooks: beforeShow and afterShow get the params', async (t)
         x: 10,
         y: 20,
         name: 'menu',
+        position: {
+            x: 10,
+            y: 20,
+        },
     };
     
     const expected = [
@@ -432,6 +436,10 @@ test('lunes: hydrate: hooks: contextmenu: beforeShow gets the pointer', async (t
         x: 30,
         y: 40,
         name: 'menu',
+        position: {
+            x: 30,
+            y: 40,
+        },
     }]);
     t.end();
 });
@@ -684,5 +692,23 @@ test('lunes: hydrate: hooks: beforeShow returns false: the shown menu hides with
     const names = calls.map(([name]) => name);
     
     t.deepEqual([isHidden(ctx), names], [true, ['afterShow']]);
+    t.end();
+});
+
+test('lunes: hydrate: show flips the menu by computed size near the edge', async (t) => {
+    const ctx = await create({}, {}, {
+        innerWidth: 120,
+        innerHeight: 90,
+        menuWidth: 100,
+        menuHeight: 60,
+    });
+    
+    ctx.instance.show(100, 80);
+    
+    const {innerHTML} = ctx.element;
+    
+    ctx.win.uninstall();
+    
+    t.match(innerHTML, 'left: 0px; top: 6px');
     t.end();
 });

@@ -22,12 +22,7 @@ const createEmitter = () => {
 
 export const createFakeElement = () => {
     const emitter = createEmitter();
-    const menuElement = {
-        getBoundingClientRect: () => ({
-            height: 100,
-            width: 50,
-        }),
-    };
+    const menuElement = {};
     
     const element = {
         ...emitter,
@@ -40,19 +35,24 @@ export const createFakeElement = () => {
     return element;
 };
 
-export const installWindow = ({innerHeight = 1000, innerWidth = 1000} = {}) => {
+export const installWindow = ({innerHeight = 1000, innerWidth = 1000, menuHeight = 100, menuWidth = 50} = {}) => {
     const emitter = createEmitter();
     const saved = {
         addEventListener: globalThis.addEventListener,
         removeEventListener: globalThis.removeEventListener,
         innerHeight: globalThis.innerHeight,
         innerWidth: globalThis.innerWidth,
+        getComputedStyle: globalThis.getComputedStyle,
     };
     
     globalThis.addEventListener = emitter.addEventListener;
     globalThis.removeEventListener = emitter.removeEventListener;
     globalThis.innerHeight = innerHeight;
     globalThis.innerWidth = innerWidth;
+    globalThis.getComputedStyle = () => ({
+        height: `${menuHeight}px`,
+        width: `${menuWidth}px`,
+    });
     
     return {
         emit: emitter.emit,
