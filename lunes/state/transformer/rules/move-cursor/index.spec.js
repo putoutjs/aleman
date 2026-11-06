@@ -56,3 +56,11 @@ test('lunes: move-cursor: next: last item: next-stay', (t) => {
     });
     t.end();
 });
+
+test('lunes: move-cursor: no report with options: next', (t) => {
+    t.noReportWithOptions('next', {
+        operation: 'unknown',
+        cursor: 'edit',
+    });
+    t.end();
+});

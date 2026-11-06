@@ -31,3 +31,13 @@ test('lunes: build-menu: transform with options', (t) => {
     });
     t.end();
 });
+
+test('lunes: build-menu: transform with options: submenu-open', (t) => {
+    t.transformWithOptions('submenu-open', {
+        position: {
+            left: 100,
+            top: 20,
+        },
+    });
+    t.end();
+});

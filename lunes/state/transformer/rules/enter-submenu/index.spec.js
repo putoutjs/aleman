@@ -28,3 +28,8 @@ test('lunes: enter-submenu: no report with options: enter', (t) => {
     });
     t.end();
 });
+
+test('lunes: enter-submenu: no transform: empty', (t) => {
+    t.noTransform('empty');
+    t.end();
+});

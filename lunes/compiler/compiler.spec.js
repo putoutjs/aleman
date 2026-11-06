@@ -6,14 +6,10 @@ const create = (overrides = {}) => {
     
     const commit = stub().returns('state');
     const render = stub().returns('<ul></ul>');
-    const run = stub().returns(true);
-    const read = stub().returns('current');
     
     const compile = createCompiler(element, {
         commit,
         render,
-        run,
-        read,
         ...overrides,
     });
     
@@ -21,7 +17,6 @@ const create = (overrides = {}) => {
         element,
         commit,
         render,
-        run,
         compile,
     };
 };
@@ -47,28 +42,6 @@ test('lunes: compiler: passes the options to commit', (t) => {
     }];
     
     t.calledWith(commit, args);
-    t.end();
-});
-
-test('lunes: compiler: run: calls the callback, then hides', (t) => {
-    const {compile, commit} = create();
-    
-    compile('run');
-    
-    const args = ['hide', {}];
-    
-    t.calledWith(commit, args);
-    t.end();
-});
-
-test('lunes: compiler: run: no callback: no commit', (t) => {
-    const {compile, commit} = create({
-        run: stub().returns(false),
-    });
-    
-    compile('run');
-    
-    t.notCalled(commit);
     t.end();
 });
 
@@ -180,5 +153,42 @@ test('lunes: compiler: show with an event: next show keeps the calculated positi
         top: 286,
         left: 400,
     });
+    t.end();
+});
+
+test('lunes: compiler: show with an event without coordinates: default position', (t) => {
+    const {compile, render} = create();
+    
+    compile('show', {
+        event: {
+            type: 'keydown',
+        },
+    });
+    
+    const [, options] = render.args.at(-1);
+    
+    t.deepEqual(options.position, {
+        top: 0,
+        left: 0,
+    });
+    t.end();
+});
+
+test('lunes: compiler: show with an event: the calculated position is the same: renders once', (t) => {
+    const {compile, render} = create({
+        getPosition: () => ({
+            top: 5,
+            left: 7,
+        }),
+    });
+    
+    compile('show', {
+        event: {
+            clientX: 7,
+            clientY: 5,
+        },
+    });
+    
+    t.calledCount(render, 1);
     t.end();
 });
