@@ -17,12 +17,7 @@ const {
     setAttributeValue,
 } = operator;
 
-const isOn = ({node}) => {
-    if (isObjectProperty(node))
-        return node.value.value;
-    
-    return node.elements[0].value === 'on';
-};
+const isOn = ({node}) => node.elements[0].value === 'on';
 
 const isSelected = ({node}) => {
     if (isObjectProperty(node))

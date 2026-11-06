@@ -99,9 +99,6 @@ export function clearCursor(path) {
 export const closeSubmenus = (root) => {
     root.traverse({
         ArrayExpression(path) {
-            if (path === root)
-                return;
-            
             path.node.elements[0] = stringLiteral('off');
         },
     });
