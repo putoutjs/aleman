@@ -12,6 +12,11 @@ test('state: get-cursor: report', (t) => {
     t.end();
 });
 
+test('state: get-cursor: report: nested', (t) => {
+    t.report('nested', `new.file`);
+    t.end();
+});
+
 test('state: get-cursor: transform', (t) => {
     t.transform('get-cursor');
     t.end();
