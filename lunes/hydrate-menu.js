@@ -1,4 +1,5 @@
 import {jessy} from 'jessy';
+import {createHooks} from './hooks.js';
 import {createState} from './state/state.js';
 import {getCursorPath} from './state/getter/getter.js';
 import {render} from './render/render.js';
@@ -8,6 +9,7 @@ import {createCompiler} from './compiler/compiler.js';
 import {calculate} from './engine/position/calculate.js';
 
 const isFn = (a) => typeof a === 'function';
+const isCancel = (a) => Object.is(a, false);
 
 export const hydrateMenu = (elementName, {hydrateElement, options, menu}) => {
     const {
@@ -16,17 +18,8 @@ export const hydrateMenu = (elementName, {hydrateElement, options, menu}) => {
         isShown,
     } = createState(menu, options);
     
-    const run = (state) => {
-        const path = getCursorPath(state);
-        const fn = path && jessy(path, menu);
-        
-        if (!isFn(fn))
-            return false;
-        
-        fn();
-        
-        return true;
-    };
+    const {name} = options;
+    const hooks = createHooks(options);
     
     const getPosition = (event) => {
         const menuElement = hydrateElement.querySelector('ul.menu');
@@ -53,32 +46,91 @@ export const hydrateMenu = (elementName, {hydrateElement, options, menu}) => {
         commit,
         read,
         render,
-        run,
         getPosition,
     });
     
+    const showMenu = (showOptions) => {
+        const {event, position} = showOptions;
+        const params = event ? {
+            x: event.clientX,
+            y: event.clientY,
+            name,
+        } : {
+            x: position.left,
+            y: position.top,
+            name,
+        };
+        
+        if (isCancel(hooks.beforeShow(params)))
+            return;
+        
+        compile('show', showOptions);
+        hooks.afterShow(params);
+    };
+    
+    const hideMenu = () => {
+        if (!isShown())
+            return;
+        
+        hooks.beforeHide();
+        
+        if (hooks.beforeClose())
+            return;
+        
+        compile('hide');
+        hooks.afterHide();
+    };
+    
+    const clickItem = (fn) => {
+        const isSkip = hooks.beforeClick(name);
+        
+        hideMenu();
+        
+        if (isSkip)
+            return;
+        
+        fn();
+        hooks.afterClick();
+    };
+    
+    const dispatch = (operation, dispatchOptions) => {
+        if (operation === 'show')
+            return showMenu(dispatchOptions);
+        
+        if (operation === 'hide')
+            return hideMenu();
+        
+        if (operation === 'run')
+            return runItem(getCursorPath(read()));
+        
+        compile(operation, dispatchOptions);
+    };
+    
+    const runItem = (path) => {
+        const fn = path && jessy(path, menu);
+        
+        if (isFn(fn))
+            clickItem(fn);
+    };
+    
     createLoop(hydrateElement, {
-        compile,
+        compile: dispatch,
         actions,
         isShown,
     });
     
     hydrateElement.addEventListener('click', (event) => {
         const label = event.target.closest('label[data-menu-path]');
-        const fn = label && jessy(label.dataset.menuPath, menu);
         
-        if (!isFn(fn))
-            return;
-        
-        fn();
-        compile('hide');
+        if (label)
+            runItem(label.dataset.menuPath);
     });
     
     globalThis.addEventListener('click', (event) => {
-        if (!isShown() || hydrateElement.contains(event.target))
+        if (hydrateElement.contains(event.target))
             return;
         
-        compile('hide');
+        hideMenu();
     });
     
     hydrateElement.addEventListener('mouseleave', (event) => {
@@ -90,15 +142,13 @@ export const hydrateMenu = (elementName, {hydrateElement, options, menu}) => {
     
     return {
         show: (x = 0, y = 0) => {
-            compile('show', {
+            showMenu({
                 position: {
                     top: y,
                     left: x,
                 },
             });
         },
-        hide: () => {
-            compile('hide');
-        },
+        hide: hideMenu,
     };
 };

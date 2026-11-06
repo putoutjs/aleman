@@ -19,14 +19,7 @@ const fromEvent = (event) => {
 
 const isSame = (a, b) => a.top === b.top && a.left === b.left;
 
-export const createCompiler = (element, {commit, read, render, run, getPosition = () => null, mainOptions = fullstore()}) => (operation, options = {}) => {
-    if (operation === 'run') {
-        if (!run(read()))
-            return;
-        
-        operation = 'hide';
-    }
-    
+export const createCompiler = (element, {commit, render, getPosition = () => null, mainOptions = fullstore()}) => (operation, options = {}) => {
     const {event} = options;
     const state = commit(operation, options);
     const saved = mainOptions() || {};
