@@ -3,6 +3,7 @@ import {
     types,
     operator,
 } from 'putout';
+import {getKeyName} from '../../../state/transformer/rules/cursor.js';
 
 const {
     isExpressionStatement,
@@ -31,7 +32,7 @@ const getMenuPath = (path) => {
     
     for (let current = path; current; current = current.parentPath)
         if (isObjectProperty(current))
-            names.unshift(current.node.key.name);
+            names.unshift(getKeyName(current.node));
     
     return names.join('.');
 };
@@ -42,8 +43,20 @@ export const include = () => [
     'ArrayExpression',
 ];
 
+const ENTITIES = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '{': '&#123;',
+    '}': '&#125;',
+    '"': '&quot;',
+};
+
+const escapeText = (a) => a.replace(/[&<>{}]/g, (char) => ENTITIES[char]);
+const escapeAttribute = (a) => a.replace(/[&<>{}"]/g, (char) => ENTITIES[char]);
+
 const createMenuItem = (path) => {
-    const {name} = path.node.key;
+    const name = escapeText(getKeyName(path.node));
     const valuePath = path.get('value');
     
     if (isArrayExpression(valuePath)) {
@@ -69,7 +82,7 @@ const createMenuItem = (path) => {
     
     const node = template.ast.fresh(`
         <li data-name="menu-item" className="menu-item${classSelected}">
-            <label data-menu-path="${getMenuPath(path)}">${name}</label>
+            <label data-menu-path="${escapeAttribute(getMenuPath(path))}">${name}</label>
         </li>
     `);
     
@@ -88,14 +101,14 @@ const createUL = (path) => {
 };
 
 const createSubmenu = (path) => {
-    const {name} = path.parentPath.node.key;
+    const name = escapeText(getKeyName(path.parentPath.node));
     const menuHidden = isOn(path) ? '' : ' menu-hidden';
     const classShow = isOn(path) ? ' menu-submenu-show' : '';
     const classSelected = isSelected(path) ? ' menu-item-selected' : '';
     
     const node = template.ast.fresh(`
         <li data-name="menu-item" className="menu-item menu-submenu${classShow}${classSelected}">
-            <label data-menu-path="${getMenuPath(path)}">${name}</label>
+            <label data-menu-path="${escapeAttribute(getMenuPath(path))}">${name}</label>
             <ul className="menu${menuHidden}"></ul>
         </li>
     `);

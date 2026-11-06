@@ -274,6 +274,7 @@ test('lunes: state: commit: first and last', (t) => {
     
     const first = getCursorPath(read());
     const result = [first, last];
+    
     const expected = [
         'view',
         'new',
@@ -324,5 +325,51 @@ test('lunes: state: commit: prev from the first item wraps with infiniteScroll',
     const expected = 'new';
     
     t.equal(result, expected);
+    t.end();
+});
+
+const labeled = {
+    'Upload To Cloud': noop,
+    '(Un)Select All': noop,
+    'New Items': {
+        'File Name': noop,
+    },
+};
+
+test('lunes: state: labels with spaces: cursor walks and returns', (t) => {
+    const {commit} = createState(labeled);
+    
+    commit('show');
+    const first = getCursorPath(commit('next'));
+    const second = getCursorPath(commit('next'));
+    const third = getCursorPath(commit('next'));
+    const back = getCursorPath(commit('prev'));
+    const result = [
+        first,
+        second,
+        third,
+        back,
+    ];
+    const expected = [
+        'Upload To Cloud',
+        '(Un)Select All',
+        'New Items',
+        '(Un)Select All',
+    ];
+    
+    t.deepEqual(result, expected);
+    t.end();
+});
+
+test('lunes: state: labels with spaces: submenu is entered', (t) => {
+    const {commit} = createState(labeled);
+    
+    commit('show');
+    commit('last');
+    commit('right');
+    
+    const result = getCursorPath(commit('next'));
+    
+    t.equal(result, 'New Items.File Name');
     t.end();
 });

@@ -5,6 +5,7 @@ import {
     itemOf,
     setCursor,
     clearCursor,
+    getKeyName,
 } from '../cursor.js';
 
 const operations = {
@@ -28,9 +29,9 @@ export const filter = (path, {options}) => {
         return false;
     
     if (isArrayExpression(parentPath))
-        return parentPath.parentPath.node.key.name === cursor;
+        return getKeyName(parentPath.parentPath.node) === cursor;
     
-    return parentPath.node.key.name === cursor;
+    return getKeyName(parentPath.node) === cursor;
 };
 
 export const fix = (path, {options}) => {

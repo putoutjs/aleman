@@ -10,7 +10,11 @@ const {
     identifier,
     isObjectProperty,
     isExpressionStatement,
+    isNullLiteral,
+    nullLiteral,
 } = types;
+
+export const getKeyName = ({key}) => key.name || key.value;
 
 export const itemOf = ({parentPath}) => {
     if (isArrayExpression(parentPath))
@@ -24,7 +28,7 @@ export const pathOf = (path) => {
     
     for (let current = itemOf(path); current; current = current.parentPath)
         if (isObjectProperty(current))
-            names.unshift(current.node.key.name);
+            names.unshift(getKeyName(current.node));
     
     return names.join('.');
 };
@@ -71,7 +75,7 @@ export const rootProperties = (root) => root.get('elements').at(-1)
 export function setCursor(path) {
     const valuePath = path.get('value');
     
-    if (isIdentifier(valuePath)) {
+    if (isIdentifier(valuePath) || isNullLiteral(valuePath)) {
         path.node.value = stringLiteral('cursor');
         path.node.shorthand = false;
         
@@ -86,8 +90,16 @@ export function clearCursor(path) {
     const {parentPath} = path;
     
     if (isObjectProperty(parentPath)) {
-        parentPath.node.value = identifier(parentPath.node.key.name);
-        parentPath.node.shorthand = true;
+        const {key} = parentPath.node;
+        
+        if (isIdentifier(key)) {
+            parentPath.node.value = identifier(key.name);
+            parentPath.node.shorthand = true;
+            
+            return;
+        }
+        
+        parentPath.node.value = nullLiteral();
         
         return;
     }
