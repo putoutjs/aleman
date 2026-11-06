@@ -31,6 +31,16 @@ const isSelected = ({node}) => {
     return node.elements[1].value === 'cursor';
 };
 
+const getMenuPath = (path) => {
+    const names = [];
+    
+    for (let current = path; current; current = current.parentPath)
+        if (isObjectProperty(current))
+            names.unshift(current.node.key.name);
+    
+    return names.join('.');
+};
+
 export const report = () => `Build menu`;
 export const include = () => [
     'ObjectProperty',
@@ -64,7 +74,7 @@ const createMenuItem = (path) => {
     
     const node = template.ast.fresh(`
         <li data-name="menu-item" className="menu-item${classSelected}">
-            <label>${name}</label>
+            <label data-menu-path="${getMenuPath(path)}">${name}</label>
         </li>
     `);
     
@@ -85,11 +95,12 @@ const createUL = (path) => {
 const createSubmenu = (path) => {
     const {name} = path.parentPath.node.key;
     const menuHidden = isOn(path) ? '' : ' menu-hidden';
-    const classSelected = isSelected(path) ? '  menu-item-selected' : '';
+    const classShow = isOn(path) ? ' menu-submenu-show' : '';
+    const classSelected = isSelected(path) ? ' menu-item-selected' : '';
     
     const node = template.ast.fresh(`
-        <li data-name="menu-item" className="menu-item${classSelected}">
-            <label>${name}</label>
+        <li data-name="menu-item" className="menu-item menu-submenu${classShow}${classSelected}">
+            <label data-menu-path="${getMenuPath(path)}">${name}</label>
             <ul className="menu${menuHidden}"></ul>
         </li>
     `);
