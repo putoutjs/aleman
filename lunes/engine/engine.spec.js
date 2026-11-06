@@ -56,3 +56,25 @@ test('lunes: engine: createLoop: compiles the operations of an event', async (t)
     t.calledWith(compile, args);
     t.end();
 });
+
+test('lunes: engine: createLoop: returns stop that removes the listeners', async (t) => {
+    const removeEventListener = stub();
+    
+    const stop = createLoop(null, {
+        actions: [{
+            keys: ['j'],
+            operations: ['next'],
+        }],
+        compile: stub(),
+        overrides: {
+            addEventListener: stub(),
+            removeEventListener,
+        },
+    });
+    
+    await stop();
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    
+    t.calledCount(removeEventListener, 1);
+    t.end();
+});

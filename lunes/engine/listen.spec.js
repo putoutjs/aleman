@@ -166,6 +166,7 @@ test('listen: queue: events before the consumer keep their operations', async (t
     const first = await iterator.next();
     const second = await iterator.next();
     const result = [first.value[0], second.value[0]];
+    
     const expected = [
         ['next'],
         ['prev'],
@@ -207,5 +208,132 @@ test('listen: when shown: ignores the action while the menu is hidden', async (t
     const {value} = await iterator.next();
     
     t.deepEqual(value[0], ['prev']);
+    t.end();
+});
+
+const createListen = (actions, overrides = {}) => {
+    const handlers = [];
+    const iterator = listen(actions, {
+        addEventListener: (event, fn) => handlers.push({
+            event,
+            fn,
+        }),
+        removeEventListener: stub(),
+        ...overrides,
+    })[Symbol.asyncIterator]();
+    
+    return {
+        handlers,
+        iterator,
+    };
+};
+
+test('listen: events of an action', (t) => {
+    const {handlers} = createListen([{
+        events: ['click', 'contextmenu'],
+        operations: ['show'],
+    }]);
+    
+    const result = [];
+    
+    for (const {event} of handlers) {
+        result.push(event);
+    }
+    
+    const expected = [
+        'click',
+        'contextmenu',
+    ];
+    
+    t.deepEqual(result, expected);
+    t.end();
+});
+
+test('listen: actions as a namespace', (t) => {
+    const {handlers} = createListen({
+        down: {
+            default: {
+                keys: ['ArrowDown'],
+                operations: ['next'],
+            },
+        },
+    });
+    
+    t.equal(handlers.length, 1);
+    t.end();
+});
+
+test('listen: key is not listed: nothing is queued', async (t) => {
+    const {handlers, iterator} = createListen([{
+        keys: ['ArrowDown'],
+        operations: ['next'],
+    }]);
+    
+    handlers[0].fn({
+        key: 'x',
+        preventDefault: stub(),
+    });
+    
+    const result = await Promise.race([
+        iterator.next(),
+        new Promise((resolve) => setTimeout(resolve, 10, 'nothing')),
+    ]);
+    
+    t.equal(result, 'nothing');
+    t.end();
+});
+
+test('listen: stopPropagation', (t) => {
+    const stopPropagation = stub();
+    const {handlers} = createListen([{
+        keys: ['ArrowDown'],
+        stopPropagation: true,
+        operations: ['next'],
+    }]);
+    
+    handlers[0].fn({
+        key: 'ArrowDown',
+        stopPropagation,
+    });
+    
+    t.calledCount(stopPropagation, 1);
+    t.end();
+});
+
+test('listen: default isShown: action with when shown is accepted', async (t) => {
+    const addEventListener = (event, fn) => {
+        fn({
+            key: 'ArrowDown',
+        });
+    };
+    
+    const iterator = listen([{
+        keys: ['ArrowDown'],
+        when: 'shown',
+        operations: ['next'],
+    }], {
+        addEventListener,
+        removeEventListener: stub(),
+    })[Symbol.asyncIterator]();
+    
+    const {value} = await iterator.next();
+    
+    t.deepEqual(value[0], ['next']);
+    t.end();
+});
+
+test('listen: return resolves the pending next as done', async (t) => {
+    const {iterator} = createListen([{
+        keys: ['ArrowDown'],
+        operations: ['next'],
+    }]);
+    
+    const pending = iterator.next();
+    
+    await iterator.return();
+    
+    const {done} = await pending;
+    
+    t.ok(done);
     t.end();
 });
