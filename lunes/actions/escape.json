@@ -1,5 +1,6 @@
 {
+    "keys": ["Escape"],
+    "when": "shown",
     "preventDefault": true,
-    "events": ["click"],
     "operations": ["hide"]
 }

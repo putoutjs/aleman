@@ -1,5 +1,6 @@
 {
     "keys": ["ArrowDown"],
+    "when": "shown",
     "preventDefault": true,
     "operations": ["next"]
 }

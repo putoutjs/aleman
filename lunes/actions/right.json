@@ -1,0 +1,6 @@
+{
+    "keys": ["ArrowRight", "l"],
+    "when": "shown",
+    "preventDefault": true,
+    "operations": ["right"]
+}

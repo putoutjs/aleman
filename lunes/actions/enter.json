@@ -1,0 +1,6 @@
+{
+    "keys": ["Enter"],
+    "when": "shown",
+    "preventDefault": true,
+    "operations": ["run"]
+}

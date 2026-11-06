@@ -1,5 +1,6 @@
 {
     "keys": ["ArrowUp"],
+    "when": "shown",
     "preventDefault": true,
     "operations": ["prev"]
 }

@@ -1,0 +1,7 @@
+{
+    "keys": ["g", "^"],
+    "commands": ["gg", "^"],
+    "when": "shown",
+    "preventDefault": true,
+    "operations": ["first"]
+}

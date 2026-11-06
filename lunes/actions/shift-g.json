@@ -1,0 +1,6 @@
+{
+    "keys": ["G", "$"],
+    "when": "shown",
+    "preventDefault": true,
+    "operations": ["last"]
+}

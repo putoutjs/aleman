@@ -1,0 +1,7 @@
+{
+    "keys": ["k"],
+    "commands": ["k"],
+    "when": "shown",
+    "preventDefault": true,
+    "operations": ["prev"]
+}
