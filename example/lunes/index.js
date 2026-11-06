@@ -1,6 +1,13 @@
 import {createMenu} from '../../lunes/lunes.js';
 
 globalThis.window.__fired = [];
+globalThis.window.__hooks = [];
+globalThis.window.__blockShow = false;
+
+const hook = (name, value) => (...args) => {
+    globalThis.window.__hooks.push([name, ...args]);
+    return value?.();
+};
 
 let resolveMenu = null;
 const menuReady = new Promise((resolve) => {
@@ -34,6 +41,12 @@ const {name} = document.body.dataset;
 
 const menuInstance = await createMenu(name, {
     infiniteScroll: true,
+    beforeShow: hook('beforeShow', () => !globalThis.window.__blockShow),
+    afterShow: hook('afterShow'),
+    beforeHide: hook('beforeHide'),
+    afterHide: hook('afterHide'),
+    beforeClick: hook('beforeClick'),
+    afterClick: hook('afterClick'),
 }, menuData);
 
 resolveMenu(menuInstance);
