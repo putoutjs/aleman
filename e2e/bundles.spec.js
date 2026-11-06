@@ -41,6 +41,13 @@ test.describe('bundles', () => {
         expect(errors).toEqual([]);
     });
     
+    test('lunes.bundle.js renders and fires callbacks', async ({page}) => {
+        const errors = await openBundlePage(page, '/example/lunes/bundle.html');
+        
+        await clickHello(page);
+        expect(errors).toEqual([]);
+    });
+    
     test('menos.bundle.js renders and fires callbacks', async ({page}) => {
         const errors = await openBundlePage(page, '/example/menos/bundle.html');
         
