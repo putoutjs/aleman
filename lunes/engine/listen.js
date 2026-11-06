@@ -25,6 +25,7 @@ export const listen = (actions = [], overrides = {}) => ({
             addEventListener = globalThis.addEventListener,
             removeEventListener = globalThis.removeEventListener,
             parseVim = createVimParser(),
+            isShown = () => true,
         } = overrides;
         
         const queue = [];
@@ -42,6 +43,9 @@ export const listen = (actions = [], overrides = {}) => ({
                 } = action;
                 
                 const fn = (event) => {
+                    if (action.when === 'shown' && !isShown())
+                        return;
+                    
                     const [isEmitBefore, count] = emitBefore(action, {
                         event,
                         parseVim,
@@ -56,14 +60,17 @@ export const listen = (actions = [], overrides = {}) => ({
                     if (stopPropagation)
                         event.stopPropagation();
                     
+                    const value = [
+                        operations, {
+                            count,
+                            position: {},
+                            event,
+                        },
+                    ];
+                    
                     if (resolveNext) {
                         resolveNext({
-                            value: [
-                                operations, {
-                                    count,
-                                    position: {},
-                                },
-                            ],
+                            value,
                             done: false,
                         });
                         resolveNext = null;
@@ -71,7 +78,7 @@ export const listen = (actions = [], overrides = {}) => ({
                         return;
                     }
                     
-                    queue.push(event);
+                    queue.push(value);
                 };
                 
                 addEventListener(event, fn);
