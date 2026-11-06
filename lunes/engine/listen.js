@@ -1,4 +1,4 @@
-import {emitBefore} from '../../aleman/emit.js';
+import {emitBefore} from './emit.js';
 import {createVimParser} from './vim.js';
 
 const {values} = Object;
@@ -111,6 +111,14 @@ export const listen = (actions = [], overrides = {}) => ({
             
             return() {
                 cleanup();
+                
+                if (resolveNext)
+                    resolveNext({
+                        done: true,
+                    });
+                
+                resolveNext = null;
+                
                 return Promise.resolve({
                     done: true,
                 });

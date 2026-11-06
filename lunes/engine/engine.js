@@ -7,6 +7,8 @@ export const createLoop = (element, {actions, compile, isShown, overrides = {}})
     })[Symbol.asyncIterator]();
     
     loop(iterator, compile);
+    
+    return () => iterator.return();
 };
 
 const loop = async (iterator, compile) => {
