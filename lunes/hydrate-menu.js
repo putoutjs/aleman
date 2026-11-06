@@ -117,6 +117,9 @@ export const hydrateMenu = (elementName, {hydrateElement, options, menu}) => {
         compile: dispatch,
         actions,
         isShown,
+        overrides: {
+            isTarget: (event) => Boolean(event.target.closest(`[data-name="${elementName}"]`)),
+        },
     });
     
     hydrateElement.addEventListener('click', (event) => {

@@ -337,3 +337,63 @@ test('listen: return resolves the pending next as done', async (t) => {
     t.ok(done);
     t.end();
 });
+
+test('listen: scoped: event outside of the target is ignored', (t) => {
+    const preventDefault = stub();
+    const {handlers} = createListen([{
+        scoped: true,
+        preventDefault: true,
+        events: ['contextmenu'],
+        operations: ['show'],
+    }], {
+        isTarget: () => false,
+    });
+    
+    handlers[0].fn({
+        preventDefault,
+    });
+    
+    t.notOk(preventDefault.called);
+    t.end();
+});
+
+test('listen: scoped: event inside of the target is emitted', async (t) => {
+    const preventDefault = stub();
+    const {handlers, iterator} = createListen([{
+        scoped: true,
+        preventDefault: true,
+        events: ['contextmenu'],
+        operations: ['show'],
+    }], {
+        isTarget: () => true,
+    });
+    
+    handlers[0].fn({
+        preventDefault,
+    });
+    
+    const {value} = await iterator.next();
+    const result = [value[0], preventDefault.called];
+    const expected = [
+        ['show'],
+        true,
+    ];
+    
+    t.deepEqual(result, expected);
+    t.end();
+});
+
+test('listen: scoped: without isTarget every event is emitted', async (t) => {
+    const {handlers, iterator} = createListen([{
+        scoped: true,
+        events: ['contextmenu'],
+        operations: ['show'],
+    }]);
+    
+    handlers[0].fn({});
+    
+    const {value} = await iterator.next();
+    
+    t.deepEqual(value[0], ['show']);
+    t.end();
+});

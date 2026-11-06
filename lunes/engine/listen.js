@@ -26,6 +26,7 @@ export const listen = (actions = [], overrides = {}) => ({
             removeEventListener = globalThis.removeEventListener,
             parseVim = createVimParser(),
             isShown = () => true,
+            isTarget = () => true,
         } = overrides;
         
         const queue = [];
@@ -44,6 +45,9 @@ export const listen = (actions = [], overrides = {}) => ({
                 
                 const fn = (event) => {
                     if (action.when === 'shown' && !isShown())
+                        return;
+                    
+                    if (action.scoped && !isTarget(event))
                         return;
                     
                     const [isEmitBefore, count] = emitBefore(action, {

@@ -1,4 +1,4 @@
-import {test} from 'supertape';
+import {test, stub} from 'supertape';
 import {hydrateMenu} from './hydrate-menu.js';
 import {
     createFakeElement,
@@ -292,6 +292,7 @@ test('lunes: hydrate: contextmenu shows the menu at the pointer', async (t) => {
     const ctx = await create();
     
     ctx.win.emit('contextmenu', {
+        target: inside('menu'),
         clientX: 30,
         clientY: 40,
     });
@@ -325,6 +326,7 @@ test('lunes: hydrate: no menu element: position is not calculated', async (t) =>
     
     ctx.element.querySelector = () => null;
     ctx.win.emit('contextmenu', {
+        target: inside('menu'),
         clientX: 30,
         clientY: 40,
     });
@@ -419,6 +421,7 @@ test('lunes: hydrate: hooks: contextmenu: beforeShow gets the pointer', async (t
     const ctx = await create(hooks);
     
     ctx.win.emit('contextmenu', {
+        target: inside('menu'),
         clientX: 30,
         clientY: 40,
     });
@@ -439,6 +442,7 @@ test('lunes: hydrate: hooks: contextmenu: beforeShow returns false', async (t) =
     });
     
     ctx.win.emit('contextmenu', {
+        target: inside('menu'),
         clientX: 30,
         clientY: 40,
     });
@@ -620,5 +624,45 @@ test('lunes: hydrate: hooks: click outside goes through the hide hooks', async (
     ];
     
     t.deepEqual(calls.map(([name]) => name), expected);
+    t.end();
+});
+
+const inside = (name) => ({
+    closest: (selector) => selector === `[data-name="${name}"]` ? {} : null,
+});
+
+test('lunes: hydrate: contextmenu outside of the element is ignored', async (t) => {
+    const ctx = await create();
+    const preventDefault = stub();
+    
+    ctx.win.emit('contextmenu', {
+        clientX: 30,
+        clientY: 40,
+        target: inside('other'),
+        preventDefault,
+    });
+    await tick();
+    
+    ctx.win.uninstall();
+    
+    const expected = ['', false];
+    
+    t.deepEqual([ctx.element.innerHTML, preventDefault.called], expected);
+    t.end();
+});
+
+test('lunes: hydrate: contextmenu on the element shows the menu', async (t) => {
+    const ctx = await create();
+    
+    ctx.win.emit('contextmenu', {
+        clientX: 30,
+        clientY: 40,
+        target: inside('menu'),
+    });
+    await tick();
+    
+    ctx.win.uninstall();
+    
+    t.notOk(isHidden(ctx));
     t.end();
 });
