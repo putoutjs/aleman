@@ -9,6 +9,11 @@ const ALWAYS = [
     'hide',
 ];
 
+const MOVES = [
+    'next',
+    'prev',
+];
+
 export const isShown = (state) => SHOWN.test(state);
 
 export const createState = (menu, {infiniteScroll = false} = {}) => {
@@ -24,25 +29,42 @@ export const createState = (menu, {infiniteScroll = false} = {}) => {
     };
 };
 
-const createCommit = (stateStore, {infiniteScroll}) => (operation, options = {}) => {
-    const state = stateStore();
+const createCommit = (stateStore, {infiniteScroll}) => {
+    const commit = (operation, options = {}) => {
+        const state = stateStore();
+        
+        if (!ALWAYS.includes(operation) && !isShown(state))
+            return state;
+        
+        const cursorPath = getCursorPath(state);
+        const {count = 1} = options;
+        
+        if (MOVES.includes(operation) && !cursorPath && count > 1) {
+            commit(operation, {
+                ...options,
+                count: 1,
+            });
+            
+            return commit(operation, {
+                ...options,
+                count: count - 1,
+            });
+        }
+        
+        const newState = transform(state, operation, {
+            infiniteScroll,
+            ...options,
+            operation,
+            cursorPath,
+            cursor: cursorPath
+                .split('.')
+                .at(-1),
+        });
+        
+        stateStore(newState);
+        
+        return newState;
+    };
     
-    if (!ALWAYS.includes(operation) && !isShown(state))
-        return state;
-    
-    const cursorPath = getCursorPath(state);
-    
-    const newState = transform(state, operation, {
-        infiniteScroll,
-        ...options,
-        operation,
-        cursorPath,
-        cursor: cursorPath
-            .split('.')
-            .at(-1),
-    });
-    
-    stateStore(newState);
-    
-    return newState;
+    return commit;
 };
