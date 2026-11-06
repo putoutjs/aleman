@@ -6,6 +6,9 @@
         "e2e/bundles.spec.js": {
             "tape/jest": "off"
         },
+        "e2e/lunes-only/*.js": {
+            "tape/jest": "off"
+        },
         "aleman": {
             "nodejs": "off"
         },
