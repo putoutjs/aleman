@@ -27,6 +27,12 @@ export default defineConfig({
             baseURL: 'http://localhost:3000/example/menos/',
         },
     }, {
+        name: 'lunes',
+        testIgnore: '**/bundles.spec.js',
+        use: {
+            baseURL: 'http://localhost:3000/example/lunes/',
+        },
+    }, {
         name: 'bundle',
         testMatch: '**/bundles.spec.js',
         use: {

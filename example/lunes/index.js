@@ -1,22 +1,39 @@
 import {createMenu} from '../../lunes/lunes.js';
 
+globalThis.window.__fired = [];
+
+let resolveMenu = null;
+const menuReady = new Promise((resolve) => {
+    resolveMenu = resolve;
+});
+
 const menuData = {
-    hello: () => alert('x'),
-    world: () => alert('y'),
+    hello: () => {
+        globalThis.window.__fired.push('hello');
+    },
+    world: () => {
+        globalThis.window.__fired.push('world');
+    },
+    new: {
+        file: () => {
+            globalThis.window.__fired.push('file');
+        },
+        directory: () => {
+            globalThis.window.__fired.push('directory');
+        },
+    },
 };
 
-const options = {
-    name: 'menu',
-    infiniteScroll: true,
+globalThis.window.__menu = {
+    show: async (x, y) => (await menuReady).show(x, y),
+    hide: async () => (await menuReady).hide(),
+    ready: menuReady,
 };
 
 const {name} = document.body.dataset;
-const menu = await createMenu(name, options, menuData);
 
-globalThis.addEventListener('keydown', (event) => {
-    if (event.key === 'F9')
-        menu.show();
-    
-    if (event.key === 'Escape')
-        menu.hide();
-});
+const menuInstance = await createMenu(name, {
+    infiniteScroll: true,
+}, menuData);
+
+resolveMenu(menuInstance);
