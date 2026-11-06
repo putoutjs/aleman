@@ -1,13 +1,6 @@
-import {types} from 'putout';
+import {pathOf} from '../../transformer/rules/cursor.js';
 
-const {isArrayExpression} = types;
-
-export const report = (path) => {
-    if (isArrayExpression(path.parentPath))
-        return path.parentPath.parentPath.node.key.name;
-    
-    return path.parentPath.node.key.name;
-};
+export const report = pathOf;
 
 export const include = () => [
     '"cursor"',
