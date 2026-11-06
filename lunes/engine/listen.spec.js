@@ -137,3 +137,75 @@ test('listen: for-of: preventDefault: no', async (t) => {
     t.notCalled(preventDefault);
     t.end();
 });
+
+test('listen: queue: events before the consumer keep their operations', async (t) => {
+    const handlers = [];
+    const overrides = {
+        addEventListener: (event, fn) => handlers.push(fn),
+        removeEventListener: stub(),
+    };
+    
+    const actions = [{
+        keys: ['ArrowDown'],
+        operations: ['next'],
+    }, {
+        keys: ['ArrowUp'],
+        operations: ['prev'],
+    }];
+    
+    const iterator = listen(actions, overrides)[Symbol.asyncIterator]();
+    const [down, up] = handlers;
+    
+    down({
+        key: 'ArrowDown',
+    });
+    up({
+        key: 'ArrowUp',
+    });
+    
+    const first = await iterator.next();
+    const second = await iterator.next();
+    const result = [first.value[0], second.value[0]];
+    const expected = [
+        ['next'],
+        ['prev'],
+    ];
+    
+    t.deepEqual(result, expected);
+    t.end();
+});
+
+test('listen: when shown: ignores the action while the menu is hidden', async (t) => {
+    const handlers = [];
+    const overrides = {
+        isShown: () => false,
+        addEventListener: (event, fn) => handlers.push(fn),
+        removeEventListener: stub(),
+    };
+    
+    const actions = [{
+        keys: ['j'],
+        commands: ['j'],
+        when: 'shown',
+        operations: ['next'],
+    }, {
+        keys: ['k'],
+        commands: ['k'],
+        operations: ['prev'],
+    }];
+    
+    const iterator = listen(actions, overrides)[Symbol.asyncIterator]();
+    const [j, k] = handlers;
+    
+    j({
+        key: 'j',
+    });
+    k({
+        key: 'k',
+    });
+    
+    const {value} = await iterator.next();
+    
+    t.deepEqual(value[0], ['prev']);
+    t.end();
+});
