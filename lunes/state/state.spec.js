@@ -55,12 +55,42 @@ test('lunes: state: commit: next with count', (t) => {
     t.end();
 });
 
-test('lunes: state: commit: next with count: no cursor: puts the cursor on the first item', (t) => {
+test('lunes: state: commit: next with count: no cursor: counts from the first item', (t) => {
     const {commit, read} = createState(menu);
     
     commit('show');
     commit('next', {
         count: 2,
+    });
+    
+    const result = getCursorPath(read());
+    const expected = 'edit';
+    
+    t.equal(result, expected);
+    t.end();
+});
+
+test('lunes: state: commit: prev with count: no cursor: counts from the last item', (t) => {
+    const {commit, read} = createState(menu);
+    
+    commit('show');
+    commit('prev', {
+        count: 2,
+    });
+    
+    const result = getCursorPath(read());
+    const expected = 'rename';
+    
+    t.equal(result, expected);
+    t.end();
+});
+
+test('lunes: state: commit: next with count 1: no cursor: puts the cursor on the first item', (t) => {
+    const {commit, read} = createState(menu);
+    
+    commit('show');
+    commit('next', {
+        count: 1,
     });
     
     const result = getCursorPath(read());
@@ -198,6 +228,100 @@ test('lunes: state: commit: three levels: right enters one level at a time', (t)
     
     const result = getCursorPath(read());
     const expected = 'a.b';
+    
+    t.equal(result, expected);
+    t.end();
+});
+
+test('lunes: state: commit: prev', (t) => {
+    const {commit, read} = createState(menu);
+    
+    commit('show');
+    commit('next');
+    commit('prev');
+    
+    const result = getCursorPath(read());
+    const expected = 'view';
+    
+    t.equal(result, expected);
+    t.end();
+});
+
+test('lunes: state: commit: prev: infiniteScroll wraps to the last item', (t) => {
+    const {commit, read} = createState(menu, {
+        infiniteScroll: true,
+    });
+    
+    commit('show');
+    commit('prev');
+    
+    const result = getCursorPath(read());
+    const expected = 'new';
+    
+    t.equal(result, expected);
+    t.end();
+});
+
+test('lunes: state: commit: first and last', (t) => {
+    const {commit, read} = createState(menu);
+    
+    commit('show');
+    commit('last');
+    
+    const last = getCursorPath(read());
+    
+    commit('first');
+    
+    const first = getCursorPath(read());
+    const result = [first, last];
+    const expected = [
+        'view',
+        'new',
+    ];
+    
+    t.deepEqual(result, expected);
+    t.end();
+});
+
+test('lunes: state: commit: reset removes the cursor', (t) => {
+    const {commit, read} = createState(menu);
+    
+    commit('show');
+    commit('next');
+    commit('reset');
+    
+    const result = getCursorPath(read());
+    const expected = '';
+    
+    t.equal(result, expected);
+    t.end();
+});
+
+test('lunes: state: commit: prev stays on the first item', (t) => {
+    const {commit, read} = createState(menu);
+    
+    commit('show');
+    commit('first');
+    commit('prev');
+    
+    const result = getCursorPath(read());
+    const expected = 'view';
+    
+    t.equal(result, expected);
+    t.end();
+});
+
+test('lunes: state: commit: prev from the first item wraps with infiniteScroll', (t) => {
+    const {commit, read} = createState(menu, {
+        infiniteScroll: true,
+    });
+    
+    commit('show');
+    commit('first');
+    commit('prev');
+    
+    const result = getCursorPath(read());
+    const expected = 'new';
     
     t.equal(result, expected);
     t.end();
