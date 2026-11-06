@@ -2,6 +2,7 @@ import {types} from 'putout';
 import {
     next,
     prev,
+    itemOf,
     setCursor,
     clearCursor,
 } from '../cursor.js';
@@ -32,18 +33,25 @@ export const filter = (path, {options}) => {
     return parentPath.node.key.name === cursor;
 };
 
-export const fix = (path, options) => {
+export const fix = (path, {options}) => {
     const {
         operation = 'next',
         count = 1,
+        infiniteScroll = false,
     } = options;
     
-    const getCursor = operations[operation];
-    let cursorPath = path.parentPath;
+    const move = operations[operation];
+    const from = itemOf(path);
+    let item = from;
     
     for (let i = 0; i < count; i++)
-        cursorPath = getCursor(cursorPath);
+        item = move(item, {
+            infiniteScroll,
+        });
+    
+    if (item === from)
+        return;
     
     clearCursor(path);
-    setCursor(cursorPath);
+    setCursor(item);
 };
