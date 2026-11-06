@@ -12,6 +12,7 @@ export default {
     'lint:fresh': () => run('lint', '--fresh'),
     'fix:lint': () => run('lint', '--fix'),
     'coverage': async () => `c8 ${await run('test')}`,
+    'coverage:lunes': () => `c8 --all --src=lunes --include='lunes/**/*.js' --exclude='**/*.spec.js' --exclude='**/fixture/**' --exclude='lunes/bundle.js' --check-coverage --lines=100 --branches=100 --functions=100 --statements=100 tape 'lunes/**/*.spec.js'`,
     'report': () => 'c8 report --reporter=lcov',
     'test:e2e': () => `playwright test --project=menu --project=nemo --project=menos`,
     'test:e2e:bundle': async () => `${await run('build')} && playwright test --project=bundle`,
