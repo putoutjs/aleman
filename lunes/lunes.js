@@ -1,3 +1,9 @@
+import {
+    findByName,
+    createHydrate,
+    addStyleLink,
+} from './dom.js';
+
 const {stringify} = JSON;
 
 export const createMenu = async (elementName, options, menu) => {
@@ -7,7 +13,7 @@ export const createMenu = async (elementName, options, menu) => {
     const hydrateElement = createHydrate(name);
     
     await createMap();
-    await loadStyle();
+    addStyleLink();
     
     const {hydrateMenu} = await import('./hydrate-menu.js');
     
@@ -17,61 +23,6 @@ export const createMenu = async (elementName, options, menu) => {
         menu,
     });
 };
-
-async function loadStyle() {
-    const name = 'aleman-menu-style';
-    
-    if (findByName(name))
-        return;
-    
-    const [error] = await tryToCatch(importCSS);
-    
-    if (!error)
-        return;
-    
-    createLink();
-}
-
-function createLink() {
-    const link = document.createElement('link');
-    
-    link.rel = 'stylesheet';
-    link.href = new URL('menu.css', import.meta.url).pathname;
-    document.head.appendChild(link);
-}
-
-async function importCSS() {
-    const content = await import('./menu.css', {
-        with: {
-            type: 'css',
-        },
-    });
-    
-    const style = document.createElement('style');
-    
-    style.dataset.name = name;
-    
-    for (const rule of content.default.cssRules) {
-        style.innerHTML += rule.cssText;
-    }
-    
-    document.head.appendChild(style);
-}
-
-function createHydrate(name) {
-    const hydrateElement = findByName(name);
-    
-    if (hydrateElement)
-        return hydrateElement;
-    
-    const section = document.createElement('section');
-    
-    section.dataset.name = `aleman-hydrate-${name}`;
-    section.innerHTML = `<ul data-name="${name}" class="menu menu-hidden"></ul>`;
-    document.body.append(section);
-    
-    return section;
-}
 
 async function createMap() {
     const name = 'aleman-importmap';
@@ -87,16 +38,4 @@ async function createMap() {
     script.type = 'importmap';
     script.innerHTML = stringify(importmap, null, 4);
     document.body.append(script);
-}
-
-function findByName(name) {
-    return document.querySelector(`[data-name=${name}]`);
-}
-
-async function tryToCatch(fn, args) {
-    try {
-        return [null, await fn(...args)];
-    } catch(error) {
-        return [error];
-    }
 }
