@@ -61,8 +61,12 @@ export const hydrateMenu = (elementName, {hydrateElement, options, menu}) => {
             name,
         };
         
-        if (isCancel(hooks.beforeShow(params)))
+        if (isCancel(hooks.beforeShow(params))) {
+            if (isShown())
+                compile('hide');
+            
             return;
+        }
         
         compile('show', showOptions);
         hooks.afterShow(params);

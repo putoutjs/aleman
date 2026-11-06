@@ -666,3 +666,23 @@ test('lunes: hydrate: contextmenu on the element shows the menu', async (t) => {
     t.notOk(isHidden(ctx));
     t.end();
 });
+
+test('lunes: hydrate: hooks: beforeShow returns false: the shown menu hides without hide hooks', async (t) => {
+    let allow = true;
+    
+    const {hooks, calls} = createHooks({
+        beforeShow: () => allow,
+    });
+    
+    const ctx = await create(hooks);
+    
+    ctx.instance.show(10, 20);
+    allow = false;
+    ctx.instance.show(30, 40);
+    ctx.win.uninstall();
+    
+    const names = calls.map(([name]) => name);
+    
+    t.deepEqual([isHidden(ctx), names], [true, ['afterShow']]);
+    t.end();
+});
