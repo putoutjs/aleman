@@ -6,7 +6,11 @@ globalThis.window.__blockShow = false;
 
 const hook = (name, value) => (...args) => {
     globalThis.window.__hooks.push([name, ...args]);
-    return value?.();
+    
+    if (!value)
+        return undefined;
+    
+    return value();
 };
 
 let resolveMenu = null;

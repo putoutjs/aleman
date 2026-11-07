@@ -35,6 +35,13 @@ export const createFakeElement = () => {
     return element;
 };
 
+const hasName = (name) => (element) => {
+    if (!element.dataset)
+        return false;
+    
+    return element.dataset.name === name;
+};
+
 export const installWindow = ({innerHeight = 1000, innerWidth = 1000, menuHeight = 100, menuWidth = 50} = {}) => {
     const emitter = createEmitter();
     const saved = {
@@ -100,7 +107,7 @@ export const installDocument = () => {
         querySelector: (selector) => {
             const [, name] = /\[data-name="?([^"\]]+)"?\]/.exec(selector);
             
-            return elements.find((element) => element.dataset?.name === name) || null;
+            return elements.find(hasName(name)) || null;
         },
         createElement: (tag) => ({
             ...createFakeElement(),
