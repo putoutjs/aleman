@@ -1,3 +1,14 @@
+2026.11.07, v2.2.1
+
+fix:
+- 7ef6ec8 lunes: render: select the parent of the opened submenu
+- e51d0be lunes: render: same class order of the submenu item as in menu
+- cb738d5 lunes: convert-menu-to-state: spec: use the key with an apostrophe
+- 3ce54e0 lunes: hydrate: spec: lint
+
+feature:
+- 5e227d9 lunes: icon option adds icon classes to the menu items
+
 2026.11.07, v2.2.0
 
 fix:
