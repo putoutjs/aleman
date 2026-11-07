@@ -1,10 +1,12 @@
 import {listen} from './listen.js';
 
 export const createLoop = (element, {actions, compile, isShown, overrides = {}}) => {
-    const iterator = listen(actions, {
+    const events = listen(actions, {
         ...overrides,
         isShown,
-    })[Symbol.asyncIterator]();
+    });
+    
+    const iterator = events[Symbol.asyncIterator]();
     
     loop(iterator, compile);
     
