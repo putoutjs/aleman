@@ -116,7 +116,7 @@ const createSubmenu = (path, {icon} = {}) => {
     const classIcon = icon ? ` icon ${getIconName(getKeyName(path.parentPath.node))}` : '';
     
     const node = template.ast.fresh(`
-        <li data-name="menu-item" className="menu-item menu-submenu${classShow}${classIcon}${classSelected}">
+        <li data-name="menu-item" className="menu-item${classIcon} menu-submenu${classShow}${classSelected}">
             <label data-menu-path="${escapeAttribute(getMenuPath(path))}">${name}</label>
             <ul className="menu${menuHidden}"></ul>
         </li>

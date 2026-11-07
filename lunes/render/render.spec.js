@@ -109,7 +109,7 @@ test('lunes: render: icon: submenu and its items', (t) => {
         icon: true,
     });
     
-    t.match(result, 'menu-submenu-show icon icon-new');
+    t.match(result, 'class="menu-item icon icon-new menu-submenu menu-submenu-show"');
     t.end();
 });
 
