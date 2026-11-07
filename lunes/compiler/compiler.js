@@ -1,6 +1,13 @@
 import {fullstore} from 'fullstore';
 
-const hasPosition = (position) => typeof position?.top === 'number';
+const isNumber = (a) => !Number.isNaN(a) && typeof a === 'number';
+
+const hasPosition = (position) => {
+    if (!position)
+        return false;
+    
+    return isNumber(position.top);
+};
 
 const DEFAULT_POSITION = {
     top: 0,
@@ -8,7 +15,10 @@ const DEFAULT_POSITION = {
 };
 
 const fromEvent = (event) => {
-    if (typeof event?.clientX !== 'number')
+    if (!event)
+        return null;
+    
+    if (!isNumber(event.clientX))
         return null;
     
     return {

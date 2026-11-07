@@ -192,3 +192,73 @@ test('lunes: compiler: show with an event: the calculated position is the same: 
     t.calledCount(render, 1);
     t.end();
 });
+
+test('lunes: compiler: position is null: default position', (t) => {
+    const {compile, render} = create();
+    
+    compile('next', {
+        position: null,
+    });
+    
+    const [, options] = render.args[0];
+    
+    t.deepEqual(options.position, {
+        top: 0,
+        left: 0,
+    });
+    t.end();
+});
+
+test('lunes: compiler: show with a null event: default position', (t) => {
+    const {compile, render} = create();
+    
+    compile('show', {
+        event: null,
+    });
+    
+    const [, options] = render.args[0];
+    
+    t.deepEqual(options.position, {
+        top: 0,
+        left: 0,
+    });
+    t.end();
+});
+
+test('lunes: compiler: position.top is NaN: default position', (t) => {
+    const {compile, render} = create();
+    
+    compile('next', {
+        position: {
+            top: Number.NaN,
+            left: 1,
+        },
+    });
+    
+    const [, options] = render.args[0];
+    
+    t.deepEqual(options.position, {
+        top: 0,
+        left: 0,
+    });
+    t.end();
+});
+
+test('lunes: compiler: show with clientX NaN: default position', (t) => {
+    const {compile, render} = create();
+    
+    compile('show', {
+        event: {
+            clientX: Number.NaN,
+            clientY: 5,
+        },
+    });
+    
+    const [, options] = render.args[0];
+    
+    t.deepEqual(options.position, {
+        top: 0,
+        left: 0,
+    });
+    t.end();
+});
