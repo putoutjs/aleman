@@ -1,3 +1,24 @@
+2026.11.07, v2.2.0
+
+fix:
+- 0b55762 lunes: show API uses the event pipeline, computed size, position param
+- 7398e3c lunes: hide the shown menu when beforeShow cancels
+- 0a2318e lunes: labels with spaces, parens and markup
+- cae0d0f lunes: local emit, stop of the loop, end of the event stream
+
+feature:
+- 0aab406 lunes: contextmenu only on the menu element
+- 55058c1 lunes: hooks in the example page
+- 1d58fa2 lunes: dom helpers, source mode, bundle mode
+- aa604f6 lunes: hooks
+- dbab9c7 lunes: count without a cursor
+- 6f38759 lunes: actions and pointer, remove the click action
+- 4704315 lunes: hydration and renderer
+- cd59158 lunes: listener, loop, compiler
+- af5ff84 lunes: getter and state
+- 69849ac lunes: transforms and transformer
+- 74f8ee7 lunes: cursor helpers and cursor plugins
+
 2026.09.18, v2.1.2
 
 fix:
