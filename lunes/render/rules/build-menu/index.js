@@ -55,7 +55,14 @@ const ENTITIES = {
 const escapeText = (a) => a.replace(/[&<>{}]/g, (char) => ENTITIES[char]);
 const escapeAttribute = (a) => a.replace(/[&<>{}"]/g, (char) => ENTITIES[char]);
 
-const createMenuItem = (path) => {
+const getIconName = (name) => 'icon-' + name
+    .replace(/[()]/g, '')
+    .replace(/\s/g, '-')
+    .toLowerCase();
+
+const createIconClass = (path, icon) => icon ? ` icon ${getIconName(getKeyName(path.node))}` : '';
+
+const createMenuItem = (path, {icon} = {}) => {
     const name = escapeText(getKeyName(path.node));
     const valuePath = path.get('value');
     
@@ -63,12 +70,12 @@ const createMenuItem = (path) => {
         const objectPath = valuePath.get('elements').at(-1);
         const children = [];
         
-        for (const prop of objectPath.get('properties').map(createMenuItem)) {
+        for (const prop of objectPath.get('properties').map((property) => createMenuItem(property, {icon}))) {
             children.push(prop);
             children.push(jsxText('\n'));
         }
         
-        const submenu = createSubmenu(valuePath);
+        const submenu = createSubmenu(valuePath, {icon});
         
         submenu.children[3].children = [
             jsxText('\n'),
@@ -79,9 +86,10 @@ const createMenuItem = (path) => {
     }
     
     const classSelected = isSelected(path) ? ' menu-item-selected' : '';
+    const classIcon = createIconClass(path, icon);
     
     const node = template.ast.fresh(`
-        <li data-name="menu-item" className="menu-item${classSelected}">
+        <li data-name="menu-item" className="menu-item${classIcon}${classSelected}">
             <label data-menu-path="${escapeAttribute(getMenuPath(path))}">${name}</label>
         </li>
     `);
@@ -100,14 +108,15 @@ const createUL = (path) => {
     return node;
 };
 
-const createSubmenu = (path) => {
+const createSubmenu = (path, {icon} = {}) => {
     const name = escapeText(getKeyName(path.parentPath.node));
     const menuHidden = isOn(path) ? '' : ' menu-hidden';
     const classShow = isOn(path) ? ' menu-submenu-show' : '';
     const classSelected = isSelected(path) ? ' menu-item-selected' : '';
+    const classIcon = icon ? ` icon ${getIconName(getKeyName(path.parentPath.node))}` : '';
     
     const node = template.ast.fresh(`
-        <li data-name="menu-item" className="menu-item menu-submenu${classShow}${classSelected}">
+        <li data-name="menu-item" className="menu-item menu-submenu${classShow}${classIcon}${classSelected}">
             <label data-menu-path="${escapeAttribute(getMenuPath(path))}">${name}</label>
             <ul className="menu${menuHidden}"></ul>
         </li>
@@ -117,11 +126,11 @@ const createSubmenu = (path) => {
 };
 
 export const fix = (path, {options}) => {
-    const {position} = options;
+    const {position, icon} = options;
     const {top, left} = position;
     
     if (isObjectProperty(path)) {
-        replaceWith(path, createMenuItem(path));
+        replaceWith(path, createMenuItem(path, {icon}));
         return;
     }
     

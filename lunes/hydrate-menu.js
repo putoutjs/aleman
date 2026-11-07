@@ -45,7 +45,10 @@ export const hydrateMenu = (elementName, {hydrateElement, options, menu}) => {
     const compile = createCompiler(hydrateElement, {
         commit,
         read,
-        render,
+        render: (state, renderOptions) => render(state, {
+            ...renderOptions,
+            icon: options.icon,
+        }),
         getPosition,
     });
     

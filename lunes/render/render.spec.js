@@ -57,3 +57,77 @@ test('lunes: render: submenu label with spaces', (t) => {
     t.match(result, '<label data-menu-path="New Items.File Name">File Name</label>');
     t.end();
 });
+
+const position = {
+    left: 1,
+    top: 2,
+};
+
+test('lunes: render: icon: item gets icon classes', (t) => {
+    const result = render(`['on', 'no-cursor', {view}];`, {
+        position,
+        icon: true,
+    });
+    
+    t.match(result, 'class="menu-item icon icon-view"');
+    t.end();
+});
+
+test('lunes: render: icon: name with spaces and parens', (t) => {
+    const result = render(`['on', 'no-cursor', {'Upload To Cloud': null, '(Un)Select All': null}];`, {
+        position,
+        icon: true,
+    });
+    
+    t.match(result, 'icon-upload-to-cloud');
+    t.end();
+});
+
+test('lunes: render: icon: name with parens drops the parens', (t) => {
+    const result = render(`['on', 'no-cursor', {'(Un)Select All': null}];`, {
+        position,
+        icon: true,
+    });
+    
+    t.match(result, 'icon-unselect-all');
+    t.end();
+});
+
+test('lunes: render: icon: selected item keeps both classes', (t) => {
+    const result = render(`['on', 'no-cursor', {view: 'cursor'}];`, {
+        position,
+        icon: true,
+    });
+    
+    t.match(result, 'class="menu-item icon icon-view menu-item-selected"');
+    t.end();
+});
+
+test('lunes: render: icon: submenu and its items', (t) => {
+    const result = render(`['on', 'no-cursor', {New: ['on', {File: null}]}];`, {
+        position,
+        icon: true,
+    });
+    
+    t.match(result, 'menu-submenu-show icon icon-new');
+    t.end();
+});
+
+test('lunes: render: icon: submenu item', (t) => {
+    const result = render(`['on', 'no-cursor', {New: ['on', {File: null}]}];`, {
+        position,
+        icon: true,
+    });
+    
+    t.match(result, 'class="menu-item icon icon-file"');
+    t.end();
+});
+
+test('lunes: render: no icon option: no icon classes', (t) => {
+    const result = render(`['on', 'no-cursor', {view}];`, {
+        position,
+    });
+    
+    t.notMatch(result, 'icon');
+    t.end();
+});

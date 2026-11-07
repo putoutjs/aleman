@@ -718,3 +718,18 @@ test('lunes: hydrate: show flips the menu by computed size near the edge', async
     t.match(innerHTML, 'left: 0px; top: 6px');
     t.end();
 });
+
+test('lunes: hydrate: icon option adds icon classes', async (t) => {
+    const ctx = await create({
+        icon: true,
+    });
+    
+    ctx.instance.show(10, 20);
+    
+    const {innerHTML} = ctx.element;
+    
+    ctx.win.uninstall();
+    
+    t.match(innerHTML, 'icon icon-');
+    t.end();
+});
