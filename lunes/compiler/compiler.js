@@ -29,28 +29,37 @@ const fromEvent = (event) => {
 
 const isSame = (a, b) => a.top === b.top && a.left === b.left;
 
-export const createCompiler = (element, {commit, render, getPosition = () => null, mainOptions = fullstore()}) => (operation, options = {}) => {
-    const {event} = options;
-    const state = commit(operation, options);
-    const saved = mainOptions() || {};
-    const isShow = operation === 'show';
+export const createCompiler = (element, overrides) => {
+    const {
+        commit,
+        render,
+        getPosition = () => null,
+        mainOptions = fullstore(),
+    } = overrides;
     
-    const position = hasPosition(options.position) ? options.position : isShow && fromEvent(event) || saved.position || DEFAULT_POSITION;
-    
-    element.innerHTML = render(state, {
-        ...options,
-        position,
-    });
-    
-    const fixed = isShow && event && getPosition(event);
-    
-    if (fixed && !isSame(fixed, position))
+    return (operation, options = {}) => {
+        const {event} = options;
+        const state = commit(operation, options);
+        const saved = mainOptions() || {};
+        const isShow = operation === 'show';
+        
+        const position = hasPosition(options.position) ? options.position : isShow && fromEvent(event) || saved.position || DEFAULT_POSITION;
+        
         element.innerHTML = render(state, {
             ...options,
-            position: fixed,
+            position,
         });
-    
-    mainOptions({
-        position: fixed || position,
-    });
+        
+        const fixed = isShow && event && getPosition(event);
+        
+        if (fixed && !isSame(fixed, position))
+            element.innerHTML = render(state, {
+                ...options,
+                position: fixed,
+            });
+        
+        mainOptions({
+            position: fixed || position,
+        });
+    };
 };
