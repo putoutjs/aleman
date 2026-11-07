@@ -8,7 +8,7 @@
     <li data-name="menu-item" className="menu-item">
         <label data-menu-path="rename">rename</label>
     </li>
-    <li data-name="menu-item" className="menu-item menu-submenu menu-submenu-show menu-item-selected">
+    <li data-name="menu-item" className="menu-item menu-submenu menu-item-selected menu-submenu-show">
         <label data-menu-path="new">new</label>
         <ul className="menu">
             <li data-name="menu-item" className="menu-item">

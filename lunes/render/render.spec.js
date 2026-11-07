@@ -109,7 +109,7 @@ test('lunes: render: icon: submenu and its items', (t) => {
         icon: true,
     });
     
-    t.match(result, 'class="menu-item icon icon-new menu-submenu menu-submenu-show"');
+    t.match(result, 'class="menu-item icon icon-new menu-submenu menu-item-selected menu-submenu-show"');
     t.end();
 });
 
@@ -129,5 +129,42 @@ test('lunes: render: no icon option: no icon classes', (t) => {
     });
     
     t.notMatch(result, 'icon');
+    t.end();
+});
+
+test('lunes: render: the parent of the opened submenu is selected', (t) => {
+    const result = render(`['on', 'no-cursor', {New: ['on', {File: 'cursor'}]}];`, {
+        position,
+    });
+    
+    t.match(result, 'class="menu-item menu-submenu menu-item-selected menu-submenu-show"');
+    t.end();
+});
+
+test('lunes: render: the parent of the opened submenu is selected: with icon', (t) => {
+    const result = render(`['on', 'no-cursor', {New: ['on', {File: 'cursor'}]}];`, {
+        position,
+        icon: true,
+    });
+    
+    t.match(result, 'class="menu-item icon icon-new menu-submenu menu-item-selected menu-submenu-show"');
+    t.end();
+});
+
+test('lunes: render: the parent of the closed submenu is not selected', (t) => {
+    const result = render(`['on', 'no-cursor', {New: ['off', {File: null}], view: 'cursor'}];`, {
+        position,
+    });
+    
+    t.match(result, 'class="menu-item menu-submenu"');
+    t.end();
+});
+
+test('lunes: render: the parent with the cursor and the closed submenu is selected', (t) => {
+    const result = render(`['on', 'no-cursor', {New: ['off', 'cursor', {File: null}]}];`, {
+        position,
+    });
+    
+    t.match(result, 'class="menu-item menu-submenu menu-item-selected"');
     t.end();
 });
