@@ -689,9 +689,15 @@ test('lunes: hydrate: hooks: beforeShow returns false: the shown menu hides with
     ctx.instance.show(30, 40);
     ctx.win.uninstall();
     
-    const names = calls.map(([name]) => name);
+    const names = [];
     
-    t.deepEqual([isHidden(ctx), names], [true, ['afterShow']]);
+    for (const [name] of calls)
+        names.push(name);
+    
+    const result = [isHidden(ctx), names];
+    const expected = [true, ['afterShow']];
+    
+    t.deepEqual(result, expected);
     t.end();
 });
 
